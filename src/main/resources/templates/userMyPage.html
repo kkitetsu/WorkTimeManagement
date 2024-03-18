@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>打刻システム</title>
+<link rel="stylesheet" href="css/userMyPage.css"/>
+</head>
+<body>
+	<div class="header">
+		<h2>楽天証券　打刻システム</h2>
+	</div>
+	<div class="container">
+		<h3>楽天 太郎  様</h3>
+		<p id="date"></p>
+		<p id="time"></pid>
+		
+		<p>選択</p>
+		<select>
+		    <option value="option1">出勤</option>
+		    <option value="option2">退勤</option>
+		    <option value="option3">外出</option>
+		    <option value="option3">復帰</option>
+		</select>
+		
+		<div class="btn_submit">
+			<form>
+				<button class="btn">打刻</button>
+				<button class="btn">履歴確認</button>
+				<button class="btn">ログアウト</button>
+			</form>
+		</div>
+	</div>
+<script>
+	
+	function getCurrentDate() {
+		let currentDate = new Date();
+	    let date = currentDate.toDateString();
+	    return `${date}`;
+	}
+	
+	function getCurrentTime() {
+		let currentDate = new Date();
+		let time = currentDate.toLocaleTimeString();
+		return `${time}`;
+	}
+	
+	function updateTime() {
+	    document.getElementById('time').textContent = getCurrentTime();
+	}
+	
+	function updateDate() {
+	    document.getElementById('date').textContent = getCurrentDate();
+	}
+	
+	setInterval(updateTime, 1000);
+	updateTime();
+	updateDate();
+	
+</script>
+</body>
+</html>
