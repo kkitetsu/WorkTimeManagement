@@ -8,28 +8,33 @@
 </head>
 <body>
 	<div class="header">
-		<h2>楽天証券　打刻システム</h2>
+		<h1>楽天証券　打刻システム</h1>
 	</div>
 	<div class="container">
-		<h3>楽天 太郎  様</h3>
-		<p id="date"></p>
-		<p id="time"></pid>
 		
-		<p>選択</p>
-		<select>
-		    <option value="option_clockin">出勤</option>
-		    <option value="option_clockout">退勤</option>
-		    <option value="option_leave">外出</option>
-		    <option value="option_back">復帰</option>
-		</select>
-		
-		<div class="btn_submit">
-			<form th:action="@{/clockin}" th:method="post" th:name="p">
-		        <input type="hidden" name="action" id="action" />
-		        <button class="btn" type="submit" value="clockin" onclick="setAction('clockin')">打刻</button>
-		        <button class="btn" type="submit" value="checkHistory" onclick="setAction('checkHistory')">履歴確認</button>
-		        <button class="btn" type="submit" value="logout" onclick="setAction('logout')">ログアウト</button>
-		    </form>
+		<div class="left-column"> 
+	        <p id="date"></p>
+	        <p id="time"></p>
+	    </div>
+	
+		<div class="right-column">
+			<h3>楽天 太郎  様</h3>
+			<select id="optionsSelect">
+			    <option value="option_clockin">出勤</option>
+			    <option value="option_clockout">退勤</option>
+			    <option value="option_leave">外出</option>
+			    <option value="option_back">復帰</option>
+			</select>
+			
+			<div class="btn_submit">
+				<form th:action="@{/clockin}" th:method="post" th:name="p" id="clockinForm">
+			        <input type="hidden" name="action" id="action" />
+			        <input type="hidden" name="selectedOption" id="selectedOption" />
+			        <button class="btn" type="submit" value="clockin" onclick="setAction('clockin')">打刻</button>
+			        <button class="btn" type="submit" value="checkHistory" onclick="setAction('checkHistory')">履歴確認</button>
+			        <button class="logout-btn" type="submit" value="logout" onclick="setAction('logout')">ログアウト</button>
+			    </form>
+			</div>
 		</div>
 	</div>
 <script>
@@ -54,8 +59,13 @@
 	    document.getElementById('date').textContent = getCurrentDate();
 	}
 	
-	function setAction(value) {
-        document.getElementById('action').value = value;
+	function setAction(action) {
+        document.getElementById('action').value = action;
+        if (action === 'clockin') {
+            var selectedOption = document.getElementById('optionsSelect').value;
+            document.getElementById('selectedOption').value = selectedOption;
+        }
+        document.getElementById('clockinForm').submit();
     }
 	
 	setInterval(updateTime, 1000);

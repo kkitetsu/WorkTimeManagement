@@ -34,9 +34,11 @@ public class WorkTimeManagementController {
 	 * @return alertAndRedirect, clockinPage, or top page
 	 */
 	@RequestMapping(value="/clockin", method=RequestMethod.POST)
-	public String clockIn(Model model, HttpSession session, @RequestParam("action") String action) {
-		System.out.println(action);
+	public String clockIn(Model model, HttpSession session, @RequestParam("action") String action,
+															@RequestParam("selectedOption") String selectedOption) {
+		
 		if (action.equals("clockin")) {
+			System.out.println(selectedOption);
             return "/alertAndRedirect";
         } else if (action.equals("checkHistory")) {
             return "/clockinPage";
