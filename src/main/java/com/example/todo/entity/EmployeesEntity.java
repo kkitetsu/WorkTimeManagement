@@ -8,6 +8,8 @@ import lombok.Data;
 @Data
 public class EmployeesEntity implements Serializable{
 	
+	int employee_id;
+	
 	private String loginPW;
 	
 	private String lastname;
@@ -26,6 +28,6 @@ public class EmployeesEntity implements Serializable{
 	
 	private Date birthday;
 	
-	private Date cancel_date;
+	private Date created_date;
 	
 }
