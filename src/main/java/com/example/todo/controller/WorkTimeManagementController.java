@@ -47,7 +47,7 @@ public class WorkTimeManagementController {
 			System.out.println(selectedOption);
             return "/alertAndRedirect";
         } else if (action.equals("checkHistory")) {
-            return "/clockinPage";
+            return "/userLogPage";
         } else {
         	// TODO: redirect to top page
             return "";
@@ -63,7 +63,7 @@ public class WorkTimeManagementController {
 	 */
 	@GetMapping("/tmppage")
 	public String tmpPage() {
-	    return "clockinPage"; 
+	    return "userLogPage"; 
 	}
 	
 }
