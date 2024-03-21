@@ -69,5 +69,130 @@ select {
     background-color: #fff;
 }
 
+.title_box{
+	height:80px;
+	display: flex;
+    align-items: center; 
+}
+.title_1{
+	width:25%;
+	display: inline-block;
+	text-align:center;
+}
+.title_2{
+	text-align:center;
+	font-weight:bold;
+	width:50%;
+	font-size:40px;
+	color:red;
+	display: inline-block;
+}
+.title3{
+	width:auto;
+	display: inline-block;
+	padding:10%;
+}
+.main_logo{
+	display:block;
+	width:100%;
+	height:auto;
+}
+.main_box{
+	width:90%;
+	text-align:center;
+	font-weight:bold;
+	font-size:40px;
+	border-top: 3px solid black;
+	margin: 5px 5%;
+}
+.content_box{
+	margin:10px 5%;
+	padding: 30px 5px;
+	width:90%;
+	background-color:pink;
+	border-radius:20px;
+}
+.medium_whitebox{ 
+	border-radius:30px;
+	height:100px;
+	margin-left:5%;
+	width:90%;
+	display: inline-block;
+	text-align:center;
+	background-color:white;
+	font-weight:bolder;
+	font-size:40px;
+	line-height:100px;
+}
+.medium_whitebox2{ 
+	border-radius:30px;
+	height:100px;
+	margin-left:5%;
+	width:90%;
+	display: inline-block;
+	text-align:center;
+	background-color:white;
+	font-weight:bolder;
+	font-size:50px;
+	line-height:100px;
+}
+.large_whitebox{ 
+	padding-top:20px;
+	width:95%;
+	border-radius:20px;
+	height:200px;
+	display: inline-block;
+	text-align:center;
+	background-color:white;
+	font-size:35px;
+	font-weight:bolder;
+}
 
+.footer_box{
+	text-align:center;
+	font-weight:bold;
+	font-size:30px;
+	border-top: 3px solid black;
+	margin: 0 5%;
+}
+.login_table{
+	width:100%;
+}
+.column1{
+	width:50%;
+}
 
+.red_btn{
+	margin-top:10px;
+	font-size:40px;
+	width:230px;
+	height:60px;
+	font-weight:bolder;
+	background-color:red;
+	color:white;
+	border:none;
+	border-radius:10px;
+}
+.red_btn:hover{
+	background-color:black;
+}
+.blue_btn{
+	margin-top:10px;
+	font-size:40px;
+	width:230px;
+	height:60px;
+	font-weight:bolder;
+	background-color:blue;
+	color:white;
+	border:none;
+	border-radius:10px;
+}
+.blue_btn:hover{
+	background-color: black;
+}
+.input_box{
+	height:35px;
+	width:150px;
+	font-size:35px;
+	margin-bottom:10px;
+}

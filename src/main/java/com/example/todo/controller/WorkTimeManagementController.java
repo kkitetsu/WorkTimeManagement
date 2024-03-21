@@ -19,10 +19,16 @@ public class WorkTimeManagementController {
 	 * 
 	 * @return 
 	 */
-	@GetMapping(value="/userMyPage")
+/*	@GetMapping(value="/userMyPage")
 	public String displayUserMyPage(Model model, HttpSession session) {
 		return "/userMyPage";
 	}
+*/
+	@GetMapping(value="/home")
+	public String displayUserMyPage(Model model, HttpSession session) {
+		return "/home";
+	}
+
 	
 	/**
 	 * @author kk
