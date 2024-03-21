@@ -149,6 +149,7 @@ select {
 }
 .login_table{
 	width:100%;
+	border:none;
 }
 .column1{
 width:50%;}
@@ -169,16 +170,6 @@ table {
     width: 50%;
     margin: 0 auto;
     border-collapse: collapse;
-}
-
-th, td {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-
-th {
-    background-color: #f2f2f2;
 }
 
 .footer {
