@@ -19,14 +19,11 @@ public class WorkTimeManagementController {
 	 * 
 	 * @return 
 	 */
-/*	@GetMapping(value="/userMyPage")
-	public String displayUserMyPage(Model model, HttpSession session) {
-		return "/userMyPage";
-	}
-*/
+
+
 	@GetMapping(value="/home")
 	public String displayUserMyPage(Model model, HttpSession session) {
-		return "/home";
+		return "/home.html";
 	}
 
 	
@@ -47,7 +44,7 @@ public class WorkTimeManagementController {
 			System.out.println(selectedOption);
             return "/alertAndRedirect";
         } else if (action.equals("checkHistory")) {
-            return "/userLogPage";
+            return "/clockinPage";
         } else {
         	// TODO: redirect to top page
             return "";
@@ -63,7 +60,7 @@ public class WorkTimeManagementController {
 	 */
 	@GetMapping("/tmppage")
 	public String tmpPage() {
-	    return "userLogPage"; 
+	    return "clockinPage"; 
 	}
 	
 }
