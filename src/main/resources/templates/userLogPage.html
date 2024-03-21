@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>打刻履歴</title>
+<link rel="stylesheet" href="css/common.css"/>
+<link rel="stylesheet" href="css/userPage.css"/>
+</head>
+<body>
+	<!-- Header は基本的にどの画面でも同じ -->
+	<div class="header">
+		<img src="/img/rakuten-sec.png">
+		<h1>楽天証券　打刻システム</h1>
+		<button class="logout-btn" type="submit" value="logout">ログアウト</button>
+	</div>
+	<div class="logPage">
+		<h3>楽天 太郎  様</h3>
+		<br>
+		<table>
+		    <thead>
+		        <tr>
+		            <th>日付</th>
+		            <th>カテゴリ</th>
+		            <th>申請者</th>
+		        </tr>
+		    </thead>
+		    <tbody id="table-body">
+		        <!-- Table rows will be added dynamically here -->
+		        <tr>
+		            <td>24/03/18 08:33:00</td>
+		            <td>出勤</td>
+		            <td>楽天太郎</td>
+		        </tr>
+		        <tr>
+		            <td>24/03/18 17:15:23</td>
+		            <td>退勤</td>
+		            <td>楽天太郎</td>
+		        </tr>
+		    </tbody>
+		</table>
+	</div>
+	<div class="footer">
+		<a href="/userMyPage">
+		    <button>マイページへ</button>
+		</a>
+	</div>
+</body>
+</html>

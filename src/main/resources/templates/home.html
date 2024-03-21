@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>打刻システム</title>
+<link rel="stylesheet" href="css/userPage.css"/>
+</head>
+<body>
+
+<!--　ヘッダーです。（共通項目） -->
+<header> 
+	<div class="title_box">
+		<div class="title_1"> <a href="https://www.rakuten-sec.co.jp/"><img src="img/rakuten_logo.png" alt="Rakuten_sec_mark" class="maing_logo"> </a></div>
+		<div class="title_2"> 楽天証券打刻システム</div>
+		<div class="title_3">  </div>
+	</div>
+</header>
+<!--　ここからメインです。-->
+<main>
+	<div class="main_box">
+	- TOP -
+	</div>
+	<div class="content_box">
+		<table class="login_table">
+			<tr >
+				<td class="column1"> <div class="medium_whitebox"> <span id="date"></span></div> </td>
+				<td rowspan="2" class="column1">
+					<div class="large_whitebox"> 
+						<form action="login" method="post">
+							<label for="employee_id"> 社員番号: </label> <input type="number" name="employee_id" class="input_box">  <br>
+							<label for="employee_id"> パスワード: </label> <input type="password" name="loginPW" class="input_box"> <br>
+							<button type="submit" class="red_btn"> ログイン</button>	<button type="submit" class="blue_btn">会員登録 </button>					
+						</form>
+							
+					</div> 
+				</td>
+			</tr>
+			<tr >
+				<td> <div class="medium_whitebox2"><span id="time"> </span></div> </td>
+			</tr>
+		</table>
+	</div>
+</main>
+<!--フッターです。（共通項目）-->
+<footer>
+	<div class="footer_box">問い合わせ先:rakuten-tarou@rakuten-sec.co.jp</div>
+</footer>
+
+
+<script>
+	function getCurrentDate() {
+		let currentDate = new Date();
+	    let date = currentDate.toDateString();
+	    return `${date}`;
+	}
+	
+	function getCurrentTime() {
+		let currentDate = new Date();
+		let time = currentDate.toLocaleTimeString();
+		return `${time}`;
+	}
+	
+	function updateTime() {
+	    document.getElementById('time').textContent = getCurrentTime();
+	}
+	
+	function updateDate() {
+	    document.getElementById('date').textContent = getCurrentDate();
+	}
+	
+	function setAction(action) {
+        document.getElementById('action').value = action;
+        if (action === 'clockin') {
+            var selectedOption = document.getElementById('optionsSelect').value;
+            document.getElementById('selectedOption').value = selectedOption;
+        }
+        document.getElementById('clockinForm').submit();
+    }
+	
+	setInterval(updateTime, 1000);
+	updateTime();
+	updateDate();
+	
+</script>
+</body>
+</html>

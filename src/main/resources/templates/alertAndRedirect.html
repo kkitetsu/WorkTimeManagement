@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!-- Author: kk   CreatedAt: 03/18/2024 -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Alert Box and Redirect</title>
+    <script>
+        var currentTime = new Date();
+        var hours = currentTime.getHours();
+        var minutes = currentTime.getMinutes();
+        var seconds = currentTime.getSeconds();
+
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+
+        var formattedTime = hours + ":" + minutes + ":" + seconds;
+        alert("アラート\n" + formattedTime + "に打刻しました");
+
+        // Redirect after displaying the alert
+        window.location.href = "/tmppage";
+    </script>
+</head>
+<body>
+    <!-- This is a placeholder body, but it's not actually used -->
+</body>
+</html>
