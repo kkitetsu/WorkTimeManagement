@@ -1,49 +1,69 @@
 @charset "UTF-8";
 
-*{
-	background-color: navajowhite;
-}
-
-button{
+button {
 	width: 100px;
-	height:20px;
+	height: 20px;
 }
 
 .area {
-  width: 500px;
-  height:500px;
-  margin: auto;
-  flex-wrap: wrap;
-  display: flex;
-  border: solid black 2px;
+	position: relative;
+	top: 30px;
+	width: 500px;
+	height: 500px;
+	margin: auto;
+	flex-wrap: wrap;
+	display: flex;
+	border-radius: 20px;
+	background-color: white;
 }
- 
+
+
+.content_box_admin {
+	position: absolute;
+	top: 230px;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+	
+	width: 90%;
+	background-color: pink;
+	border-radius: 20px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
 .tab_class {
-  width: calc(100%/2);
-  height: 50px;
-  background-color: darkgrey;
-  line-height: 50px;
-  font-size: 15px;
-  text-align: center;
-  display: block;
-  float: left;
-  order: -1;
+	position: relative;
+	bottom: 50px;
+	width: calc(100%/3);
+	height: 50px;
+	background-color: darkgrey;
+	line-height: 50px;
+	font-size: 15px;
+	text-align: center;
+	display: block;
+	float: left;
+	order: -1;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
 }
- 
+
 input[name="tab_name"] {
-  display: none;
+	display: none;
 }
- 
-input:checked + .tab_class {
-  background-color: cadetblue;
-  color: aliceblue;
+
+input:checked+.tab_class {
+	background-color: pink;
+	color: black;
 }
- 
+
 .content_class {
-  display: none;
-  width: 100%;
+	display: none;
+	width: 100%;
 }
- 
-input:checked + .tab_class + .content_class {
-  display: block;
+
+input:checked+.tab_class+.content_class {
+	display: block;
 }

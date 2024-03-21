@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+ <div th:if="${empInfo}">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>名前</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <tr th:each="user : ${empInfo}" th:object="${admin}" class="align-middle">
+                        <td th:text="*{lastname}"></td>
+                        <td th:text="*{firstname}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+</body>
+</html>
