@@ -3,21 +3,22 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.todo.mapper.EmployeesInfoMapper">
-	<!-- author kk -->
 
-	<select id="getEmployeesById"
-		resultType="com.example.todo.entity.EmployeesEntity">
-		SELECT
-		 *
-		FROM
-		 employees
-		WHERE
-		 created_date != NULL
-		<!-- <if test="stampType != null and stampType != ''">
-			AND stampType= #{stampType}
-		</if> -->
-		<!-- <if test="name != null and name != ''">
-			AND name LIKE CONCAT('%', #{name}, '%')
-		</if> -->
-	</select>
+    <select id="getEmployeesById" resultType="com.example.todo.entity.EmployeesEntity">
+    	SELECT firstname FROM employees WHERE lastname=#{name};
+    </select>
+    
+    <!--  author kk -->
+    <select id="getEmployeesLogs" resultType="com.example.todo.entity.LogsEntity">
+    	SELECT * FROM logs;
+    </select>
+    
+    <!--  author kk -->
+    <insert id="insertLogs">
+    	INSERT INTO logs 
+    		(datetime, stampType_id, user_id, applicant, note)
+    	VALUES
+    		(CURRENT_TIMESTAMP, #{stampTypeId}, #{user_id}, #{applicant}, #{note})
+    </insert>
+
 </mapper>

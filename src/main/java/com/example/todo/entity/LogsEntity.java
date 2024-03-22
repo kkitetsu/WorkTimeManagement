@@ -10,7 +10,7 @@ public class LogsEntity implements Serializable{
 	
 	private Date datetime;
 	
-	private int stampType_id;
+	private int stampTypeId;
 	
 	private int user_id;
 	
