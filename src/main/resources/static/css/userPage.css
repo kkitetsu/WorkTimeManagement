@@ -178,6 +178,7 @@ table {
 }
 
 .red_btn{
+	display:inline-block;
 	margin-top:10px;
 	font-size:40px;
 	width:230px;
@@ -187,11 +188,22 @@ table {
 	color:white;
 	border:none;
 	border-radius:10px;
+	cursor:pointer;
 }
-.red_btn:hover{
+a{
+	text-decoration:none;
+}
+.main_title,
+.main_title:hover, 
+.main_title:focus, 
+.main_title:active 
+{ text-decoration: none; color:red;}
+
+.red_btn:hover, .blue_btn:hover{
 	background-color:black;
 }
 .blue_btn{
+	display:inline-block;
 	margin-top:10px;
 	font-size:40px;
 	width:230px;
@@ -200,10 +212,8 @@ table {
 	background-color:blue;
 	color:white;
 	border:none;
+	cursor:pointer;
 	border-radius:10px;
-}
-.blue_btn:hover{
-	background-color: black;
 }
 .input_box{
 	height:35px;

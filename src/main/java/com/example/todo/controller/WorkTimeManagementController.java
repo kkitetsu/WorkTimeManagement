@@ -40,7 +40,7 @@ public class WorkTimeManagementController {
 
 	@GetMapping(value="/home")
 	public String displayUserMyPage(Model model, HttpSession session) {
-		return "/home";
+		return "/home.html";
 	}
 
 	
@@ -72,8 +72,8 @@ public class WorkTimeManagementController {
             return "/alertAndRedirect";
             
         } else if (action.equals("checkHistory")) {
+      
             return "redirect:/userLogPage";
-            
         } else {
             return "/home";
         }

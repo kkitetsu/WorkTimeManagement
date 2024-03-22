@@ -25,20 +25,19 @@ public class EmployeesInfoController {
    
 	@GetMapping(value="/admin")
 	public String adminView(Model model) {
-		model.addAttribute("searchEmployee", new SearchEmployeesRequest());
+		model.addAttribute("searchEmployees", new SearchEmployeesRequest());
 		return "/admin";
 	}
 	
 	@RequestMapping(value="/admin/search",method=RequestMethod.POST)
 	public String search(@ModelAttribute SearchEmployeesRequest searchEmployeesRequest,Model model) {
 		
-		
 		List<EmployeesEntity> empInfo = employeesInfoService.getEmployeesById(searchEmployeesRequest);
-		//model.addAttribute("empInfo",empInfo);
+		
 		model.addAttribute("empInfo",empInfo);
 		
 		
-		return "/admin";
+		return "/result";
 	}
 
 }

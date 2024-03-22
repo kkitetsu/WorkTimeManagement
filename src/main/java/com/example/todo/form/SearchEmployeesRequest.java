@@ -21,12 +21,17 @@ public class SearchEmployeesRequest implements Serializable {
 	/**
 	 * 社員番号
 	 */
-	private int emploee_id;
+	private int employee_id;
 	
 	/**
 	 * 名前
 	 */
-	private String name;
+	private String lastname;
+	
+	/**
+	 * 名前
+	 */
+	private String firstname;
 
 	/**
 	 * 出退勤カテゴリ

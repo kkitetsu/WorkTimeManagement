@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>打刻システム - TOP</title>
+<title>打刻システム - 会員登録</title>
 <link rel="stylesheet" href="css/userPage.css"/>
 </head>
 <body>
@@ -18,7 +18,7 @@
 <!--　ここからメインです。-->
 <main>
 	<div class="main_box">
-	- TOP -
+	- 会員登録 -
 	</div>
 	<div class="content_box">
 		<table class="login_table">
@@ -26,11 +26,13 @@
 				<td class="column1"> <div class="medium_whitebox"> <span id="date"></span></div> </td>
 				<td rowspan="2" class="column1">
 					<div class="large_whitebox"> 
-<!-- ログイン　form タグの actionを修正要望　-->
-						<form action="login" method="post">
+<!-- 会員登録　form タグを修正要望　-->
+						<form action="create" method="post">
 							<label for="employee_id"> 社員番号: </label> <input type="number" name="employee_id" class="input_box">  <br>
 							<label for="employee_id"> パスワード: </label> <input type="password" name="loginPW" class="input_box"> <br>
-							<button type="submit" class="red_btn"> ログイン</button>  <a href="create" class="blue_btn"> <span>会員登録</span></a> </form>   
+							<button type="submit" class="red_btn"> 登録</button>	<a href="home" class="blue_btn"> <span>取り消し</span></a>					
+						</form>
+							
 					</div> 
 				</td>
 			</tr>
