@@ -18,7 +18,7 @@
     	INSERT INTO logs 
     		(datetime, stampType_id, user_id, applicant, note)
     	VALUES
-    		(CURRENT_TIMESTAMP, #{stampType_id}, #{user_id}, #{applicant}, #{note})
+    		(CURRENT_TIMESTAMP, #{stampTypeId}, #{user_id}, #{applicant}, #{note})
     </insert>
    
 </mapper>
