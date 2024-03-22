@@ -90,6 +90,16 @@ public class WorkTimeManagementController {
 	public String userLogPage(Model model, HttpSession session) {
 		List<LogsEntity> logs = employeesInfoService.getEmployeesLogs();
 		model.addAttribute("logs", logs);
+		for (LogsEntity eachLog : logs) {
+			int tmp = eachLog.getStampTypeId();
+			switch (tmp) {
+				case 0: eachLog.setStampTypeIdStr("出勤"); break;
+				case 1: eachLog.setStampTypeIdStr("退勤"); break;
+				case 2: eachLog.setStampTypeIdStr("外出"); break;
+				case 3: eachLog.setStampTypeIdStr("復帰"); break;
+				default: eachLog.setStampTypeIdStr(null); break;
+			}
+		}
 		System.out.println(logs);
 		return "userLogPage"; 
 	}

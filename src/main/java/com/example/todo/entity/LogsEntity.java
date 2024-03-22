@@ -12,6 +12,8 @@ public class LogsEntity implements Serializable{
 	
 	private int stampTypeId;
 	
+	private String stampTypeIdStr;
+	
 	private int user_id;
 	
 	private String applicant;
