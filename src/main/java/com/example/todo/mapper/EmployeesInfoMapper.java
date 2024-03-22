@@ -6,11 +6,14 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.example.todo.entity.EmployeesEntity;
 import com.example.todo.entity.LogsEntity;
+import com.example.todo.form.LoginRequest;
 import com.example.todo.form.SearchEmployeesRequest;
 
 @Mapper
 public interface EmployeesInfoMapper{
 	List<EmployeesEntity> getEmployeesById(SearchEmployeesRequest searchEmployeesRequest);
+	List<EmployeesEntity> login(LoginRequest loginRequest);
+
 	
 	/**
 	 * @author kk
@@ -29,4 +32,5 @@ public interface EmployeesInfoMapper{
 	 * @param data need for updating the log
 	 */
 	void insertLogs(LogsEntity logsEntity);
+
 }
