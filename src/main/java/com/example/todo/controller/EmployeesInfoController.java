@@ -27,7 +27,7 @@ public class EmployeesInfoController {
 	public String adminView(Model model) {
 		model.addAttribute("searchEmployees", new SearchEmployeesRequest());
 		return "/admin";
-	}
+	} 	
 	
 	@RequestMapping(value="/admin/search",method=RequestMethod.POST)
 	public String search(@ModelAttribute SearchEmployeesRequest searchEmployeesRequest,Model model) {

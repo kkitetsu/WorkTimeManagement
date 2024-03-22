@@ -7,7 +7,6 @@ import lombok.Data;
 
 @Data
 public class SearchEmployeesRequest implements Serializable {
-
 	/**
 	 * 期間（始まり）
 	 */
@@ -43,3 +42,6 @@ public class SearchEmployeesRequest implements Serializable {
 	 */
 	private int  dpt_id;
 }
+
+
+

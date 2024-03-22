@@ -20,4 +20,17 @@
 			AND name LIKE CONCAT('%', #{name}, '%')
 		</if> -->
 	</select>
+	
+	
+		<select id="login" resultType="com.example.todo.entity.EmployeesEntity">
+		SELECT
+		 *
+		FROM
+		 employees
+		WHERE
+		 employee_id = #{login_id} AND loginPW = #{login_pw} 
+	    </select>
+	
+	
+	
 </mapper>
