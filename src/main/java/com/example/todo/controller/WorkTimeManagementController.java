@@ -22,6 +22,7 @@ import jakarta.servlet.http.HttpSession;
 public class WorkTimeManagementController {
 	@Autowired
 	private EmployeesInfoService employeesinfoservice;	
+	
 	/**
 	 * @author kk
 	 * 
@@ -39,10 +40,16 @@ public class WorkTimeManagementController {
 	 */
 	@GetMapping(value="/userMyPage")
 	public String UserMyPage(Model model, HttpSession session) {
+		if (session.getAttribute("userFirstName") == null) {
+			return "redirect:/home";
+		}
+		model.addAttribute("userName", session.getAttribute("userFirstName"));
 		return "/userMyPage";
 	}
+	
 	@GetMapping(value="/home")
 	public String displayhome(Model model, HttpSession session) {
+		session.invalidate();
 		model.addAttribute("logininfo", new LoginRequest() );
 		return "/home";
 	}
@@ -55,11 +62,13 @@ public class WorkTimeManagementController {
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String UserLogin( 
 			@ModelAttribute LoginRequest loginrequest, 
-			Model model) 
+			Model model, HttpSession session) 
 	{
 		List<EmployeesEntity> user_info = employeesinfoservice.login(loginrequest);
 		if(user_info.isEmpty()) {return  "redirect:home";}
-		System.out.println(user_info);
+		/** @author kk session */
+		session.setAttribute("userFirstName", user_info.get(0).getFirstname());
+		model.addAttribute("userName", session.getAttribute("userFirstName"));
 		return "userMyPage";
 	}
 	
@@ -75,12 +84,14 @@ public class WorkTimeManagementController {
 	@RequestMapping(value="/clockin", method=RequestMethod.POST)
 	public String clockIn(Model model, HttpSession session, @RequestParam("action") String action,
 															@RequestParam("selectedOption") String selectedOption) {
+		if (session.getAttribute("userFirstName") == null) {
+			return "redirect:/home";
+		}
 		if (action.equals("clockin")) {
 			LogsEntity logsEntity = new LogsEntity();
 			logsEntity.setApplicant("Honnin");
 			logsEntity.setNote("XXXX");
 			logsEntity.setUser_id(1);
-			System.out.println(Integer.parseInt(selectedOption));
 			logsEntity.setStampTypeId(Integer.parseInt(selectedOption));
 			
 			employeesInfoService.insertLogs(logsEntity);
@@ -90,10 +101,12 @@ public class WorkTimeManagementController {
             return "/alertAndRedirect";
             
         } else if (action.equals("checkHistory")) {
-      
-            return "redirect:/userLogPage";
+        	
+        	return "redirect:/userLogPage";
         } else {
-            return "/home";
+        	
+        	session.invalidate();    // Logout and back to home
+            return "redirect:/home";
         }
 	}
 	
@@ -106,8 +119,12 @@ public class WorkTimeManagementController {
 	 */
 	@GetMapping("/userLogPage")
 	public String userLogPage(Model model, HttpSession session) {
+		if (session.getAttribute("userFirstName") == null) {
+			return "redirect:/home";
+		}
 		List<LogsEntity> logs = employeesInfoService.getEmployeesLogs();
 		model.addAttribute("logs", logs);
+		model.addAttribute("userName", session.getAttribute("userFirstName"));
 		for (LogsEntity eachLog : logs) {
 			int tmp = eachLog.getStampTypeId();
 			switch (tmp) {
