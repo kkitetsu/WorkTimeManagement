@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.todo.entity.EmployeesEntity;
+import com.example.todo.entity.LogsEntity;
 import com.example.todo.form.LoginRequest;
 import com.example.todo.service.EmployeesInfoService;
 
@@ -24,10 +25,22 @@ public class WorkTimeManagementController {
 	/**
 	 * @author kk
 	 * 
+	 * Employees information service.
+	 */
+	@Autowired
+	private EmployeesInfoService employeesInfoService;
+	
+	/**
+	 * @author kk
+	 * 
 	 * Access to user my page.
 	 * 
 	 * @return 
 	 */
+	@GetMapping(value="/userMyPage")
+	public String UserMyPage(Model model, HttpSession session) {
+		return "/userMyPage";
+	}
 	@GetMapping(value="/home")
 	public String displayhome(Model model, HttpSession session) {
 		model.addAttribute("logininfo", new LoginRequest() );
@@ -63,13 +76,24 @@ public class WorkTimeManagementController {
 	public String clockIn(Model model, HttpSession session, @RequestParam("action") String action,
 															@RequestParam("selectedOption") String selectedOption) {
 		if (action.equals("clockin")) {
-			System.out.println(selectedOption);
+			LogsEntity logsEntity = new LogsEntity();
+			logsEntity.setApplicant("Honnin");
+			logsEntity.setNote("XXXX");
+			logsEntity.setUser_id(1);
+			System.out.println(Integer.parseInt(selectedOption));
+			logsEntity.setStampTypeId(Integer.parseInt(selectedOption));
+			
+			employeesInfoService.insertLogs(logsEntity);
+			
+			System.out.println(logsEntity.getStampTypeId());
+			
             return "/alertAndRedirect";
+            
         } else if (action.equals("checkHistory")) {
-            return "/clockinPage";
+      
+            return "redirect:/userLogPage";
         } else {
-        	// TODO: redirect to top page
-            return "";
+            return "/home";
         }
 	}
 	
@@ -80,9 +104,22 @@ public class WorkTimeManagementController {
 	 * 
 	 * @return clockinPage
 	 */
-	@GetMapping("/tmppage")
-	public String tmpPage() {
-	    return "clockinPage"; 
+	@GetMapping("/userLogPage")
+	public String userLogPage(Model model, HttpSession session) {
+		List<LogsEntity> logs = employeesInfoService.getEmployeesLogs();
+		model.addAttribute("logs", logs);
+		for (LogsEntity eachLog : logs) {
+			int tmp = eachLog.getStampTypeId();
+			switch (tmp) {
+				case 0: eachLog.setStampTypeIdStr("出勤"); break;
+				case 1: eachLog.setStampTypeIdStr("退勤"); break;
+				case 2: eachLog.setStampTypeIdStr("外出"); break;
+				case 3: eachLog.setStampTypeIdStr("復帰"); break;
+				default: eachLog.setStampTypeIdStr(null); break;
+			}
+		}
+		System.out.println(logs);
+		return "userLogPage"; 
 	}
 	
 }

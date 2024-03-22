@@ -1,16 +1,14 @@
 package com.example.todo.service;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.todo.entity.EmployeesEntity;
+import com.example.todo.entity.LogsEntity;
 import com.example.todo.form.LoginRequest;
 import com.example.todo.form.SearchEmployeesRequest;
 import com.example.todo.mapper.EmployeesInfoMapper;
-
-
 
 @Service
 public class EmployeesInfoService {
@@ -22,7 +20,24 @@ public class EmployeesInfoService {
 		return employeesInfomapper.getEmployeesById(searchEmployeesRequest);
 	}
 	public List<EmployeesEntity> login(LoginRequest loginRequest){
-		return employeesInfomapper.login(loginRequest);
+		return employeesInfomapper.login(loginRequest);}
+	/**
+	 * @author kk
+	 * 
+	 * Get employee's log as a list of LogsEntity.
+	 */
+	public List<LogsEntity> getEmployeesLogs() {
+		return employeesInfomapper.getEmployeesLogs();
+	}
+	
+	/**
+	 * @author kk
+	 * 
+	 * Update the user's log according to the selected option.
+	 * 
+	 */
+	public void insertLogs(LogsEntity input) {
+		employeesInfomapper.insertLogs(input);
 	}
 }
 
