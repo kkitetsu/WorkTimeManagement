@@ -36,7 +36,7 @@ public class EmployeesInfoService {
 	 * Update the user's log according to the selected option.
 	 * 
 	 */
-	public void updateLogs(LogsEntity input) {
-		employeesInfomapper.updateLogs(input);
+	public void insertLogs(LogsEntity input) {
+		employeesInfomapper.insertLogs(input);
 	}
 }

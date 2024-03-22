@@ -28,5 +28,5 @@ public interface EmployeesInfoMapper{
 	 * 
 	 * @param data need for updating the log
 	 */
-	void updateLogs(LogsEntity logsEntity);
+	void insertLogs(LogsEntity logsEntity);
 }

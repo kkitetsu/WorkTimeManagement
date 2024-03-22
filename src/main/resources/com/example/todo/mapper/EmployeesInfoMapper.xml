@@ -14,11 +14,11 @@
     </select>
     
     <!--  author kk -->
-    <update id="updateLogs">
+    <insert id="insertLogs">
     	INSERT INTO logs 
     		(datetime, stampType_id, user_id, applicant, note)
     	VALUES
     		(CURRENT_TIMESTAMP, #{stampType_id}, #{user_id}, #{applicant}, #{note})
-    </update>
+    </insert>
    
 </mapper>

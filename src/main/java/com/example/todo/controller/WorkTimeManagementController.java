@@ -62,9 +62,12 @@ public class WorkTimeManagementController {
 			logsEntity.setApplicant("Honnin");
 			logsEntity.setNote("XXXX");
 			logsEntity.setUser_id(1);
-			logsEntity.setStampType_id(Integer.parseInt(selectedOption));
-			System.out.println(selectedOption);
-			employeesInfoService.updateLogs(logsEntity);
+			System.out.println(Integer.parseInt(selectedOption));
+			logsEntity.setStampTypeId(Integer.parseInt(selectedOption));
+			
+			employeesInfoService.insertLogs(logsEntity);
+			
+			System.out.println(logsEntity.getStampTypeId());
 			
             return "/alertAndRedirect";
             
@@ -87,6 +90,7 @@ public class WorkTimeManagementController {
 	public String userLogPage(Model model, HttpSession session) {
 		List<LogsEntity> logs = employeesInfoService.getEmployeesLogs();
 		model.addAttribute("logs", logs);
+		System.out.println(logs);
 		return "userLogPage"; 
 	}
 	
