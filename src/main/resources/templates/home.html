@@ -18,6 +18,10 @@
 <!--　ここからメインです。-->
 <main> 
 	<div class="main_box">
+		<!-- author kk  handling error case -->
+		<div th:if="${errMsg}" class="alert alert-danger">
+			<span th:text="${errMsg}"></span>
+		</div>
 	- TOP -
 	</div>
 	<div class="content_box">
