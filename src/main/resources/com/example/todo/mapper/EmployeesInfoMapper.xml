@@ -57,7 +57,7 @@
 		 employees
 		WHERE
 		 employee_id = #{login_id} AND loginPW = #{login_pw} 
-	    </select>
+	</select>
 	
 
     <select id="getEmployeesById" resultType="com.example.todo.entity.EmployeesEntity">
@@ -70,10 +70,27 @@
     </select>
     
     <!--  author kk -->
+    <select id="getAnEmployeeFirstName">
+    	SELECT firstName FROM employees WHERE employee_id=#{id};
+    </select>
+    
+    <!--  author kk -->
     <insert id="insertLogs">
     	INSERT INTO logs 
     		(datetime, stampType_id, user_id, applicant, note)
     	VALUES
-    		(CURRENT_TIMESTAMP, #{stampTypeId}, #{user_id}, #{applicant}, #{note})
+    		(CURRENT_TIMESTAMP, #{stampTypeId}, #{userId}, #{applicant}, #{note});
     </insert>
+    
+    <!--  author kk  -->
+    <insert id="createNewUser">
+    	INSERT INTO employees
+			(employee_id, loginPW, lastName, firstName, dpt_id, 
+					position_id, mail, phone, address, birthday, created_date)
+		VALUES
+			(#{employee_id}, #{loginPW}, "xx", "xxx", 1, 
+				1, "xx@gmail.com", "xxx-xxxx-xxxx", "Tokyo", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+    </insert>
+    
+    
 </mapper>
