@@ -117,7 +117,7 @@ public class WorkTimeManagementController {
 			LogsEntity logsEntity = new LogsEntity();
 			logsEntity.setApplicant("Honnin");
 			logsEntity.setNote("XXXX");
-			logsEntity.setUser_id(1);
+			logsEntity.setUserId(1);
 			logsEntity.setStampTypeId(Integer.parseInt(selectedOption));
 			
 			employeesInfoService.insertLogs(logsEntity);

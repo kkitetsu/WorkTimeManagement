@@ -6,7 +6,7 @@ import java.sql.Date;
 import lombok.Data;
 
 @Data
-public class SearchEmployeesRequest implements Serializable {
+public class SearchStampsRequest implements Serializable{
 	/**
 	 * 期間（始まり）
 	 */
@@ -41,12 +41,4 @@ public class SearchEmployeesRequest implements Serializable {
 	 * 部署ID
 	 */
 	private int  dpt_id;
-	
-	/**
-	 * 役職ID
-	 */
-	private int  position_id;
 }
-
-
-
