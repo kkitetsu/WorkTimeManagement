@@ -2,8 +2,54 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	<mapper namespace="com.example.todo.mapper.EmployeesInfoMapper">
 
+<mapper namespace="com.example.todo.mapper.EmployeesInfoMapper">
+
+	<select id="getEmployees" resultType="com.example.todo.dto.SearchEmployeesDTO">
+		SELECT * FROM employees e 
+		LEFT JOIN departments d ON e.dpt_id  = d.dpt_id 
+		LEFT JOIN positions p ON e.position_id  = p.position_id 
+		WHERE created_date IS NOT null
+		<if test="lastname != null and lastname != ''">
+                AND lastname = #{lastname}
+         </if>
+         <if test="firstname != null and firstname != ''">
+                AND firstname = #{firstname}
+         </if> 
+        <!--  <if test="stampTypeId != null and stampTypeId != ''">
+                AND stampType_id = #{stampTypeId}
+         </if> -->
+        <!--   <if test="stampTypeId != null and stampTypeId != ''">
+                AND stampType_id = #{stampTypeId}
+         </if> -->
+	</select>
+	
+	<select id="getStamps" resultType="com.example.todo.dto.SearchStampsDTO">
+		SELECT * FROM logs l
+		LEFT JOIN employees e ON e.employee_id  = l.user_id 
+		WHERE cancel_flag != 1
+		<if test="stampType_id != null and stampType_id != ''">
+                AND stampType_id = #{stampType_id}
+         </if>
+        <if test="employee_id != null and employee_id != ''">
+                AND user_id = #{employee_id}
+         </if>
+        <if test="firstname != null and firstname != ''">
+                AND firstname = #{firstname}
+         </if>
+         
+         <if test="lastname != null and lastname != ''">
+                AND lastname = #{lastname}
+         </if>
+         
+         <!--  <if test="startDate != null and startDate != ''">
+                AND datetime between #{startDate} and null
+         </if>
+         
+         <if test="endDate != null and endDate != ''">
+                AND datetime between null and #{endDate}
+         </if> -->
+	</select>
 		<select id="login" resultType="com.example.todo.entity.EmployeesEntity">
 		SELECT
 		 *

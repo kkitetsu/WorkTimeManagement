@@ -97,6 +97,15 @@ select {
 	border-top: 3px solid black;
 	margin: 5px 5%;
 }
+
+.main_box_admin{
+	width:90%;
+	text-align:center;
+	font-size:20px;
+	border-top: 3px solid black;
+	margin: 5px 5%;
+}
+
 .content_box{
 	margin:10px 5%;
 	padding: 30px 5px;
@@ -104,6 +113,24 @@ select {
 	background-color:pink;
 	border-radius:20px;
 }
+
+.employeesTable{
+	font-size: 20px;
+  margin-top: 40px;
+  border-collapse: collapse; /* セルの境界線を重ねて描画 */
+  width: 80%; /* テーブルの幅を100%に設定 */
+}
+
+.employeesTable td,th {
+  border: 3px solid black; /* セルの境界線を1ピクセルの黒い線で描画 */
+  padding: 8px; /* セルの内側の余白を設定 */
+}
+
+.employeesTable td{
+  height:3px;
+}
+
+
 .medium_whitebox{ 
 	border-radius:30px;
 	height:100px;
