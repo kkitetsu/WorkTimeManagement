@@ -155,9 +155,7 @@ select {
 	font-size:30px;
 	border-top: 3px solid black;
 	margin: 0 5%;
-    position: fixed;
-    bottom: 0;
-    width: 85%; 
+    width: 88%; 
     color: black;
     padding: 20px; 
     display: inline-block;

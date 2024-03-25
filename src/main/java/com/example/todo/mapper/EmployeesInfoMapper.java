@@ -40,7 +40,7 @@ public interface EmployeesInfoMapper{
 	 * 
 	 * @return logs in a list
 	 */
-	List<LogsEntity> getEmployeesLogs();
+	List<LogsEntity> getEmployeesLogs(int userId);
 	
 	/**
 	 * @author kk

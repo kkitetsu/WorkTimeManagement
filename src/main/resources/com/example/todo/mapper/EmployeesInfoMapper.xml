@@ -72,7 +72,7 @@
     
     <!--  author kk -->
     <select id="getEmployeesLogs" resultType="com.example.todo.entity.LogsEntity">
-    	SELECT * FROM logs;
+    	SELECT * FROM logs WHERE user_id=#{id};
     </select>
     
     <!--  author kk -->
