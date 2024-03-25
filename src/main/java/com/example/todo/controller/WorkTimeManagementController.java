@@ -85,12 +85,19 @@ public class WorkTimeManagementController {
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String UserLogin( 
-			@ModelAttribute LoginRequest loginrequest, 
-			Model model, HttpSession session) 
-	{
+	public String UserLogin( @ModelAttribute LoginRequest loginrequest, 
+											Model model, HttpSession session) {
+		
+		/** 
+		 * @author kk 
+		 * If the login info is admin, jump to admin page.
+		 */
+		if (loginrequest.getLogin_id() == 4755 && loginrequest.getLogin_pw().equals("4755")) {
+			return "redirect:admin";
+		}
+		
 		List<EmployeesEntity> user_info = employeesinfoservice.login(loginrequest);
-		if(user_info.isEmpty()) {return  "redirect:home";}
+		if (user_info.isEmpty()) { return "redirect:home"; }
 		
 		/** @author kk session */
 		session.setAttribute("userFirstName", user_info.get(0).getFirstname());
@@ -115,7 +122,7 @@ public class WorkTimeManagementController {
 		}
 		if (action.equals("clockin")) {
 			LogsEntity logsEntity = new LogsEntity();
-			logsEntity.setApplicant("Honnin");
+			logsEntity.setApplicant("本人");
 			logsEntity.setNote("XXXX");
 			logsEntity.setUserId(1);
 			logsEntity.setStampTypeId(Integer.parseInt(selectedOption));
