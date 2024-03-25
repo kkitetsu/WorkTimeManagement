@@ -1,7 +1,7 @@
 package com.example.todo.form;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import lombok.Data;
 
@@ -10,12 +10,12 @@ public class SearchStampsRequest implements Serializable{
 	/**
 	 * 期間（始まり）
 	 */
-	private Date startDate;
+	private LocalDateTime startDate;
 	
 	/**
 	 * 期間（終わり）
 	 */
-	private Date endDate;
+	private LocalDateTime endDate;
 	
 	/**
 	 * 社員番号

@@ -15,8 +15,8 @@ import com.example.todo.form.StampUpdateRequest;
 
 @Mapper
 public interface EmployeesInfoMapper{
-	
-	List<SearchEmployeesDTO> getEmployees(SearchEmployeesRequest searchEmployeesRequest);
+
+	List<SearchEmployeesDTO> getEmployees(SearchEmployeesRequest searchEmployeesRequest);	
 	List<SearchStampsDTO> getStamps(SearchStampsRequest searchStampsRequest);
 	List<EmployeesEntity> getEmployeesById(SearchEmployeesRequest searchEmployeesRequest);
 	List<EmployeesEntity> login(LoginRequest loginRequest);

@@ -20,18 +20,15 @@ public class EmployeesInfoService {
 	@Autowired
     private EmployeesInfoMapper employeesInfomapper;
 	
-	
 	public List<SearchEmployeesDTO> getEmployees(SearchEmployeesRequest searchEmployeesRequest) {
 		return employeesInfomapper.getEmployees(searchEmployeesRequest);
 	}
 	
 	public List<SearchStampsDTO> getStamps(SearchStampsRequest searchStampsRequest) {
 		return employeesInfomapper.getStamps(searchStampsRequest);
-	}
-		
+  }
 	public List<EmployeesEntity> getEmployeesById(SearchEmployeesRequest searchEmployeesRequest) {
 		return employeesInfomapper.getEmployeesById(searchEmployeesRequest);
-
 	}
 	
 	public void updateStamps(StampUpdateRequest stampUpdateRequest) {

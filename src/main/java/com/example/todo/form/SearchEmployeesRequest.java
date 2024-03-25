@@ -33,11 +33,6 @@ public class SearchEmployeesRequest implements Serializable {
 	private String firstname;
 
 	/**
-	 * 出退勤カテゴリ
-	 */
-	private int stampType_id;
-
-	/**
 	 * 部署ID
 	 */
 	private int  dpt_id;

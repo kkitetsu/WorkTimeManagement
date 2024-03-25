@@ -27,15 +27,12 @@
 			<div class="content_class">
 				<form th:action="@{/stamp}" th:object="${searchStamps}" th:method="post">
 					<label>日時：</label>
-					<input type="date" th:field="*{startDate}" required="required">
+					<input type="datetime-local" th:field="*{startDate}" required="required">
 					〜
-					<input type="date" th:field="*{endDate}" required="required"><br>
+					<input type="datetime-local" th:field="*{endDate}" required="required"><br>
 
 					<label>社員番号：</label>
 					<input type="number" th:field="*{employee_id}"><br>
-
-					<!--<label>部署名：</label>
-					<input type="number" th:field="*{dpt_id}"><br>-->
 
 					<label>名字：</label>
 					<input type="text" th:field="*{lastname}"><br>
@@ -80,7 +77,7 @@
 			<label class="tab_class" for="tab2">社員検索</label>
 			<div class="content_class">
 				<form th:action="@{/emp}" th:object="${searchEmployees}" th:method="post">
-					<label>日時：</label>
+					<label>生年月日：</label>
 					<input type="date" th:field="*{startDate}" required="required">
 					〜
 					<input type="date" th:field="*{endDate}" required="required"><br>
@@ -131,7 +128,6 @@
 						</tbody>
 					</table>
 				</div>
-				<button>一括削除</button>
 			</div>
 
 </body>
