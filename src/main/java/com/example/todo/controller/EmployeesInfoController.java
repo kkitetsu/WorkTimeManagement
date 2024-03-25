@@ -36,7 +36,6 @@ public class EmployeesInfoController {
 		return "/admin";
 	} 	
 	
-	
 	@RequestMapping(value="/emp",method=RequestMethod.POST)
 	public String searchEmp(@ModelAttribute SearchEmployeesRequest searchEmployeesRequest,Model model) {
 		
@@ -60,24 +59,14 @@ public class EmployeesInfoController {
 	}
 	
 	
-	@GetMapping(value="/stamp/{id}/edit")
-	public String editTask(@PathVariable int id, Model model, HttpSession session) {
+	@GetMapping(value="/admin/{id}/adminEdit")
+	public String editStamp(@PathVariable int id, Model model, HttpSession session) {
 		
 		StampUpdateRequest newStamp = new StampUpdateRequest();
 		newStamp.setId(id);
 		
 		model.addAttribute("stampUpdateRequest",newStamp);
-//		if (session.getAttribute("userId") == null ) {
-//			return "redirect:/home";
-//		}
-//		TaskInfo task = taskInfoService.getTaskById(id);
-//		TaskUpdateRequest newTask = new TaskUpdateRequest();
-//		newTask.setId(task.getId());
-//		newTask.setTitle(task.getTitle());
-//		newTask.setContents(task.getContents());
-//		newTask.setImgPath(task.getImgPath());
-//		model.addAttribute("taskUpdateRequest", newTask);
-//		model.addAttribute("uploadForm", new UploadForm()); // Use to upload the picture
+
 		return "/adminEdit";
 	}
 	
@@ -87,7 +76,7 @@ public class EmployeesInfoController {
 		employeesInfoService.updateStamps(stampUpdateRequest);
 		
 		View(model);
-		return "admin";
+		return "redirect:/admin";
 	}
 	
 

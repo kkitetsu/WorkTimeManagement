@@ -22,7 +22,7 @@
 	<div class="main_box_admin">
 		- TOP -
 		<div class="content_box_admin">
-			
+
 			<!--タブ１枚目（出退勤の検索画面） -->
 			<input type="radio" name="tab_name" id="tab1" checked>
 			<label class="tab_class" for="tab1">出退勤検索</label>
@@ -43,7 +43,13 @@
 					<input type="text" th:field="*{firstname}"><br>
 
 					<label>出退勤カテゴリ：</label>
-					<input type="number" th:field="*{stampType_id}"><br>
+					<select id="stampType_id" name="stampType_id">
+						<option value="0">分類</option>
+						<option value="01">出勤</option>
+						<option value="2">退勤</option>
+						<option value="3">外出</option>
+						<option value="4">復帰</option>
+					</select><br>
 
 					<button type="submit">検索</button>
 					<button type="submit">ログアウト</button>
@@ -68,14 +74,14 @@
 								<td th:text="*{stamp.stampTypeId}"></td>
 								<td th:text="*{stamp.firstname}"></td>
 								<td th:text="*{stamp.applicant}"></td>
-								<td><a th:href="@{stamp/{id}/edit(id=*{stamp.logId})}">編集</a></td>
+								<td><a th:href="@{/admin/{id}/adminEdit(id=*{stamp.logId})}">編集</a></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 				<button>一括削除</button>
 			</div>
-			
+
 			<!--タブ２枚目（社員の検索画面） -->
 			<input type="radio" name="tab_name" id="tab2">
 			<label class="tab_class" for="tab2">社員検索</label>
@@ -89,8 +95,14 @@
 					<label>社員番号：</label>
 					<input type="number" th:field="*{employee_id}"><br>
 
-					<label>部署名：</label>
-					<input type="number" th:field="*{dpt_id}"><br>
+					<label>部署：</label>
+					<select id="dpt_id" name="dpt_id">
+						<option value="0">部署</option>
+						<option value="1">Sales</option>
+						<option value="2">Marketing</option>
+						<option value="3">Engineering</option>
+						<option value="4">Finance</option>
+					</select><br>
 
 					<label>名字：</label>
 					<input type="text" th:field="*{lastname}"><br>
@@ -99,7 +111,13 @@
 					<input type="text" th:field="*{firstname}"><br>
 
 					<label>役職：</label>
-					<input type="number" th:field="*{position_id}"><br>
+					<select id="position_id" name="position_id">
+						<option value="0">役職</option>
+						<option value="1">Manager</option>
+						<option value="2">Assistant Manager</option>
+						<option value="3">Senior Engineer</option>
+						<option value="4">Software Developer</option>
+					</select><br>
 
 
 					<button type="submit">検索</button>
