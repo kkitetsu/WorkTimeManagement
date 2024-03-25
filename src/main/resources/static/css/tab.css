@@ -69,7 +69,19 @@ input:checked+.tab_class {
 	padding-left: 30px;
 	font-weight: bold;
 }
-
+.footer_box1{
+	text-align:center;
+	font-weight:bold;
+	position:absolute;
+	bottom:0px;
+	font-size:30px;
+	border-top: 3px solid black;
+	margin: 0 5%;
+    width: 88%; 
+    color: black;
+    padding: 20px; 
+    display: inline-block;
+}
 input:checked+.tab_class+.content_class {
 	display: block;
 }
