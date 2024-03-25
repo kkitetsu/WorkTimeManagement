@@ -16,9 +16,9 @@ public class EmployeesEntity implements Serializable{
 	
 	private String firstname;
 	
-	private int dpt_id;
+	private int dptId;
 	
-	private int position_id;
+	private int positionId;
 	
 	private String mail;
 	
@@ -30,4 +30,5 @@ public class EmployeesEntity implements Serializable{
 	
 	private Date created_date;
 	
+	private String position_name;
 }
