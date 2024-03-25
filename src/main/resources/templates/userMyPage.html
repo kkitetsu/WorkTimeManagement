@@ -1,113 +1,121 @@
 <!DOCTYPE html>
 <!-- Author: kk    CreatedAt: 03/18/2024 -->
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
 	<meta charset="UTF-8">
 	<title>打刻システム</title>
 	<link rel="stylesheet" href="css/common.css" />
 	<link rel="stylesheet" href="css/userPage.css" />
 </head>
-	<!--　ヘッダーです。（共通項目） -->
-	<header>
-		<div class="title_box">
-			<div class="title_1"> <a href="https://www.rakuten-sec.co.jp/"><img src="img/rakuten_logo.png"
-						alt="Rakuten_sec_mark" class="maing_logo"> </a></div>
-			<div class="title_2"> 楽天証券打刻システム</div>
-			<div class="title_3"> </div>
-		</div>
-	</header>
-	<!--　ここからメインです。-->
-	<main>
-		<div class="main_box">
-			<div class="content_box">
-				<table class="login_table">
-								<tr >
-				<td class="column1"> <div class="medium_whitebox"> <span id="date"></span></div> </td>
-				<td rowspan="2" class="column1">
-					<div class="large_whitebox"> 
-						<div>楽天 太郎 様</div>
-					<select id="optionsSelect">
-						<option value=0>出勤</option>
-						<option value=1>退勤</option>
-						<option value=2>外出</option>
-						<option value=3>復帰</option>
-					</select>
+<!--　ヘッダーです。（共通項目） -->
+<header>
+	<div class="title_box">
+		<div class="title_1"> <a href="https://www.rakuten-sec.co.jp/"><img src="img/rakuten_logo.png"
+					alt="Rakuten_sec_mark" class="maing_logo"> </a></div>
+		<div class="title_2"> 楽天証券打刻システム</div>
+		<div class="title_3"> </div>
+	</div>
+</header>
+<!--　ここからメインです。-->
+<main>
 
-					<div class="btn_submit">
-						<form th:action="@{/clockin}" th:method="post" th:name="p" id="clockinForm">
-							<input type="hidden" name="action" id="action" />
-							<input type="hidden" name="selectedOption" id="selectedOption" />
-							<button class="red_btn" type="submit" value="clockin" onclick="setAction('clockin')">打刻</button>
-							<button class="blue_btn" type="submit" value="checkHistory"
-								onclick="setAction('checkHistory')">履歴確認</button>
-							<button class="logout-btn" type="submit" value="logout"
-								onclick="setAction('logout')">ログアウト</button>
-						</form>
+	<div class="main_box">
+		- TOP -
+	</div>
+	<div class="content_box">
+		<table class="login_table">
+			<tr>
+				<td class="column1">
+					<div class="medium_whitebox"> <span id="date"></span></div>
+				</td>
+				<td rowspan="2" class="column1">
+					<div class="large_whitebox">
+						<div>楽天 太郎 様</div>
+						<select id="optionsSelect">
+							<option value=0>出勤</option>
+							<option value=1>退勤</option>
+							<option value=2>外出</option>
+							<option value=3>復帰</option>
+						</select>
+
+						<div class="btn_submit">
+							<form th:action="@{/clockin}" th:method="post" th:name="p" id="clockinForm">
+								<input type="hidden" name="action" id="action" />
+								<input type="hidden" name="selectedOption" id="selectedOption" />
+								<button class="red_btn" type="submit" value="clockin"
+									onclick="setAction('clockin')">打刻</button>
+								<button class="blue_btn" type="submit" value="checkHistory"
+									onclick="setAction('checkHistory')">履歴確認</button>
+								<button class="logout-btn" type="submit" value="logout"
+									onclick="setAction('logout')">ログアウト</button>
+							</form>
+						</div>
 					</div>
-					</div> 
 				</td>
 			</tr>
-			<tr >
-				<td> <div class="medium_whitebox2"><span id="time"> </span></div> </td>
+			<tr>
+				<td class="column1">
+					<div class="medium_whitebox2"><span id="time"> </span></div>
+				</td>
 			</tr>
-				</table>
-			</div>
-		</div>
-	</main>
-	<!--フッターです。（共通項目）-->
-	<footer>
-		<div class="footer_box">問い合わせ先:rakuten-tarou@rakuten-sec.co.jp</div>
-	</footer>
-	<script>
-		function getCurrentDate() {
-			let currentDate = new Date();
-			let year = currentDate.getFullYear();
-			let month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
-			let day = ("0" + currentDate.getDate()).slice(-2);
-			let dayOfWeek = ["日", "月", "火", "水", "木", "金", "土"][currentDate.getDay()];
-			date = year + '年' + month + '月' + day + '日(' + dayOfWeek + ')';
-			return `${date}`;
+		</table>
+	</div>
+</main>
+<!--フッターです。（共通項目）-->
+<footer>
+	<div class="footer_box">問い合わせ先:rakuten-tarou@rakuten-sec.co.jp</div>
+</footer>
+<script>
+	function getCurrentDate() {
+		let currentDate = new Date();
+		let year = currentDate.getFullYear();
+		let month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
+		let day = ("0" + currentDate.getDate()).slice(-2);
+		let dayOfWeek = ["日", "月", "火", "水", "木", "金", "土"][currentDate.getDay()];
+		date = year + '年' + month + '月' + day + '日(' + dayOfWeek + ')';
+		return `${date}`;
+	}
+
+	function getCurrentTime() {
+		let currentDate = new Date();
+		let time = currentDate.toLocaleTimeString();
+		let hour = currentDate.getHours();
+		let minute = currentDate.getMinutes();
+		let second = currentDate.getSeconds();
+		let ampm = hour >= 12 ? '午前' : '午後';
+		hour = hour % 12;
+		hour = hour ? hour : 12;
+
+		hour = hour < 10 ? '0' + hour : hour;
+		minute = minute < 10 ? '0' + minute : minute;
+		second = second < 10 ? '0' + second : second;
+		time = ampm + ' ' + hour + '時' + minute + '分' + second + '秒';
+		return `${time}`;
+	}
+
+	function updateTime() {
+		document.getElementById('time').textContent = getCurrentTime();
+	}
+
+	function updateDate() {
+		document.getElementById('date').textContent = getCurrentDate();
+	}
+
+	function setAction(action) {
+		document.getElementById('action').value = action;
+		if (action === 'clockin') {
+			var selectedOption = document.getElementById('optionsSelect').value;
+			document.getElementById('selectedOption').value = selectedOption;
 		}
+		document.getElementById('clockinForm').submit();
+	}
 
-		function getCurrentTime() {
-			let currentDate = new Date();
-			let time = currentDate.toLocaleTimeString();
-			let hour = currentDate.getHours();
-			let minute = currentDate.getMinutes();
-			let second = currentDate.getSeconds();
-			let ampm = hour >= 12 ? '午前' : '午後';
-			hour = hour % 12;
-			hour = hour ? hour : 12;
+	setInterval(updateTime, 1000);
+	updateTime();
+	updateDate();
 
-			hour = hour < 10 ? '0' + hour : hour;
-			minute = minute < 10 ? '0' + minute : minute;
-			second = second < 10 ? '0' + second : second;
-			time = ampm + ' ' + hour + '時' + minute + '分' + second + '秒';
-			return `${time}`;
-		}
-
-		function updateTime() {
-			document.getElementById('time').textContent = getCurrentTime();
-		}
-
-		function updateDate() {
-			document.getElementById('date').textContent = getCurrentDate();
-		}
-
-		function setAction(action) {
-			document.getElementById('action').value = action;
-			if (action === 'clockin') {
-				var selectedOption = document.getElementById('optionsSelect').value;
-				document.getElementById('selectedOption').value = selectedOption;
-			}
-			document.getElementById('clockinForm').submit();
-		}
-
-		setInterval(updateTime, 1000);
-		updateTime();
-		updateDate();
-
-	</script>
-	</body>
+</script>
+</body>
 
 </html>
