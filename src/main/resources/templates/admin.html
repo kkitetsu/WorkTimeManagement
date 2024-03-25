@@ -38,10 +38,10 @@
 					<label>社員番号：</label>
 					<input type="number" th:field="*{employee_id}"><br>
 
-					<label>名字：</label>
+					<label>姓：</label>
 					<input type="text" th:field="*{lastname}"><br>
 
-					<label>名前：</label>
+					<label>名：</label>
 					<input type="text" th:field="*{firstname}"><br>
 
 					<label>出退勤カテゴリ：</label>
@@ -62,7 +62,8 @@
 							<tr>
 								<th>選択</th>
 								<th>社員番号</th>
-								<th>カテゴリ</th>
+								<th>時間</th>
+								<th>分類</th>
 								<th>名前</th>
 								<th>申請者</th>
 								<th>編集</th>
@@ -73,6 +74,7 @@
 							<tr th:each="stamp: ${stampInfo}" class="align-middle">
 								<td><input type="checkbox"></td>
 								<td th:text="*{stamp.userId}"></td>
+								<th　th:text="*{stamp.datetime}"></th>
 								<td th:text="*{stamp.stampTypeId}"></td>
 								<td th:text="*{stamp.firstname}"></td>
 								<td th:text="*{stamp.applicant}"></td>
@@ -136,7 +138,6 @@
 								<th>名前</th>
 								<th>役職</th>
 								<th>生年月日</th>
-								<th>編集</th>
 							</tr>
 						</thead>
 
@@ -148,7 +149,6 @@
 								<td th:text="*{emp.firstname}"></td>
 								<td th:text="*{emp.positionName}"></td>
 								<td th:text="*{emp.birthday}"></td>
-								<td><input type="button" value="編集"></td>
 							</tr>
 						</tbody>
 					</table>
