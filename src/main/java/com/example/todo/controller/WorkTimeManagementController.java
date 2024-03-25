@@ -51,7 +51,7 @@ public class WorkTimeManagementController {
 	public String displayhome(Model model, HttpSession session) {
 		session.invalidate();
 		model.addAttribute("logininfo", new LoginRequest() );
-		return "/home";
+		return "home";
 	}
 	
 	@GetMapping(value="/create")
@@ -76,24 +76,43 @@ public class WorkTimeManagementController {
 		EmployeesEntity employeeEntity = new EmployeesEntity();
 		employeeEntity.setEmployee_id(Integer.parseInt(id));
 		employeeEntity.setLoginPW(pwd);
-		employeesinfoservice.createNewUser(employeeEntity);
 		
+		try {
+			employeesinfoservice.createNewUser(employeeEntity);
+		} catch (Exception e) {
+			model.addAttribute("errorMsg", "この会員はすでに登録されております");
+			return "createAccount";
+		}
+			
 		session.setAttribute("userFirstName", employeesinfoservice.getAnEmployeeFirstName(Integer.parseInt(id)));
+		session.setAttribute("userId", id);
 		model.addAttribute("userName", employeesinfoservice.getAnEmployeeFirstName(Integer.parseInt(id)));
 		
 		return "userMyPage";
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String UserLogin( 
-			@ModelAttribute LoginRequest loginrequest, 
-			Model model, HttpSession session) 
-	{
+	public String UserLogin( @ModelAttribute LoginRequest loginrequest, 
+											Model model, HttpSession session) {
+		
+		/** 
+		 * @author kk 
+		 * If the login info is admin, jump to admin page.
+		 */
+		if (loginrequest.getLogin_id() == 4755 && loginrequest.getLogin_pw().equals("4755")) {
+			return "redirect:admin";
+		}
+		
 		List<EmployeesEntity> user_info = employeesinfoservice.login(loginrequest);
-		if(user_info.isEmpty()) {return  "redirect:home";}
+		if (user_info.isEmpty()) { 
+			model.addAttribute("errMsg", "社員番号もしくはパスワードが違います");
+			model.addAttribute("logininfo", new LoginRequest() );
+			return "/home"; 
+		}
 		
 		/** @author kk session */
 		session.setAttribute("userFirstName", user_info.get(0).getFirstname());
+		session.setAttribute("userId", loginrequest.getLogin_id());
 		model.addAttribute("userName", session.getAttribute("userFirstName"));
 		return "userMyPage";
 	}
@@ -115,9 +134,10 @@ public class WorkTimeManagementController {
 		}
 		if (action.equals("clockin")) {
 			LogsEntity logsEntity = new LogsEntity();
-			logsEntity.setApplicant("Honnin");
+			logsEntity.setApplicant("本人");
 			logsEntity.setNote("XXXX");
-			logsEntity.setUserId(1);
+			System.out.println(session.getAttribute("userId"));
+			logsEntity.setUserId((int) session.getAttribute("userId"));
 			logsEntity.setStampTypeId(Integer.parseInt(selectedOption));
 			
 			employeesInfoService.insertLogs(logsEntity);
@@ -146,7 +166,7 @@ public class WorkTimeManagementController {
 		if (session.getAttribute("userFirstName") == null) {
 			return "redirect:/home";
 		}
-		List<LogsEntity> logs = employeesInfoService.getEmployeesLogs();
+		List<LogsEntity> logs = employeesInfoService.getEmployeesLogs((int) session.getAttribute("userId"));
 		model.addAttribute("logs", logs);
 		model.addAttribute("userName", session.getAttribute("userFirstName"));
 		for (LogsEntity eachLog : logs) {

@@ -18,6 +18,10 @@
 <!--　ここからメインです。-->
 <main> 
 	<div class="main_box">
+		<!-- author kk  handling error case -->
+		<div th:if="${errMsg}" class="alert alert-danger">
+			<span th:text="${errMsg}"></span>
+		</div>
 	- TOP -
 	</div>
 	<div class="content_box">
@@ -36,7 +40,7 @@
 				</td>
 			</tr>
 			<tr >
-				<td> <div class="medium_whitebox2"><span id="time"> </span></div> </td>
+				<td class="column1"> <div class="medium_whitebox2"><span id="time"> </span></div> </td>
 			</tr>
 		</table>
 	</div>

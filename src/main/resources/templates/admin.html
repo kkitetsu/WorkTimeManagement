@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="css/userPage.css" />
 </head>
 
-<body>
+<DIV>
 	<!--　ヘッダーです。（共通項目） -->
 	<header>
 		<div class="title_box">
@@ -19,8 +19,10 @@
 		</div>
 	</header>
 
-	<div class="main_box_admin">
-		- TOP -
+	<div class="main_box">
+		- ADMIN MYPAGE -
+	</div>
+	
 		<div class="content_box_admin">
 
 			<!--タブ１枚目（出退勤の検索画面） -->
@@ -51,8 +53,8 @@
 						<option value="4">復帰</option>
 					</select><br>
 
-					<button type="submit">検索</button>
-					<button type="submit">ログアウト</button>
+					<button type="submit" class="blue_btn">検索</button>
+					<button type="submit" class="red_btn">ログアウト</button>
 				</form>
 				<div th:if="${stampInfo}">
 					<table class="employeesTable">
@@ -79,14 +81,15 @@
 						</tbody>
 					</table>
 				</div>
-				<button>一括削除</button>
+				<button class="red_btn">一括削除</button>
 			</div>
 
 			<!--タブ２枚目（社員の検索画面） -->
 			<input type="radio" name="tab_name" id="tab2">
 			<label class="tab_class" for="tab2">社員検索</label>
 			<div class="content_class">
-				<form th:action="@{/emp}" th:object="${searchEmployees}" th:method="post">
+				<div class="left_box">
+					<form th:action="@{/emp}" th:object="${searchEmployees}" th:method="post">
 					<label>生年月日：</label>
 					<input type="date" th:field="*{startDate}" required="required">
 					〜
@@ -120,8 +123,8 @@
 					</select><br>
 
 
-					<button type="submit">検索</button>
-					<button type="submit">ログアウト</button>
+					<button type="submit" class="blue_btn">検索</button>
+					<button type="submit" class="red_btn">ログアウト</button>
 				</form>
 				<div th:if="${empInfo}">
 					<table class="employeesTable">
@@ -150,8 +153,14 @@
 						</tbody>
 					</table>
 				</div>
+				</div>
+
 			</div>
+		</div>
+<!--フッターです。（共通項目）-->
+<footer>
+	<div class="footer_box">問い合わせ先:rakuten-tarou@rakuten-sec.co.jp</div>
+</footer>
 
 </body>
-
 </html>

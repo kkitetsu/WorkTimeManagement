@@ -30,7 +30,9 @@
     display: block; 
     margin: 5px auto; 
 }
-
+.total_box{
+	padding: 20px 0px;
+}
 .btn {
     display: inline-block;
     margin: 5px auto;
@@ -155,6 +157,10 @@ select {
 	font-size:30px;
 	border-top: 3px solid black;
 	margin: 0 5%;
+    width: 88%; 
+    color: black;
+    padding: 20px; 
+    display: inline-block;
 }
 .login_table{
 	width:100%;
