@@ -2,6 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.example.todo.mapper.EmployeesInfoMapper">
 
 	<select id="getEmployees" resultType="com.example.todo.dto.SearchEmployeesDTO">
@@ -49,4 +50,37 @@
                 AND datetime between null and #{endDate}
          </if> -->
 	</select>
+	
+	<update id="updateStamps">
+    	UPDATE logs SET datetime = #{datetime}, stampType_id = #{stampType_id} WHERE log_id = #{id};
+    </update>
+	
+
+		<select id="login" resultType="com.example.todo.entity.EmployeesEntity">
+		SELECT
+		 *
+		FROM
+		 employees
+		WHERE
+		 employee_id = #{login_id} AND loginPW = #{login_pw} 
+	    </select>
+	
+
+    <select id="getEmployeesById" resultType="com.example.todo.entity.EmployeesEntity">
+    	SELECT firstname FROM employees WHERE lastname=#{name};
+    </select>
+    
+    <!--  author kk -->
+    <select id="getEmployeesLogs" resultType="com.example.todo.entity.LogsEntity">
+    	SELECT * FROM logs;
+    </select>
+    
+    <!--  author kk -->
+    <insert id="insertLogs">
+    	INSERT INTO logs 
+    		(datetime, stampType_id, user_id, applicant, note)
+    	VALUES
+    		(CURRENT_TIMESTAMP, #{stampTypeId}, #{user_id}, #{applicant}, #{note})
+    </insert>
+
 </mapper>

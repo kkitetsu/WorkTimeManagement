@@ -8,11 +8,14 @@
 <link rel="stylesheet" href="css/userPage.css"/>
 </head>
 <body>
-	<!-- Header は基本的にどの画面でも同じ -->
-	<div class="header">
-		<img src="/img/rakuten-sec.png">
-		<h1>楽天証券　打刻システム</h1>
-	</div>
+	<!--　ヘッダーです。（共通項目） -->
+	<header> 
+		<div class="title_box">
+			<div class="title_1"> <a href="https://www.rakuten-sec.co.jp/"><img src="img/rakuten_logo.png" alt="Rakuten_sec_mark" class="maing_logo"> </a></div>
+			<div class="title_2"> 楽天証券打刻システム</div>
+			<div class="title_3">  </div>
+		</div>
+	</header>
 	<div class="container">
 		
 		<div class="left-column"> 
@@ -21,12 +24,12 @@
 	    </div>
 	
 		<div class="right-column">
-			<h3>楽天 太郎  様</h3>
+			<h3><span th:text="${userName}"></span> 様</h3>
 			<select id="optionsSelect">
-			    <option value="option_clockin">出勤</option>
-			    <option value="option_clockout">退勤</option>
-			    <option value="option_leave">外出</option>
-			    <option value="option_back">復帰</option>
+			    <option value=0>出勤</option>
+			    <option value=1>退勤</option>
+			    <option value=2>外出</option>
+			    <option value=3>復帰</option>
 			</select>
 			
 			<div class="btn_submit">

@@ -3,8 +3,8 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
-	<link rel="stylesheet" href="css/admin.css" />
+	<title>打刻システム - 検索</title>
+	<link rel="stylesheet" href="css/tab.css" />
 	<link rel="stylesheet" href="css/userPage.css" />
 </head>
 
@@ -69,7 +69,7 @@
 								<td th:text="*{stamp.stampTypeId}"></td>
 								<td th:text="*{stamp.firstname}"></td>
 								<td th:text="*{stamp.applicant}"></td>
-								<td><a th:href="@{stamp/{id}/edit(id=*{logId})}">編集</a></td>
+								<td><a th:href="@{stamp/{id}/edit(id=*{stamp.logId})}">編集</a></td>
 							</tr>
 						</tbody>
 					</table>

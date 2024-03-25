@@ -7,14 +7,19 @@
 <link rel="stylesheet" href="css/userPage.css"/>
 </head>
 <body>
-	<!-- Header は基本的にどの画面でも同じ -->
-	<div class="header">
-		<img src="/img/rakuten-sec.png">
-		<h1>楽天証券　打刻システム</h1>
-		<button class="logout-btn" type="submit" value="logout">ログアウト</button>
-	</div>
+	<!--　ヘッダーです。（共通項目） -->
+	<header> 
+		<div class="title_box">
+			<div class="title_1"> <a href="https://www.rakuten-sec.co.jp/"><img src="img/rakuten_logo.png" alt="Rakuten_sec_mark" class="maing_logo"> </a></div>
+			<div class="title_2"> 楽天証券打刻システム</div>
+			<div class="title_3">  </div>
+			<form th:action="@{/home}" th:method="get">
+				<button class="logout-btn" type="submit" value="logout" action="/home">ログアウト</button>
+			</form>
+		</div>
+	</header>
 	<div class="logPage">
-		<h3>楽天 太郎  様</h3>
+		<h3><span th:text="${userName}"></span>  様</h3>
 		<br>
 		<table>
 		    <thead>
@@ -24,19 +29,16 @@
 		            <th>申請者</th>
 		        </tr>
 		    </thead>
+		    <div th:each="eachRow : ${logs}" th:object="${eachRow}" class="align-middle">
 		    <tbody id="table-body">
 		        <!-- Table rows will be added dynamically here -->
 		        <tr>
-		            <td>24/03/18 08:33:00</td>
-		            <td>出勤</td>
-		            <td>楽天太郎</td>
-		        </tr>
-		        <tr>
-		            <td>24/03/18 17:15:23</td>
-		            <td>退勤</td>
-		            <td>楽天太郎</td>
+		            <td><p th:text="*{datetime}" style="text-align: center;"></p></td>
+		            <td><p th:text="*{stampTypeIdStr}" style="text-align: center;"></p></td>
+		            <td><p th:text="*{applicant}" style="text-align: center;"></p></td>
 		        </tr>
 		    </tbody>
+		    </div>
 		</table>
 	</div>
 	<div class="footer">

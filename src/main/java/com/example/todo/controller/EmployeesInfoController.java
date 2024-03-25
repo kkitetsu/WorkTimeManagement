@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -14,7 +15,10 @@ import com.example.todo.dto.SearchEmployeesDTO;
 import com.example.todo.dto.SearchStampsDTO;
 import com.example.todo.form.SearchEmployeesRequest;
 import com.example.todo.form.SearchStampsRequest;
+import com.example.todo.form.StampUpdateRequest;
 import com.example.todo.service.EmployeesInfoService;
+
+import jakarta.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class adminController
@@ -30,7 +34,7 @@ public class EmployeesInfoController {
 		model.addAttribute("searchEmployees", new SearchEmployeesRequest());
 		model.addAttribute("searchStamps", new SearchStampsRequest());
 		return "/admin";
-	}
+	} 	
 	
 	
 	@RequestMapping(value="/emp",method=RequestMethod.POST)
@@ -54,5 +58,37 @@ public class EmployeesInfoController {
 		View(model);
 		return "admin";
 	}
+	
+	
+	@GetMapping(value="/stamp/{id}/edit")
+	public String editTask(@PathVariable int id, Model model, HttpSession session) {
+		
+		StampUpdateRequest newStamp = new StampUpdateRequest();
+		newStamp.setId(id);
+		
+		model.addAttribute("stampUpdateRequest",newStamp);
+//		if (session.getAttribute("userId") == null ) {
+//			return "redirect:/home";
+//		}
+//		TaskInfo task = taskInfoService.getTaskById(id);
+//		TaskUpdateRequest newTask = new TaskUpdateRequest();
+//		newTask.setId(task.getId());
+//		newTask.setTitle(task.getTitle());
+//		newTask.setContents(task.getContents());
+//		newTask.setImgPath(task.getImgPath());
+//		model.addAttribute("taskUpdateRequest", newTask);
+//		model.addAttribute("uploadForm", new UploadForm()); // Use to upload the picture
+		return "/adminEdit";
+	}
+	
+	@RequestMapping(value="/stamp/update",method=RequestMethod.POST)
+	public String updateStamp(@ModelAttribute StampUpdateRequest stampUpdateRequest,Model model) {
+		
+		employeesInfoService.updateStamps(stampUpdateRequest);
+		
+		View(model);
+		return "admin";
+	}
+	
 
 }

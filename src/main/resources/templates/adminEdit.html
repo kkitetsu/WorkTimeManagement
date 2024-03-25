@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>打刻システム - 検索</title>
+	<link rel="stylesheet" href="css/userPage.css" />
+</head>
+
+<body>
+	<!--　ヘッダーです。（共通項目） -->
+	<header>
+		<div class="title_box">
+			<div class="title_1"> <a href="https://www.rakuten-sec.co.jp/"><img src="img/rakuten_logo.png"
+						alt="Rakuten_sec_mark" class="maing_logo"> </a></div>
+			<div class="title_2"> 楽天証券打刻システム</div>
+			<div class="title_3"> </div>
+		</div>
+	</header>
+
+	<div class="main_box_admin">
+		- TOP -
+		<div class="content_box_admin">
+			<div class="content_class">
+				<form th:action="@{/stamp/update}" th:object="${stampUpdateRequest}"
+					th:method="post">
+					<input type="hidden" th:field="*{id}" />
+					<div class="input_box">
+						<p>日付</p><br>
+						<input type="datetime-local" class="form-control" th:field="*{datetime}" required="required">
+						<p>カテゴリ</p><br>
+						<input type="number" class="form-control" th:field="*{stampType_id}" required="required"><br><br>
+					</div>
+
+					<div class="buttons">
+						<input type="submit" class="save_btn" value="保存">
+						<a href="/index" class="cancel_btn">キャンセル</a>
+					</div>
+				</form>
+			
+				<button>一括削除</button>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+
+</html>
