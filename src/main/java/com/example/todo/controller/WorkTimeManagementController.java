@@ -51,7 +51,7 @@ public class WorkTimeManagementController {
 	public String displayhome(Model model, HttpSession session) {
 		session.invalidate();
 		model.addAttribute("logininfo", new LoginRequest() );
-		return "/home";
+		return "home";
 	}
 	
 	@GetMapping(value="/create")
