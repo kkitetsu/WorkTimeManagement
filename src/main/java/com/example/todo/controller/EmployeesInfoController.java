@@ -30,7 +30,7 @@ public class EmployeesInfoController {
 		model.addAttribute("searchEmployees", new SearchEmployeesRequest());
 		model.addAttribute("searchStamps", new SearchStampsRequest());
 		return "/admin";
-	}
+	} 	
 	
 	
 	@RequestMapping(value="/emp",method=RequestMethod.POST)
