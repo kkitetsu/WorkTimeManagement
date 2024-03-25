@@ -20,9 +20,19 @@ public interface EmployeesInfoMapper{
 	List<SearchStampsDTO> getStamps(SearchStampsRequest searchStampsRequest);
 	List<EmployeesEntity> getEmployeesById(SearchEmployeesRequest searchEmployeesRequest);
 	List<EmployeesEntity> login(LoginRequest loginRequest);
-	void updateStamps(StampUpdateRequest stampUpdateRequest);
-
 	
+	void updateStamps(StampUpdateRequest stampUpdateRequest);
+	
+	/**
+	 * @author kk
+	 * 
+	 * Get the first name of the employee by its id.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	String getAnEmployeeFirstName(int id);
+
 	/**
 	 * @author kk
 	 * 
@@ -40,5 +50,14 @@ public interface EmployeesInfoMapper{
 	 * @param data need for updating the log
 	 */
 	void insertLogs(LogsEntity logsEntity);
+	
+	/**
+	 * @author kk
+	 * 
+	 * Create new user. 会員登録
+	 * 
+	 * @param employee's data
+	 */
+	void createNewUser(EmployeesEntity employeesEntity);
 
 }

@@ -1,50 +1,74 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>打刻履歴</title>
-<link rel="stylesheet" href="css/common.css"/>
-<link rel="stylesheet" href="css/userPage.css"/>
+	<meta charset="UTF-8">
+	<title>打刻履歴</title>
+	<link rel="stylesheet" href="css/common.css" />
+	<link rel="stylesheet" href="css/userPage.css" />
 </head>
+
 <body>
 	<!--　ヘッダーです。（共通項目） -->
-	<header> 
+	<header>
 		<div class="title_box">
-			<div class="title_1"> <a href="https://www.rakuten-sec.co.jp/"><img src="img/rakuten_logo.png" alt="Rakuten_sec_mark" class="maing_logo"> </a></div>
+			<div class="title_1"> <a href="https://www.rakuten-sec.co.jp/"><img src="img/rakuten_logo.png"
+						alt="Rakuten_sec_mark" class="maing_logo"> </a></div>
 			<div class="title_2"> 楽天証券打刻システム</div>
-			<div class="title_3">  </div>
+			<div class="title_3"> </div>
 			<form th:action="@{/home}" th:method="get">
 				<button class="logout-btn" type="submit" value="logout" action="/home">ログアウト</button>
 			</form>
 		</div>
 	</header>
+	<div class="main_box">
+		- USER LOG -
+	</div>
 	<div class="logPage">
-		<h3><span th:text="${userName}"></span>  様</h3>
-		<br>
-		<table>
-		    <thead>
-		        <tr>
-		            <th>日付</th>
-		            <th>カテゴリ</th>
-		            <th>申請者</th>
-		        </tr>
-		    </thead>
-		    <div th:each="eachRow : ${logs}" th:object="${eachRow}" class="align-middle">
-		    <tbody id="table-body">
-		        <!-- Table rows will be added dynamically here -->
-		        <tr>
-		            <td><p th:text="*{datetime}" style="text-align: center;"></p></td>
-		            <td><p th:text="*{stampTypeIdStr}" style="text-align: center;"></p></td>
-		            <td><p th:text="*{applicant}" style="text-align: center;"></p></td>
-		        </tr>
-		    </tbody>
-		    </div>
-		</table>
+		<div class="content_box">
+
+			<div class="user_name_box"><span th:text="${userName}"></span> 様</div>
+			<div class="log_box">
+
+				<table class="log_table">
+					<thead>
+						<tr>
+							<th>日付</th>
+							<th>カテゴリ</th>
+							<th>申請者</th>
+						</tr>
+					</thead>
+					<div th:each="eachRow : ${logs}" th:object="${eachRow}" class="align-middle">
+						<tbody id="table-body">
+							<!-- Table rows will be added dynamically here -->
+							<tr>
+								<td>
+									<p th:text="*{datetime}"></p>
+								</td>
+								<td>
+									<p th:text="*{stampTypeIdStr}"></p>
+								</td>
+								<td>
+									<p th:text="*{applicant}"></p>
+								</td>
+							</tr>
+						</tbody>
+					</div>
+				</table>
+
+			</div>
+			<div class="footer">
+				<a href="/userMyPage">
+					<button class="blue_btn" style="font-size:30px;">マイページへ</button>
+				</a>
+			</div>
+		</div>
+
 	</div>
-	<div class="footer">
-		<a href="/userMyPage">
-		    <button>マイページへ</button>
-		</a>
-	</div>
+<!--フッターです。（共通項目）-->
+<footer>
+	<div class="footer_box">問い合わせ先:rakuten-tarou@rakuten-sec.co.jp</div>
+</footer>
 </body>
+
 </html>

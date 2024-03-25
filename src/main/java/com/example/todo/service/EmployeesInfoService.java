@@ -37,6 +37,7 @@ public class EmployeesInfoService {
 	
 	public List<EmployeesEntity> login(LoginRequest loginRequest){
 		return employeesInfomapper.login(loginRequest);}
+	
 	/**
 	 * @author kk
 	 * 
@@ -54,6 +55,22 @@ public class EmployeesInfoService {
 	 */
 	public void insertLogs(LogsEntity input) {
 		employeesInfomapper.insertLogs(input);
+	}
+	
+	/**
+	 * @author kk
+	 * 
+	 * Create a new user.
+	 */
+	public void createNewUser(EmployeesEntity employeesEntity) {
+		employeesInfomapper.createNewUser(employeesEntity);
+	}
+	
+	/**
+	 * @author kk
+	 */
+	public String getAnEmployeeFirstName(int id) {
+		return employeesInfomapper.getAnEmployeeFirstName(id);
 	}
 }
 
