@@ -3,6 +3,7 @@ package com.example.todo.form;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
@@ -20,7 +21,8 @@ public class SearchStampsRequest implements Serializable{
 	/**
 	 * 社員番号
 	 */
-	private int employee_id;
+	@Pattern(regexp = "^[0-9]*$", message = "半角数字で入力してください")
+	private Integer employee_id;
 	
 	/**
 	 * 名前
@@ -35,7 +37,7 @@ public class SearchStampsRequest implements Serializable{
 	/**
 	 * 出退勤カテゴリ
 	 */
-	private int stampType_id;
+	private Integer stampType_id;
 
 	/**
 	 * 部署ID

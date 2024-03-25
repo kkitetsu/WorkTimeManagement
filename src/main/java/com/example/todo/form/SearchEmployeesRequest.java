@@ -1,8 +1,9 @@
 package com.example.todo.form;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDate;
 
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
@@ -10,17 +11,18 @@ public class SearchEmployeesRequest implements Serializable {
 	/**
 	 * 期間（始まり）
 	 */
-	private Date startDate;
+	private LocalDate startDate;
 	
 	/**
 	 * 期間（終わり）
 	 */
-	private Date endDate;
+	private LocalDate endDate;
 	
 	/**
 	 * 社員番号
 	 */
-	private int employee_id;
+	@Pattern(regexp = "^[0-9]*$", message = "半角数字で入力してください")
+	private Integer employee_id;
 	
 	/**
 	 * 名前
@@ -35,12 +37,12 @@ public class SearchEmployeesRequest implements Serializable {
 	/**
 	 * 部署ID
 	 */
-	private int  dpt_id;
+	private Integer  dpt_id;
 	
 	/**
 	 * 役職ID
 	 */
-	private int  position_id;
+	private Integer  position_id;
 }
 
 

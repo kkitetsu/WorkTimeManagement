@@ -1,10 +1,13 @@
 package com.example.todo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,30 +34,67 @@ public class EmployeesInfoController {
    
 	@GetMapping(value="/admin")
 	public String View(Model model) {
-		model.addAttribute("searchEmployees", new SearchEmployeesRequest());
-		model.addAttribute("searchStamps", new SearchStampsRequest());
+		model.addAttribute("searchEmployeesRequest", new SearchEmployeesRequest());
+		model.addAttribute("searchStampsRequest", new SearchStampsRequest());
 		return "/admin";
 	} 	
 	
-	@RequestMapping(value="/emp",method=RequestMethod.POST)
-	public String searchEmp(@ModelAttribute SearchEmployeesRequest searchEmployeesRequest,Model model) {
+	@RequestMapping(value="/admin",params = "emp",method=RequestMethod.POST)
+	public String searchEmp(@ModelAttribute SearchEmployeesRequest searchEmployeesRequest, BindingResult result, Model model) {
+		
+		if (result.hasErrors()) {
+            // 入力チェックエラーの場合
+            List<String> errorList = new ArrayList<String>();
+            for (ObjectError error : result.getAllErrors()) {
+                errorList.add(error.getDefaultMessage());
+            }
+            model.addAttribute("searchEmployeesRequest", new SearchEmployeesRequest());
+    		model.addAttribute("searchStampsRequest", new SearchStampsRequest());
+            model.addAttribute("validationError", errorList);
+            return "admin";
+        }
 		
 		List<SearchEmployeesDTO> empInfo = employeesInfoService.getEmployees(searchEmployeesRequest);
 		
 		model.addAttribute("empInfo",empInfo);
+		model.addAttribute("searchEmployeesRequest", new SearchEmployeesRequest());
+		model.addAttribute("searchStampsRequest", new SearchStampsRequest());
 		
-		View(model);
 		return "admin";
 	}
 	
-	@RequestMapping(value="/stamp",method=RequestMethod.POST)
-	public String searchStamp(@ModelAttribute SearchStampsRequest searchStampsRequest,Model model) {
+	@RequestMapping(value="/admin",params = "stamp",method=RequestMethod.POST)
+	public String searchStamp(@ModelAttribute SearchStampsRequest searchStampsRequest,HttpSession session, BindingResult result,Model model) {
+		
+		if (result.hasErrors()) {
+            // 入力チェックエラーの場合
+            List<String> errorList = new ArrayList<String>();
+            for (ObjectError error : result.getAllErrors()) {
+                errorList.add(error.getDefaultMessage());
+            }
+            model.addAttribute("validationError", errorList);
+            model.addAttribute("searchEmployeesRequest", new SearchEmployeesRequest());
+    		model.addAttribute("searchStampsRequest", new SearchStampsRequest());
+            return "admin";
+        }
 		
 		List<SearchStampsDTO> stampInfo = employeesInfoService.getStamps(searchStampsRequest);
 		
-		model.addAttribute("stampInfo",stampInfo);
+		for (SearchStampsDTO eachLog : stampInfo) {
+			int tmp = eachLog.getStampTypeId();
+			switch (tmp) {
+				case 0: eachLog.setStampTypeIdStr("出勤"); break;
+				case 1: eachLog.setStampTypeIdStr("退勤"); break;
+				case 2: eachLog.setStampTypeIdStr("外出"); break;
+				case 3: eachLog.setStampTypeIdStr("復帰"); break;
+				default: eachLog.setStampTypeIdStr(null); break;
+			}
+		}
 		
-		View(model);
+		model.addAttribute("stampInfo",stampInfo);
+		model.addAttribute("searchEmployeesRequest", new SearchEmployeesRequest());
+		model.addAttribute("searchStampsRequest", new SearchStampsRequest());
+		
 		return "admin";
 	}
 	

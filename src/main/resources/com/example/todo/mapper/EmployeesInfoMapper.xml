@@ -16,23 +16,31 @@
          <if test="firstname != null and firstname != ''">
                 AND e.firstname = #{firstname}
          </if> 
-       <if test="position_id != null and position_id != ''">
+       <if test="position_id != null">
                 AND e.position_id = #{position_id}
          </if>
-        <if test="dpt_id != null and dpt_id != ''">
+        <if test="dpt_id != null">
                 AND e.dpt_id = #{dpt_id}
          </if>
-         
-         <if test="startDate != null and endDate != null">
-                AND birthday between #{startDate} and #{endDate}
-         </if>
+         <if test="startDate != null">
+				AND birthday  >= #{startDate}
+		</if>
+		<if test="endDate != null">
+				AND #{endDate} >= birthday
+		</if>
 	</select>
 	
 	<select id="getStamps" resultType="com.example.todo.dto.SearchStampsDTO">
 		SELECT * FROM logs l
 		LEFT JOIN employees e ON e.employee_id  = l.user_id 
-		WHERE datetime between #{startDate} and #{endDate}
-		<if test="stampType_id != null and stampType_id != ''">
+		WHERE cancel_flag != 1
+		<if test="startDate != null">
+				AND datetime  >= #{startDate}
+		</if>
+		<if test="endDate != null">
+				AND #{endDate} >= datetime
+		</if>
+		<if test="stampType_id != null">
                 AND stampType_id = #{stampType_id}
          </if>
         <if test="employee_id != null and employee_id != ''">

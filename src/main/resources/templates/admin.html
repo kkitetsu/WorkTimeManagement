@@ -22,87 +22,89 @@
 	<div class="main_box">
 		- ADMIN MYPAGE -
 	</div>
-	
-		<div class="content_box_admin">
 
-			<!--タブ１枚目（出退勤の検索画面） -->
-			<input type="radio" name="tab_name" id="tab1" checked>
-			<label class="tab_class" for="tab1">出退勤検索</label>
-			<div class="content_class">
-				<form th:action="@{/stamp}" th:object="${searchStamps}" th:method="post">
-					<label>日時：</label>
-					<input type="datetime-local" th:field="*{startDate}" required="required">
-					〜
-					<input type="datetime-local" th:field="*{endDate}" required="required"><br>
+	<div class="content_box_admin">
+		<div th:if="${validationError}" th:each="error : ${validationError}">
+			<label class="text-danger" th:text="${error}"></label>
+		</div>
+		<!--タブ１枚目（出退勤の検索画面） -->
+		<input type="radio" name="tab_name" id="tab1" checked>
+		<label class="tab_class" for="tab1">出退勤検索</label>
+		<div class="content_class">
+			
+			<form th:action="@{/admin}" th:object="${searchStampsRequest}" th:method="post">
+				<label>日時：</label>
+				<input type="datetime-local" th:field="*{startDate}">
+				〜
+				<input type="datetime-local" th:field="*{endDate}"><br>
 
-					<label>社員番号：</label>
-					<input type="number" th:field="*{employee_id}"><br>
+				<label>社員番号：</label>
+				<input type="text" pattern="^[1-9][0-9]*$" title="半角数字で入力してください" th:field="*{employee_id}"><br>
 
-					<label>姓：</label>
-					<input type="text" th:field="*{lastname}"><br>
+				<label>姓：</label>
+				<input type="text" th:field="*{lastname}"><br>
 
-					<label>名：</label>
-					<input type="text" th:field="*{firstname}"><br>
+				<label>名：</label>
+				<input type="text" th:field="*{firstname}"><br>
 
-					<label>出退勤カテゴリ：</label>
-					<select id="stampType_id" name="stampType_id">
-						<option value="0">分類</option>
-						<option value="01">出勤</option>
-						<option value="2">退勤</option>
-						<option value="3">外出</option>
-						<option value="4">復帰</option>
-					</select><br>
+				<label>出退勤カテゴリ：</label>
+				<select id="stampType_id" name="stampType_id">
+					<option value="0">出勤</option>
+					<option value="1">退勤</option>
+					<option value="2">外出</option>
+					<option value="3">復帰</option>
+				</select><br>
 
-					<button type="submit" class="blue_btn">検索</button>
-					<button type="submit" class="red_btn">ログアウト</button>
-				</form>
-				<div th:if="${stampInfo}">
-					<table class="employeesTable">
-						<thead>
-							<tr>
-								<th>選択</th>
-								<th>社員番号</th>
-								<th>時間</th>
-								<th>分類</th>
-								<th>名前</th>
-								<th>申請者</th>
-								<th>編集</th>
-							</tr>
-						</thead>
+				<button type="submit" name="stamp" value="stamp_search" class="blue_btn">検索</button>
+				<button type="submit" class="red_btn">ログアウト</button>
+			</form>
+			<div th:if="${stampInfo}">
+				<table class="employeesTable">
+					<thead>
+						<tr>
+							<th>選択</th>
+							<th>社員番号</th>
+							<th>時間</th>
+							<th>分類</th>
+							<th>名前</th>
+							<th>申請者</th>
+							<th>編集</th>
+						</tr>
+					</thead>
 
-						<tbody>
-							<tr th:each="stamp: ${stampInfo}" class="align-middle">
-								<td><input type="checkbox"></td>
-								<td th:text="*{stamp.userId}"></td>
-								<th　th:text="*{stamp.datetime}"></th>
-								<td th:text="*{stamp.stampTypeId}"></td>
-								<td th:text="*{stamp.firstname}"></td>
-								<td th:text="*{stamp.applicant}"></td>
-								<td><a th:href="@{/admin/{id}/adminEdit(id=*{stamp.logId})}">編集</a></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<button class="red_btn">一括削除</button>
+					<tbody>
+						<tr th:each="stamp: ${stampInfo}" class="align-middle">
+							<td><input type="checkbox"></td>
+							<td th:text="*{stamp.userId}"></td>
+							<td th:text="${#temporals.format(stamp.datetime, 'yyyy/MM/dd HH:mm:ss')}"></th>
+							<td th:text="*{stamp.stampTypeIdStr}"></td>
+							<td th:text="*{stamp.lastname} + ' ' + *{stamp.firstname}"></td>
+							<td th:text="*{stamp.applicant}"></td>
+							<td><a th:href="@{/admin/{id}/adminEdit(id=*{stamp.logId})}">編集</a></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
+			<button class="red_btn">一括削除</button>
+		</div>
 
-			<!--タブ２枚目（社員の検索画面） -->
-			<input type="radio" name="tab_name" id="tab2">
-			<label class="tab_class" for="tab2">社員検索</label>
-			<div class="content_class">
-				<div class="left_box">
-					<form th:action="@{/emp}" th:object="${searchEmployees}" th:method="post">
+		<!--タブ２枚目（社員の検索画面） -->
+		<input type="radio" name="tab_name" id="tab2">
+		<label class="tab_class" for="tab2">社員検索</label>
+		<div class="content_class">
+			<div class="left_box">
+				<form th:action="@{/admin}" th:object="${searchEmployeesRequest}" th:method="post">
 					<label>生年月日：</label>
-					<input type="date" th:field="*{startDate}" required="required">
+					<input type="date" th:field="*{startDate}">
 					〜
-					<input type="date" th:field="*{endDate}" required="required"><br>
+					<input type="date" th:field="*{endDate}"><br>
 
 					<label>社員番号：</label>
-					<input type="number" th:field="*{employee_id}"><br>
+					<input type="text" pattern="^[1-9][0-9]*$" title="半角数字で入力してください" th:field="*{employee_id}"><br>
 
 					<label>部署：</label>
 					<select id="dpt_id" name="dpt_id">
-						<option value="0">部署</option>
+						<option value="">部署</option>
 						<option value="1">Sales</option>
 						<option value="2">Marketing</option>
 						<option value="3">Engineering</option>
@@ -117,7 +119,7 @@
 
 					<label>役職：</label>
 					<select id="position_id" name="position_id">
-						<option value="0">役職</option>
+						<option value="">役職</option>
 						<option value="1">Manager</option>
 						<option value="2">Assistant Manager</option>
 						<option value="3">Senior Engineer</option>
@@ -125,7 +127,7 @@
 					</select><br>
 
 
-					<button type="submit" class="blue_btn">検索</button>
+					<button type="submit" name="emp" value="emp_search" class="blue_btn">検索</button>
 					<button type="submit" class="red_btn">ログアウト</button>
 				</form>
 				<div th:if="${empInfo}">
@@ -146,21 +148,22 @@
 								<td><input type="checkbox"></td>
 								<td th:text="*{emp.employeeId}"></td>
 								<td th:text="*{emp.dptName}"></td>
-								<td th:text="*{emp.firstname}"></td>
+								<td th:text="*{emp.lastname} + ' ' + *{emp.firstname}"></td>
 								<td th:text="*{emp.positionName}"></td>
-								<td th:text="*{emp.birthday}"></td>
+								<td th:text="${#temporals.format(emp.birthday, 'yyyy/MM/dd')}"></th>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-				</div>
-
 			</div>
-		</div>
-<!--フッターです。（共通項目）-->
-<footer>
-	<div class="footer_box1">問い合わせ先:rakuten-tarou@rakuten-sec.co.jp</div>
-</footer>
 
-</body>
+		</div>
+	</div>
+	<!--フッターです。（共通項目）-->
+	<footer>
+		<div class="footer_box1">問い合わせ先:rakuten-tarou@rakuten-sec.co.jp</div>
+	</footer>
+
+	</body>
+
 </html>

@@ -1,6 +1,6 @@
 package com.example.todo.dto;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import lombok.Data;
 
@@ -9,9 +9,11 @@ public class SearchStampsDTO{
 	
 	private int logId;
 	
-	private Date datetime;
+	private LocalDateTime datetime;
 	
 	private int stampTypeId;
+	
+	private String stampTypeIdStr;
 	
 	private int userId;
 	
