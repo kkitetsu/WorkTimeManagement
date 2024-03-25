@@ -13,8 +13,17 @@ import com.example.todo.form.SearchEmployeesRequest;
 public interface EmployeesInfoMapper{
 	List<EmployeesEntity> getEmployeesById(SearchEmployeesRequest searchEmployeesRequest);
 	List<EmployeesEntity> login(LoginRequest loginRequest);
-
 	
+	/**
+	 * @author kk
+	 * 
+	 * Get the first name of the employee by its id.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	String getAnEmployeeFirstName(int id);
+
 	/**
 	 * @author kk
 	 * 
@@ -32,5 +41,14 @@ public interface EmployeesInfoMapper{
 	 * @param data need for updating the log
 	 */
 	void insertLogs(LogsEntity logsEntity);
+	
+	/**
+	 * @author kk
+	 * 
+	 * Create new user. 会員登録
+	 * 
+	 * @param employee's data
+	 */
+	void createNewUser(EmployeesEntity employeesEntity);
 
 }
