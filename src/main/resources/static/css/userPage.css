@@ -42,14 +42,21 @@
 .logout-btn {
     position: absolute;
     top: 20px; 
-    right: 50px; 
+    right: 5%; 
     size: 50px;
-    width: 100px;
+    width: 150px;
     height: 50px;
-    background-color: orangered;
     color: black;
+    border:none;
+    background-color:red;
+    font-size:25px;
+    color:white;
+    font-weight:bolder;
+    border-radius:10px;
 }
-
+.logout-btn:hover{
+	background-color:black;
+}
 select {
     appearance: menulist;
     width: 200px; 
@@ -220,4 +227,8 @@ a{
 	width:150px;
 	font-size:35px;
 	margin-bottom:10px;
+}
+#optionsSelect{
+width:60%;
+font-size:20px;
 }
