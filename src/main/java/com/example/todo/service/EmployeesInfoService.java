@@ -43,8 +43,8 @@ public class EmployeesInfoService {
 	 * 
 	 * Get employee's log as a list of LogsEntity.
 	 */
-	public List<LogsEntity> getEmployeesLogs() {
-		return employeesInfomapper.getEmployeesLogs();
+	public List<LogsEntity> getEmployeesLogs(int userId) {
+		return employeesInfomapper.getEmployeesLogs(userId);
 	}
 	
 	/**
