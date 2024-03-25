@@ -11,23 +11,27 @@
 		LEFT JOIN positions p ON e.position_id  = p.position_id 
 		WHERE created_date IS NOT null
 		<if test="lastname != null and lastname != ''">
-                AND lastname = #{lastname}
+                AND e.lastname = #{lastname}
          </if>
          <if test="firstname != null and firstname != ''">
-                AND firstname = #{firstname}
+                AND e.firstname = #{firstname}
          </if> 
-        <!--  <if test="stampTypeId != null and stampTypeId != ''">
-                AND stampType_id = #{stampTypeId}
-         </if> -->
-        <!--   <if test="stampTypeId != null and stampTypeId != ''">
-                AND stampType_id = #{stampTypeId}
-         </if> -->
+       <if test="position_id != null and position_id != ''">
+                AND e.position_id = #{position_id}
+         </if>
+        <if test="dpt_id != null and dpt_id != ''">
+                AND e.dpt_id = #{dpt_id}
+         </if>
+         
+         <if test="startDate != null and endDate != null">
+                AND birthday between #{startDate} and #{endDate}
+         </if>
 	</select>
 	
 	<select id="getStamps" resultType="com.example.todo.dto.SearchStampsDTO">
 		SELECT * FROM logs l
 		LEFT JOIN employees e ON e.employee_id  = l.user_id 
-		WHERE cancel_flag != 1
+		WHERE datetime between #{startDate} and #{endDate}
 		<if test="stampType_id != null and stampType_id != ''">
                 AND stampType_id = #{stampType_id}
          </if>
@@ -42,14 +46,16 @@
                 AND lastname = #{lastname}
          </if>
          
-         <!--  <if test="startDate != null and startDate != ''">
-                AND datetime between #{startDate} and null
-         </if>
-         
-         <if test="endDate != null and endDate != ''">
-                AND datetime between null and #{endDate}
+        <!-- <if test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+                AND datetime between #{startDate} and #{endDate}
          </if> -->
 	</select>
+	
+	<update id="updateStamps">
+    	UPDATE logs SET datetime = #{datetime}, stampType_id = #{stampType_id} WHERE log_id = #{id};
+    </update>
+	
+
 		<select id="login" resultType="com.example.todo.entity.EmployeesEntity">
 		SELECT
 		 *
@@ -81,6 +87,7 @@
     	VALUES
     		(CURRENT_TIMESTAMP, #{stampTypeId}, #{userId}, #{applicant}, #{note});
     </insert>
+
     
     <!--  author kk  -->
     <insert id="createNewUser">
@@ -91,6 +98,5 @@
 			(#{employee_id}, #{loginPW}, "xx", "xxx", 1, 
 				1, "xx@gmail.com", "xxx-xxxx-xxxx", "Tokyo", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
     </insert>
-    
     
 </mapper>

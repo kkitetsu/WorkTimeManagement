@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>打刻システム - 検索</title>
-	<link rel="stylesheet" href="css/admin.css" />
+	<link rel="stylesheet" href="css/tab.css" />
 	<link rel="stylesheet" href="css/userPage.css" />
 </head>
 
@@ -22,20 +22,19 @@
 	<div class="main_box_admin">
 		- TOP -
 		<div class="content_box_admin">
+			
+			<!--タブ１枚目（出退勤の検索画面） -->
 			<input type="radio" name="tab_name" id="tab1" checked>
 			<label class="tab_class" for="tab1">出退勤検索</label>
 			<div class="content_class">
 				<form th:action="@{/stamp}" th:object="${searchStamps}" th:method="post">
 					<label>日時：</label>
-					<input type="date" th:field="*{startDate}" required="required">
+					<input type="datetime-local" th:field="*{startDate}" required="required">
 					〜
-					<input type="date" th:field="*{endDate}" required="required"><br>
+					<input type="datetime-local" th:field="*{endDate}" required="required"><br>
 
 					<label>社員番号：</label>
 					<input type="number" th:field="*{employee_id}"><br>
-
-					<!--<label>部署名：</label>
-					<input type="number" th:field="*{dpt_id}"><br>-->
 
 					<label>名字：</label>
 					<input type="text" th:field="*{lastname}"><br>
@@ -69,18 +68,20 @@
 								<td th:text="*{stamp.stampTypeId}"></td>
 								<td th:text="*{stamp.firstname}"></td>
 								<td th:text="*{stamp.applicant}"></td>
-								<td><a th:href="@{stamp/{id}/edit(id=*{logId})}">編集</a></td>
+								<td><a th:href="@{stamp/{id}/edit(id=*{stamp.logId})}">編集</a></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 				<button>一括削除</button>
 			</div>
+			
+			<!--タブ２枚目（社員の検索画面） -->
 			<input type="radio" name="tab_name" id="tab2">
 			<label class="tab_class" for="tab2">社員検索</label>
 			<div class="content_class">
 				<form th:action="@{/emp}" th:object="${searchEmployees}" th:method="post">
-					<label>日時：</label>
+					<label>生年月日：</label>
 					<input type="date" th:field="*{startDate}" required="required">
 					〜
 					<input type="date" th:field="*{endDate}" required="required"><br>
@@ -131,7 +132,6 @@
 						</tbody>
 					</table>
 				</div>
-				<button>一括削除</button>
 			</div>
 
 </body>

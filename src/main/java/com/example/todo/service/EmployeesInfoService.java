@@ -11,6 +11,7 @@ import com.example.todo.entity.LogsEntity;
 import com.example.todo.form.LoginRequest;
 import com.example.todo.form.SearchEmployeesRequest;
 import com.example.todo.form.SearchStampsRequest;
+import com.example.todo.form.StampUpdateRequest;
 import com.example.todo.mapper.EmployeesInfoMapper;
 
 @Service
@@ -29,6 +30,11 @@ public class EmployeesInfoService {
 	public List<EmployeesEntity> getEmployeesById(SearchEmployeesRequest searchEmployeesRequest) {
 		return employeesInfomapper.getEmployeesById(searchEmployeesRequest);
 	}
+	
+	public void updateStamps(StampUpdateRequest stampUpdateRequest) {
+		employeesInfomapper.updateStamps(stampUpdateRequest);
+	}
+	
 	public List<EmployeesEntity> login(LoginRequest loginRequest){
 		return employeesInfomapper.login(loginRequest);}
 	
