@@ -15,9 +15,9 @@
                 </thead>
                 
                 <tbody>
-                    <tr th:each="user : ${empInfo}" th:object="${admin}" class="align-middle">
-                        <td th:text="*{lastname}"></td>
-                        <td th:text="*{firstname}"></td>
+                    <tr th:each="emp: ${empInfo}"class="align-middle">
+                        <td th:text="*{emp.lastname}"></td>
+                        <td th:text="*{emp.firstname}"></td>
                     </tr>
                 </tbody>
             </table>

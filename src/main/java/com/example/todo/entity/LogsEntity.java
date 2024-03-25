@@ -10,13 +10,13 @@ public class LogsEntity implements Serializable{
 	
 	private Date datetime;
 	
-	private int stampType_id;
+	private int stampTypeId;
 	
-	private int user_id;
+	private int userId;
 	
 	private String applicant;
 	
 	private String note;
 	
-	private boolean cancel_flag;
+	private boolean cancelFlag;
 }
