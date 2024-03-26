@@ -59,5 +59,8 @@ public interface EmployeesInfoMapper{
 	 * @param employee's data
 	 */
 	void createNewUser(EmployeesEntity employeesEntity);
+	
+	/** @author kk */
+	LogsEntity getLastLog(int id);
 
 }

@@ -79,6 +79,10 @@
     <select id="getAnEmployeeFirstName">
     	SELECT firstName FROM employees WHERE employee_id=#{id};
     </select>
+     <!--  author kk -->
+    <select id="getLastLog">
+    	SELECT * FROM logs WHERE user_id=#{id} ORDER BY datetime DESC LIMIT 1;
+    </select>
     
     <!--  author kk -->
     <insert id="insertLogs">
