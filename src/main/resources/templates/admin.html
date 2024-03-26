@@ -22,68 +22,68 @@
 	<div class="main_box">
 		- ADMIN MYPAGE -
 	</div>
-	
-		<div class="content_box_admin">
-			
-			<!--タブ１枚目（出退勤の検索画面） -->
-			<input type="radio" name="tab_name" id="tab1" checked>
-			<label class="tab_class" for="tab1">出退勤検索</label>
-			<div class="content_class">
-				<form th:action="@{/stamp}" th:object="${searchStamps}" th:method="post">
-					<label>日時：</label>
-					<input type="datetime-local" th:field="*{startDate}" required="required">
-					〜
-					<input type="datetime-local" th:field="*{endDate}" required="required"><br>
 
-					<label>社員番号：</label>
-					<input type="number" th:field="*{employee_id}"><br>
+	<div class="content_box">
 
-					<label>名字：</label>
-					<input type="text" th:field="*{lastname}"><br>
+		<!--タブ１枚目（出退勤の検索画面） -->
+		<input type="radio" name="tab_name" id="tab1" checked>
+		<label class="tab_class" for="tab1" id="tab_position1">出退勤検索</label>
+		<div class="content_class">
+			<form th:action="@{/stamp}" th:object="${searchStamps}" th:method="post">
+				<label>日時：</label>
+				<input type="datetime-local" th:field="*{startDate}" required="required">
+				〜
+				<input type="datetime-local" th:field="*{endDate}" required="required"><br>
 
-					<label>名前：</label>
-					<input type="text" th:field="*{firstname}"><br>
+				<label>社員番号：</label>
+				<input type="number" th:field="*{employee_id}"><br>
 
-					<label>出退勤カテゴリ：</label>
-					<input type="number" th:field="*{stampType_id}"><br>
+				<label>名字：</label>
+				<input type="text" th:field="*{lastname}"><br>
 
-					<button type="submit" class="blue_btn">検索</button>
-					<button type="submit" class="red_btn">ログアウト</button>
-				</form>
-				<div th:if="${stampInfo}">
-					<table class="employeesTable">
-						<thead>
-							<tr>
-								<th>選択</th>
-								<th>社員番号</th>
-								<th>カテゴリ</th>
-								<th>名前</th>
-								<th>申請者</th>
-								<th>編集</th>
-							</tr>
-						</thead>
+				<label>名前：</label>
+				<input type="text" th:field="*{firstname}"><br>
 
-						<tbody>
-							<tr th:each="stamp: ${stampInfo}" class="align-middle">
-								<td><input type="checkbox"></td>
-								<td th:text="*{stamp.userId}"></td>
-								<td th:text="*{stamp.stampTypeId}"></td>
-								<td th:text="*{stamp.firstname}"></td>
-								<td th:text="*{stamp.applicant}"></td>
-								<td><a th:href="@{stamp/{id}/edit(id=*{stamp.logId})}">編集</a></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<button class="red_btn">一括削除</button>
+				<label>出退勤カテゴリ：</label>
+				<input type="number" th:field="*{stampType_id}"><br>
+
+				<button type="submit" class="blue_btn">検索</button>
+				<button type="submit" class="red_btn">ログアウト</button>
+			</form>
+			<div th:if="${stampInfo}">
+				<table class="employeesTable">
+					<thead>
+						<tr>
+							<th>選択</th>
+							<th>社員番号</th>
+							<th>カテゴリ</th>
+							<th>名前</th>
+							<th>申請者</th>
+							<th>編集</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr th:each="stamp: ${stampInfo}" class="align-middle">
+							<td><input type="checkbox"></td>
+							<td th:text="*{stamp.userId}"></td>
+							<td th:text="*{stamp.stampTypeId}"></td>
+							<td th:text="*{stamp.firstname}"></td>
+							<td th:text="*{stamp.applicant}"></td>
+							<td><a th:href="@{stamp/{id}/edit(id=*{stamp.logId})}">編集</a></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
-			
-			<!--タブ２枚目（社員の検索画面） -->
-			<input type="radio" name="tab_name" id="tab2">
-			<label class="tab_class" for="tab2">社員検索</label>
-			<div class="content_class">
-				<div class="left_box">
-					<form th:action="@{/emp}" th:object="${searchEmployees}" th:method="post">
+			<button class="red_btn">一括削除</button>
+		</div>
+
+		<!--タブ２枚目（社員の検索画面） -->
+		<input type="radio" name="tab_name" id="tab2">
+		<label class="tab_class" for="tab2" id="tab_position2">社員検索</label>
+		<div class="content_class">
+			<div class="left_box">
+				<form th:action="@{/emp}" th:object="${searchEmployees}" th:method="post">
 					<label>生年月日：</label>
 					<input type="date" th:field="*{startDate}" required="required">
 					〜
@@ -135,14 +135,15 @@
 						</tbody>
 					</table>
 				</div>
-				</div>
-
 			</div>
-		</div>
-<!--フッターです。（共通項目）-->
-<footer>
-	<div class="footer_box1">問い合わせ先:rakuten-tarou@rakuten-sec.co.jp</div>
-</footer>
 
-</body>
+		</div>
+	</div>
+	<!--フッターです。（共通項目）-->
+	<footer>
+		<div class="footer_box">問い合わせ先:rakuten-tarou@rakuten-sec.co.jp</div>
+	</footer>
+
+	</body>
+
 </html>

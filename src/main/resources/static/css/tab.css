@@ -35,11 +35,18 @@ button {
 input{
 	font-size:20px;
 }
+#tab_position1{
+	position: absolute;
+	top:140px;
+}
+#tab_position2{
+	position: absolute;
+	top:140px;
+	left:600px;
+}
+
 .tab_class {
-	position: relative;
-	bottom: 50px;
-	left: -15%;
-	width: calc(100%/3);
+	width: 500px;
 	height: 50px;
 	background-color: darkgrey;
 	line-height: 50px;
