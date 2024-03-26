@@ -22,6 +22,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class WorkTimeManagementController {
+
     @Autowired
     private EmployeesInfoService employeesinfoservice;
 
@@ -50,6 +51,7 @@ public class WorkTimeManagementController {
     @GetMapping(value="/userMyPage")
     public String UserMyPage(Model model, HttpSession session) {
         if (session.getAttribute("userFirstName") == null) {
+
             return "redirect:/home";
         }
         model.addAttribute("userName", session.getAttribute("userFirstName"));
