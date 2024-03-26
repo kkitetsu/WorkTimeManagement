@@ -59,6 +59,10 @@ public class WorkTimeManagementController {
 		return "createAccount";
 	}
 	
+	@GetMapping(value="/detail")
+	public String displaycreatepage1(Model model, HttpSession session) {
+		return "detail";
+	}
 	/**
 	 * @author kk
 	 * 
