@@ -1,14 +1,14 @@
 package com.example.todo.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.Data;
 
 @Data
 public class LogsEntity implements Serializable{
 	
-	private Date datetime;
+	private Timestamp datetime;
 	
 	private int stampTypeId;
 

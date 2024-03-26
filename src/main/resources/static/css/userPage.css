@@ -256,6 +256,11 @@ font-size:20px;
 	border-radius:15px;
 	margin:10px 15%;
 	padding: 10px 0px;
+	
+	/* Added by kk */
+	display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .log_table{
  border-collapse: collapse;

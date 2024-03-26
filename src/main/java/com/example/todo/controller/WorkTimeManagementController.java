@@ -140,7 +140,6 @@ public class WorkTimeManagementController {
 			LogsEntity logsEntity = new LogsEntity();
 			logsEntity.setApplicant("本人");
 			logsEntity.setNote("XXXX");
-			System.out.println(session.getAttribute("userId"));
 			logsEntity.setUserId((int) session.getAttribute("userId"));
 			logsEntity.setStampTypeId(Integer.parseInt(selectedOption));
 			
@@ -166,13 +165,26 @@ public class WorkTimeManagementController {
 	 * @return clockinPage
 	 */
 	@GetMapping("/userLogPage")
-	public String userLogPage(Model model, HttpSession session) {
+	public String userLogPage(@RequestParam(defaultValue = "1") int currPage, Model model, HttpSession session) {
+		System.out.println(currPage);
 		if (session.getAttribute("userFirstName") == null) {
 			return "redirect:/home";
 		}
-		List<LogsEntity> logs = employeesInfoService.getEmployeesLogs((int) session.getAttribute("userId"));
+		List<LogsEntity> allData = employeesInfoService.getEmployeesLogs((int) session.getAttribute("userId"));
+		
+		int sublistSize = 5;
+		int startIndex = (currPage - 1) * sublistSize;
+        int endIndex = Math.min(startIndex + sublistSize, allData.size());
+		
+		List<LogsEntity> logs = allData.subList(startIndex, endIndex); 
+		
+		System.out.println("Current Page: " + currPage + "endIndex" + endIndex);
+		
 		model.addAttribute("logs", logs);
 		model.addAttribute("userName", session.getAttribute("userFirstName"));
+		model.addAttribute("currentPage", currPage);
+		model.addAttribute("maxPageNum", (int) (Math.ceil(allData.size() / sublistSize)));
+		
 		for (LogsEntity eachLog : logs) {
 			int tmp = eachLog.getStampTypeId();
 			switch (tmp) {
