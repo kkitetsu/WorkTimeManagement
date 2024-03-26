@@ -56,7 +56,7 @@
     </update>
 	
 
-		<select id="login" resultType="com.example.todo.entity.EmployeesEntity">
+	<select id="login" resultType="com.example.todo.entity.EmployeesEntity">
 		SELECT
 		 *
 		FROM
@@ -72,7 +72,7 @@
     
     <!--  author kk -->
     <select id="getEmployeesLogs" resultType="com.example.todo.entity.LogsEntity">
-    	SELECT * FROM logs WHERE user_id=#{id};
+    	SELECT * FROM logs WHERE user_id=#{id} ORDER BY datetime DESC;
     </select>
     
     <!--  author kk -->
