@@ -195,7 +195,7 @@ table {
 
 .red_btn{
 	display:inline-block;
-	margin-top:10px;
+	margin:10px;
 	font-size:40px;
 	width:230px;
 	height:60px;
@@ -221,7 +221,7 @@ a{
 }
 .blue_btn{
 	display:inline-block;
-	margin-top:10px;
+	margin:10px;
 	font-size:40px;
 	width:230px;
 	height:60px;
@@ -277,5 +277,23 @@ td, th, tr{
 	font-size:40px;
 	border-radius:5px;
 	font-weight:bolder;
-	
+	display:inline-block;
+}
+.white_span_box{
+	background-color:white;
+	padding:10px;
+	margin:20px;
+	font-size:40px;
+	border-radius:5px;
+	font-weight:bolder;
+}
+.text_box{
+	padding:10px;
+	margin:20px;
+	font-size:40px;
+	font-weight:bold;
+}
+.btn_box{
+	display:flex;
+	justify-content: center;
 }

@@ -1,47 +1,60 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>打刻システム-詳細</title>
-<link rel="stylesheet" href="css/userPage.css"/>
+	<meta charset="UTF-8">
+	<title>打刻システム-詳細</title>
+	<link rel="stylesheet" href="css/userPage.css" />
 </head>
+
 <body>
 
-<!--　ヘッダーです。（共通項目） -->
-<header> 
-	<div class="title_box">
-		<div class="title_1"> <a href="https://www.rakuten-sec.co.jp/"><img src="img/rakuten_logo.png" alt="Rakuten_sec_mark" class="maing_logo"> </a></div>
-		<div class="title_2"> <a href="home" class="main_title"> 楽天証券打刻システム</a></div>
-		<div class="title_3">  </div>
-	</div>
-</header>
-<!--　ここからメインです。-->
-<main> 
-	<div class="main_box">
-		<!-- author kk  handling error case -->
-		<div th:if="${errMsg}" class="alert alert-danger">
-			<span th:text="${errMsg}"></span>
+	<!--　ヘッダーです。（共通項目） -->
+	<header>
+		<div class="title_box">
+			<div class="title_1"> <a href="https://www.rakuten-sec.co.jp/"><img src="img/rakuten_logo.png"
+						alt="Rakuten_sec_mark" class="maing_logo"> </a></div>
+			<div class="title_2"> <a href="home" class="main_title"> 楽天証券打刻システム</a></div>
+			<div class="title_3"> </div>
 		</div>
-	- DETAIL -
-	</div>
-	<div class="content_box">
-	<span class="name_box"> 楽天　太郎</span> <br>
-	<span> 	日付 : <span class="white_span_box">2023/03/01</span>
-	~ <span class="white_span_box">2024/03/01</span> <br>
-	</span>
-	<div class="blue_btn">戻る</div>	
-	<div class="red_btn">ホームへ</div>	
-	<div class="blue_btn">検索</div>	
-	</div>
-	<div class="content_box">
+	</header>
+	<!--　ここからメインです。-->
+	<main>
+		<div class="main_box">
+			<!-- author kk  handling error case -->
+			<div th:if="${errMsg}" class="alert alert-danger">
+				<span th:text="${errMsg}"></span>
+			</div>
+			- DETAIL(user) -
+		</div>
+		<div class="content_box">
+			<div class="name_box"> 楽天　太郎</div> <br>
+			<div class="text_box"> 日付 : <span class="white_span_box">2023/03/01</span>
+				~ <span class="white_span_box">2024/03/01</span> <br>
+			</div>
+			<div class="btn_box">
+				<div class="blue_btn">戻る</div>
+				<div class="red_btn">ホームへ</div>
+				<div class="blue_btn">検索</div>
+			</div>
+		</div>
+		<div class="content_box">
+			<div class="text_box">ユーザー名:<div class="name_box"> 楽天　太郎</div>
+			</div>
+			<div class="text_box"> 期限 : <span class="white_span_box">2023/03/01</span>
+				より <span class="white_span_box">2024/03/01</span>まで </div>
+			<div class="text_box">
+				期限内出勤日数：<span class="white_span_box"> 100</span>日,
+				総勤務時間:<span class="white_span_box"> 900 </span>  時間
+			</div>
+		</div>
+	</main>
 
-	</div>
-</main>
 
-
-<!--フッターです。（共通項目）-->
-<footer>
-	<div class="footer_box">問い合わせ先:rakuten-tarou@rakuten-sec.co.jp</div>
-</footer>
+	<!--フッターです。（共通項目）-->
+	<footer>
+		<div class="footer_box">問い合わせ先:rakuten-tarou@rakuten-sec.co.jp</div>
+	</footer>
 </body>
+
 </html>
