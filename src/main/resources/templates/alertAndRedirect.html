@@ -4,6 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Alert Box and Redirect</title>
+    <div th:if="${unableToClockIn}">
+		<script>
+			alert("前回の打刻から十五時間すぎていません");
+			window.location.href = "/userLogPage";
+		</script>
+	</div>
     <script>
         var currentTime = new Date();
         var hours = currentTime.getHours();
