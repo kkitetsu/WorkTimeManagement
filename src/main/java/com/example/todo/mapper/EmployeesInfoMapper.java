@@ -40,7 +40,7 @@ public interface EmployeesInfoMapper{
 	 * 
 	 * @return logs in a list
 	 */
-	List<LogsEntity> getEmployeesLogs(int userId);
+	List<LogsEntity> getEmployeesLogs(int userId, final int SUBLISTSIZE, int startIndex);
 	
 	/**
 	 * @author kk
@@ -62,5 +62,8 @@ public interface EmployeesInfoMapper{
 	
 	/** @author kk */
 	LogsEntity getLastLog(int id);
-
+	
+	/** @author kk */
+	int getLogsSize(int id);
+	
 }

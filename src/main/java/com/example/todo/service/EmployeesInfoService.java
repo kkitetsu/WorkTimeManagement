@@ -43,8 +43,8 @@ public class EmployeesInfoService {
 	 * 
 	 * Get employee's log as a list of LogsEntity.
 	 */
-	public List<LogsEntity> getEmployeesLogs(int userId) {
-		return employeesInfomapper.getEmployeesLogs(userId);
+	public List<LogsEntity> getEmployeesLogs(int userId, final int SUBLISTSIZE, int startIndex) {
+		return employeesInfomapper.getEmployeesLogs(userId, SUBLISTSIZE, startIndex);
 	}
 	
 	/**
@@ -77,20 +77,10 @@ public class EmployeesInfoService {
 	public LogsEntity getLastLog(int id) {
 		return employeesInfomapper.getLastLog(id);
 	}
+	
+	/** @author kk */
+	public int getLogsSize(int id) {
+		return employeesInfomapper.getLogsSize(id);
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

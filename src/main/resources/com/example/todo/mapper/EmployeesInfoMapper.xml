@@ -72,7 +72,7 @@
     
     <!--  author kk -->
     <select id="getEmployeesLogs" resultType="com.example.todo.entity.LogsEntity">
-    	SELECT * FROM logs WHERE user_id=#{id} ORDER BY datetime DESC;
+    	SELECT * FROM logs WHERE user_id=#{userId} ORDER BY datetime DESC LIMIT #{SUBLISTSIZE} OFFSET #{startIndex};
     </select>
     
     <!--  author kk -->
@@ -82,6 +82,11 @@
      <!--  author kk -->
     <select id="getLastLog">
     	SELECT * FROM logs WHERE user_id=#{id} ORDER BY datetime DESC LIMIT 1;
+    </select>
+    
+    <!--  author kk -->
+    <select id="getLogsSize">
+    	SELECT COUNT(*) AS row_count FROM logs WHERE user_id=#{id};
     </select>
     
     <!--  author kk -->
