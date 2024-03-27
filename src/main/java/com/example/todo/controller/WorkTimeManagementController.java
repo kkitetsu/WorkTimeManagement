@@ -1,5 +1,6 @@
 package com.example.todo.controller;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -17,6 +18,7 @@ import com.example.todo.entity.EmployeesEntity;
 import com.example.todo.entity.LogsEntity;
 import com.example.todo.form.LoginRequest;
 import com.example.todo.service.EmployeesInfoService;
+import com.example.todo.utils.HashGenerator;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -91,7 +93,11 @@ public class WorkTimeManagementController {
 
         EmployeesEntity employeeEntity = new EmployeesEntity();
         employeeEntity.setEmployee_id(Integer.parseInt(id));
-        employeeEntity.setLoginPW(pwd);
+        try {
+			employeeEntity.setLoginPW(HashGenerator.generateHash(pwd));
+		} catch (NoSuchAlgorithmException e1) {
+			e1.printStackTrace();
+		}
 
         try {
             employeesinfoservice.createNewUser(employeeEntity);
@@ -110,9 +116,20 @@ public class WorkTimeManagementController {
     @RequestMapping(value="/login", method=RequestMethod.POST)
     public String UserLogin( @ModelAttribute LoginRequest loginrequest,
                                             Model model, HttpSession session) {
+    	
+    	String hashedPassword = "";
+    	String adminPassword  = "";
+		try {
+			hashedPassword = HashGenerator.generateHash(loginrequest.getLogin_pw());
+			adminPassword  = HashGenerator.generateHash("4755");
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+    	System.out.println(hashedPassword);
+    	loginrequest.setLogin_pw(hashedPassword);
 
         /** @author kk  If the login info is admin, jump to admin page. */
-        if (loginrequest.getLogin_id() == 4755 && loginrequest.getLogin_pw().equals("4755")) {
+        if (loginrequest.getLogin_id() == 4755 && loginrequest.getLogin_pw().equals(adminPassword)) {
             return "redirect:admin";
         }
 
