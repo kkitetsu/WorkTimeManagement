@@ -302,6 +302,7 @@ td, th, tr{
 .btn_box_right{
 	display:flex;
 	justify-content: right;
+	width:95%;
 }
 .white_box{
 	width:80%;

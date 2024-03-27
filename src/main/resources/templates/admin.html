@@ -15,7 +15,13 @@
 			<div class="title_1"> <a href="https://www.rakuten-sec.co.jp/"><img src="img/rakuten_logo.png"
 						alt="Rakuten_sec_mark" class="maing_logo"> </a></div>
 			<div class="title_2"> 楽天証券打刻システム</div>
-			<div class="title_3"> </div>
+			<div class="title_3">
+				<form th:action="@{/clockin}" th:method="post" th:name="p" id="clockinForm">
+					<input type="hidden" name="action" id="action" />
+					<input type="hidden" name="selectedOption" id="selectedOption" />
+					<button class="logout-btn" type="submit" value="logout" onclick="setAction('logout')">ログアウト</button>
+				</form>
+			</div>
 		</div>
 	</header>
 
@@ -31,7 +37,7 @@
 		<input type="radio" name="tab_name" id="tab1" onclick="saveState('tab1')" checked>
 		<label class="tab_class" for="tab1" id="tab_position1">出退勤検索</label>
 		<div class="content_class">
-			
+
 			<form th:action="@{/admin}" th:object="${searchStampsRequest}" th:method="post">
 				<label>日時：</label>
 				<input type="datetime-local" th:field="*{startDate}">
@@ -55,9 +61,9 @@
 					<option value="2">外出</option>
 					<option value="3">復帰</option>
 				</select><br>
-
-				<button type="submit" name="stamp" value="stamp_search" class="blue_btn">検索</button>
-				<button type="submit" class="red_btn">ログアウト</button>
+				<div class="btn_box_right">
+					<button type="submit" name="stamp" value="stamp_search" class="blue_btn">検索</button>
+				</div>
 			</form>
 			<div th:if="${stampCondition}">
 				<label>検索条件</label>
@@ -154,9 +160,9 @@
 					<option value="4">Software Developer</option>
 				</select><br>
 
-
-				<button type="submit" name="emp" value="emp_search" class="blue_btn">検索</button>
-				<button type="submit" class="red_btn">ログアウト</button>
+				<div class="btn_box_right">
+					<button type="submit" name="emp" value="emp_search" class="blue_btn">検索</button>
+				</div>
 			</form>
 
 			<div th:if="${empCondition}">
