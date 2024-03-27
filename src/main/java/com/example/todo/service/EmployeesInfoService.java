@@ -27,6 +27,11 @@ public class EmployeesInfoService {
 	public List<SearchStampsDTO> getStamps(SearchStampsRequest searchStampsRequest) {
 		return employeesInfomapper.getStamps(searchStampsRequest);
   }
+	
+	public List<SearchStampsDTO> getStampsById(int id){
+		return employeesInfomapper.getStampsById(id);
+	}
+	
 	public List<EmployeesEntity> getEmployeesById(SearchEmployeesRequest searchEmployeesRequest) {
 		return employeesInfomapper.getEmployeesById(searchEmployeesRequest);
 	}

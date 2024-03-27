@@ -22,4 +22,10 @@ public class StampUpdateRequest implements Serializable{
 	 */
 	private int stampType_id;
 	
+	
+	/**
+	 * 申請者
+	 */
+	private String applicant;
+	
 }

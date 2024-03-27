@@ -7,21 +7,33 @@ import lombok.Data;
 @Data
 public class SearchStampsDTO{
 	
-	private int logId;
+	private Integer logId;
 	
 	private LocalDateTime datetime;
 	
-	private int stampTypeId;
+	private Integer stampTypeId;
 	
 	private String stampTypeIdStr;
 	
-	private int userId;
+	private Integer userId;
 	
 	private String lastname;
 	
 	private String firstname;
 	
-	private int cancelFlag;
+	private Integer cancelFlag;
 	
 	private String applicant;
+	
+	//ここからは検索条件
+	/**
+	 * 期間（始まり）
+	 */
+	private LocalDateTime startDate;
+	
+	/**
+	 * 期間（終わり）
+	 */
+	private LocalDateTime endDate;
+	
 }

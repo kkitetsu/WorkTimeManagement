@@ -47,20 +47,22 @@
                 AND user_id = #{employee_id}
          </if>
         <if test="firstname != null and firstname != ''">
-                AND firstname = #{firstname}
+                AND e.firstname=#{firstname}
          </if>
          
          <if test="lastname != null and lastname != ''">
-                AND lastname = #{lastname}
-         </if>
+                AND e.lastname=#{lastname}
+       	</if>
+         </select>
          
-        <!-- <if test="startDate != null and startDate != '' and endDate != null and endDate != ''">
-                AND datetime between #{startDate} and #{endDate}
-         </if> -->
+      <select id="getStampsById" resultType="com.example.todo.dto.SearchStampsDTO">
+		SELECT * FROM logs l
+		LEFT JOIN employees e ON e.employee_id  = l.user_id 
+		WHERE log_id = #{id}
 	</select>
 	
 	<update id="updateStamps">
-    	UPDATE logs SET datetime = #{datetime}, stampType_id = #{stampType_id} WHERE log_id = #{id};
+    	UPDATE logs SET datetime = #{datetime}, stampType_id = #{stampType_id}, applicant = #{applicant} WHERE log_id = #{id};
     </update>
 	
 

@@ -42,5 +42,5 @@ public class SearchStampsRequest implements Serializable{
 	/**
 	 * 部署ID
 	 */
-	private int  dpt_id;
+	private Integer  dpt_id;
 }

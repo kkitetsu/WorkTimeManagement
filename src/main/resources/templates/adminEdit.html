@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>打刻システム - 編集</title>
-	<link rel="stylesheet" th:href="@{../../css/userPage.css}"/>
+	<link rel="stylesheet" th:href="@{../../css/userPage.css}" />
 </head>
 
 <body>
@@ -20,16 +20,44 @@
 
 	<div class="main_box">
 		- 編集 -
+		<div th:if="${stampInfo}">
+			<table class="employeesTable">
+				<thead>
+					<tr>
+						<th>社員番号</th>
+						<th>日時</th>
+						<th>分類</th>
+						<th>名前</th>
+						<th>申請者</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:each="stamp: ${stampInfo}" class="align-middle">
+						<td th:text="*{stamp.userId}"></td>
+						<td th:text="${#temporals.format(stamp.datetime, 'yyyy/MM/dd HH:mm:ss')}"></td>
+						<td th:text="*{stamp.stampTypeIdStr}"></td>
+						<td th:text="*{stamp.lastname} + ' ' + *{stamp.firstname}"></td>
+						<td th:text="*{stamp.applicant}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 		<div class="content_box">
 			<div class="content_class">
-				<form th:action="@{/stamp/update}" th:object="${stampUpdateRequest}"
-					th:method="post">
+				<form th:action="@{/stamp/update}" th:object="${stampUpdateRequest}" th:method="post">
 					<input type="hidden" th:field="*{id}" />
 					<div class="input_box">
-						<label>日付</label>
-						<input type="datetime-local" class="form-control" th:field="*{datetime}" required="required"><br>
-						<label>カテゴリ</label>
-						<input type="number" class="form-control" th:field="*{stampType_id}" required="required"><br>
+						<label>日時</label>
+						<input type="datetime-local" class="form-control" th:field="*{datetime}"
+							required="required"><br>
+						<label>出退勤カテゴリ：</label>
+						<select id="stampType_id" name="stampType_id">
+							<option value="0">出勤</option>
+							<option value="1">退勤</option>
+							<option value="2">外出</option>
+							<option value="3">復帰</option>
+						</select><br>
 					</div>
 
 					<div class="buttons">
@@ -37,7 +65,7 @@
 						<input type="submit" class="save_btn" value="キャンセル">
 					</div>
 				</form>
-			
+
 				<button>一括削除</button>
 			</div>
 		</div>
