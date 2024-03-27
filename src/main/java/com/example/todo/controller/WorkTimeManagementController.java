@@ -164,7 +164,19 @@ public class WorkTimeManagementController {
         }
         if (action.equals("clockin")) {
         	
-            previousLog = employeesInfoService.getLastLog((int) session.getAttribute("userId"));
+        	System.out.println(session.getAttribute("userId"));
+            previousLog = employeesInfoService.getLastLog(Integer.parseInt(session.getAttribute("userId").toString()));
+            
+            if (previousLog == null) {
+            	LogsEntity logsEntity = new LogsEntity();
+                logsEntity.setApplicant("本人");
+                logsEntity.setNote("XXXX");
+                logsEntity.setUserId(Integer.parseInt(session.getAttribute("userId").toString()));
+                logsEntity.setStampTypeId(Integer.parseInt(selectedOption));
+                employeesInfoService.insertLogs(logsEntity);
+                model.addAttribute("isClockIn", true);
+                return "/alertAndRedirect";
+            }
 
             Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
             long millisecondsDifference = currentTimestamp.getTime() - previousLog.getDatetime().getTime();
@@ -216,7 +228,7 @@ public class WorkTimeManagementController {
             return "redirect:/home";
         }
         
-        int userId = (int) session.getAttribute("userId");
+        int userId = Integer.parseInt(session.getAttribute("userId").toString());
         int LogsSize = employeesInfoService.getLogsSize(userId);
         final int SUBLISTSIZE = 5;
         int startIndex = (currPage - 1) * SUBLISTSIZE;
