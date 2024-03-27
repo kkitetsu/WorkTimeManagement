@@ -107,7 +107,7 @@ select {
 	margin: 5px 5%;
 }
 .content_box{
-	margin:10px 5%;
+	margin:30px 5%;
 	padding: 30px 5px;
 	width:90%;
 	background-color:pink;
@@ -197,7 +197,7 @@ table {
 
 .red_btn{
 	display:inline-block;
-	margin-top:10px;
+	margin:10px;
 	font-size:40px;
 	width:230px;
 	height:60px;
@@ -207,6 +207,7 @@ table {
 	border:none;
 	border-radius:10px;
 	cursor:pointer;
+	text-align:center;
 }
 a{
 	text-decoration:none;
@@ -222,7 +223,7 @@ a{
 }
 .blue_btn{
 	display:inline-block;
-	margin-top:10px;
+	margin:10px;
 	font-size:40px;
 	width:230px;
 	height:60px;
@@ -232,6 +233,7 @@ a{
 	border:none;
 	cursor:pointer;
 	border-radius:10px;
+	text-align:center;
 }
 .input_box{
 	height:35px;
@@ -256,6 +258,11 @@ font-size:20px;
 	border-radius:15px;
 	margin:10px 15%;
 	padding: 10px 0px;
+	
+	/* Added by kk */
+	display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .log_table{
  border-collapse: collapse;
@@ -264,4 +271,31 @@ td, th, tr{
   border: 1px solid black;
   text-align:center;
 
+}
+.name_box{
+	background-color: moccasin;
+	padding:10px;
+	margin:20px;
+	font-size:40px;
+	border-radius:5px;
+	font-weight:bolder;
+	display:inline-block;
+}
+.white_span_box{
+	background-color:white;
+	padding:10px;
+	margin:20px;
+	font-size:40px;
+	border-radius:5px;
+	font-weight:bolder;
+}
+.text_box{
+	padding:10px;
+	margin:20px;
+	font-size:40px;
+	font-weight:bold;
+}
+.btn_box{
+	display:flex;
+	justify-content: center;
 }

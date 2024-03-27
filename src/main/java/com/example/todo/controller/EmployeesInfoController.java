@@ -143,7 +143,6 @@ public class EmployeesInfoController {
 				case 1: eachLog.setStampTypeIdStr("退勤"); break;
 				case 2: eachLog.setStampTypeIdStr("外出"); break;
 				case 3: eachLog.setStampTypeIdStr("復帰"); break;
-				default: eachLog.setStampTypeIdStr(null); break;
 			}
 		}
 		
@@ -161,7 +160,6 @@ public class EmployeesInfoController {
 			case 1: stampCondition.setStampTypeIdStr("退勤"); break;
 			case 2: stampCondition.setStampTypeIdStr("外出"); break;
 			case 3: stampCondition.setStampTypeIdStr("復帰"); break;
-			default: stampCondition.setStampTypeIdStr(null); break;
 		   }
 		}
 		

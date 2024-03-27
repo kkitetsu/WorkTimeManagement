@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="css/userPage.css" />
 </head>
 
-<DIV>
+<body>
 	<!--　ヘッダーです。（共通項目） -->
 	<header>
 		<div class="title_box">
@@ -31,7 +31,7 @@
 		<input type="radio" name="tab_name" id="tab1" onclick="saveState('tab1')" checked>
 		<label class="tab_class" for="tab1">出退勤検索</label>
 		<div class="content_class">
-
+			
 			<form th:action="@{/admin}" th:object="${searchStampsRequest}" th:method="post">
 				<label>日時：</label>
 				<input type="datetime-local" th:field="*{startDate}">
@@ -60,31 +60,33 @@
 				<button type="submit" class="red_btn">ログアウト</button>
 			</form>
 			<div th:if="${stampCondition}">
-				<div class="searchCondition">
-					<label>検索条件</label>
-					<table>
-						<thead>
-							<tr>
-								<th>期間</th>
-								<th>社員番号</th>
-								<th>姓</th>
-								<th>名</th>
-								<th>出退勤カテゴリ</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="con:${stampCondition}" class="align-middle">
-								<td
-									th:text="${#temporals.format(con.startDate, 'yyyy/MM/dd')} + 〜 + ${#temporals.format(con.endDate, 'yyyy/MM/dd')}">
-								</td>
-								<td th:text="*{con.userId}"></td>
-								<td th:text="*{con.lastname}"></td>
-								<td th:text="*{con.firstname}"></td>
-								<td th:text="*{con.stampTypeIdStr}"></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+				<label>検索条件</label>
+				<table>
+					<thead>
+						<tr>
+							<th>期間</th>
+							<th>社員番号</th>
+							<th>姓</th>
+							<th>名</th>
+							<th>出退勤カテゴリ</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="con:${stampCondition}" class="align-middle">
+							<td
+								th:text="${#temporals.format(con.startDate, 'yyyy/MM/dd')} + 〜 + ${#temporals.format(con.endDate, 'yyyy/MM/dd')}">
+							</td>
+							<td th:text="*{con.userId}"></td>
+							<td th:text="*{con.lastname}"></td>
+							<td th:text="*{con.firstname}"></td>
+							<td th:text="*{con.stampTypeIdStr}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+
+			<div th:if="${stampInfo}">
 				<table class="employeesTable">
 					<thead>
 						<tr>
@@ -92,6 +94,7 @@
 							<th>社員番号</th>
 							<th>日時</th>
 							<th>分類</th>
+							<th>カテゴリ</th>
 							<th>名前</th>
 							<th>申請者</th>
 							<th>編集</th>
@@ -112,142 +115,141 @@
 				</table>
 				<button class="red_btn">一括削除</button>
 			</div>
-			
 		</div>
 
 		<!--タブ２枚目（社員の検索画面） -->
 		<input type="radio" name="tab_name" id="tab2" onclick="saveState('tab2')">
 		<label class="tab_class" for="tab2">社員検索</label>
 		<div class="content_class">
-			<div class="left_box">
-				<form th:action="@{/admin}" th:object="${searchEmployeesRequest}" th:method="post">
-					<label>生年月日：</label>
-					<input type="date" th:field="*{startDate}">
-					〜
-					<input type="date" th:field="*{endDate}"><br>
+			<form th:action="@{/admin}" th:object="${searchEmployeesRequest}" th:method="post">
+				<label>生年月日：</label>
+				<input type="date" th:field="*{startDate}">
+				〜
+				<input type="date" th:field="*{endDate}"><br>
 
-					<label>社員番号：</label>
-					<input type="text" pattern="^[1-9][0-9]*$" title="半角数字で入力してください" th:field="*{employee_id}"><br>
+				<label>社員番号：</label>
+				<input type="text" pattern="^[1-9][0-9]*$" title="半角数字で入力してください" th:field="*{employee_id}"><br>
 
-					<label>部署：</label>
-					<select id="dpt_id" name="dpt_id">
-						<option value="">部署</option>
-						<option value="1">Sales</option>
-						<option value="2">Marketing</option>
-						<option value="3">Engineering</option>
-						<option value="4">Finance</option>
-					</select><br>
+				<label>部署：</label>
+				<select id="dpt_id" name="dpt_id">
+					<option value="">部署</option>
+					<option value="1">Sales</option>
+					<option value="2">Marketing</option>
+					<option value="3">Engineering</option>
+					<option value="4">Finance</option>
+				</select><br>
 
-					<label>姓：</label>
-					<input type="text" th:field="*{lastname}"><br>
+				<label>姓：</label>
+				<input type="text" th:field="*{lastname}"><br>
 
-					<label>名：</label>
-					<input type="text" th:field="*{firstname}"><br>
+				<label>名：</label>
+				<input type="text" th:field="*{firstname}"><br>
 
-					<label>役職：</label>
-					<select id="position_id" name="position_id">
-						<option value="">役職</option>
-						<option value="1">Manager</option>
-						<option value="2">Assistant Manager</option>
-						<option value="3">Senior Engineer</option>
-						<option value="4">Software Developer</option>
-					</select><br>
+				<label>役職：</label>
+				<select id="position_id" name="position_id">
+					<option value="">役職</option>
+					<option value="1">Manager</option>
+					<option value="2">Assistant Manager</option>
+					<option value="3">Senior Engineer</option>
+					<option value="4">Software Developer</option>
+				</select><br>
 
 
-					<button type="submit" name="emp" value="emp_search" class="blue_btn">検索</button>
-					<button type="submit" class="red_btn">ログアウト</button>
-				</form>
-				<div th:if="${empCondition}">
-					<div class="searchCondition">
-						<label>検索条件</label>
-						<table>
-							<thead>
-								<tr>
-									<th>生年月日</th>
-									<th>社員番号</th>
-									<th>部署</th>
-									<th>姓</th>
-									<th>名</th>
-									<th>役職</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="em:${empCondition}" class="align-middle">
-									<td
-										th:text="${#temporals.format(em.startDate, 'yyyy/MM/dd')} + 〜 + ${#temporals.format(em.endDate, 'yyyy/MM/dd')}">
-									</td>
-									<td th:text="*{em.employeeId}"></td>
-									<td th:text="*{em.dptName}"></td>
-									<td th:text="*{em.lastname}"></td>
-									<td th:text="*{em.firstname}"></td>
-									<td th:text="*{em.positionName}"></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div th:if="${empInfo}">
-						<table class="employeesTable">
-							<thead>
-								<tr>
-									<th>選択</th>
-									<th>社員番号</th>
-									<th>部署</th>
-									<th>名前</th>
-									<th>役職</th>
-									<th>生年月日</th>
-									<th>詳細</th>
-								</tr>
-							</thead>
+				<button type="submit" name="emp" value="emp_search" class="blue_btn">検索</button>
+				<button type="submit" class="red_btn">ログアウト</button>
+			</form>
 
-							<tbody>
-								<tr th:each="emp: ${empInfo}" class="align-middle">
-									<td><input type="checkbox"></td>
-									<td th:text="*{emp.employeeId}"></td>
-									<td th:text="*{emp.dptName}"></td>
-									<td th:text="*{emp.lastname} + ' ' + *{emp.firstname}"></td>
-									<td th:text="*{emp.positionName}"></td>
-									<td th:text="${#temporals.format(emp.birthday, 'yyyy/MM/dd')}">
-									<td><a th:href="@{/admin/{id}/adminDetail(id=*{emp.employeeId})}">詳細</a></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					
-				</div>
-
+			<div th:if="${empCondition}">
+				<label>検索条件</label>
+				<table>
+					<thead>
+						<tr>
+							<th>生年月日</th>
+							<th>社員番号</th>
+							<th>部署</th>
+							<th>姓</th>
+							<th>名</th>
+							<th>役職</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="em:${empCondition}" class="align-middle">
+							<td
+								th:text="${#temporals.format(em.startDate, 'yyyy/MM/dd')} + 〜 + ${#temporals.format(em.endDate, 'yyyy/MM/dd')}">
+							</td>
+							<td th:text="*{em.employeeId}"></td>
+							<td th:text="*{em.dptName}"></td>
+							<td th:text="*{em.lastname}"></td>
+							<td th:text="*{em.firstname}"></td>
+							<td th:text="*{em.positionName}"></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
+			<div th:if="${empInfo}">
+				<table class="employeesTable">
+					<thead>
+						<tr>
+							<th>選択</th>
+							<th>社員番号</th>
+							<th>部署</th>
+							<th>名前</th>
+							<th>役職</th>
+							<th>生年月日</th>
+							<th>詳細</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="emp: ${empInfo}" class="align-middle">
+							<td><input type="checkbox"></td>
+							<td th:text="*{emp.employeeId}"></td>
+							<td th:text="*{emp.dptName}"></td>
+							<td th:text="*{emp.lastname} + ' ' + *{emp.firstname}"></td>
+							<td th:text="*{emp.positionName}"></td>
+							<td th:text="${#temporals.format(emp.birthday, 'yyyy/MM/dd')}">
+							<td><a th:href="@{/admin/{id}/adminDetail(id=*{emp.employeeId})}">詳細</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
 		</div>
-		<!--フッターです。（共通項目）-->
-		<footer>
-			<div class="footer_box1">問い合わせ先:rakuten-tarou@rakuten-sec.co.jp</div>
-		</footer>
+	</div>
+	</div>
+	<!--フッターです。（共通項目）-->
+	<footer>
+		<div class="footer_box">問い合わせ先:rakuten-tarou@rakuten-sec.co.jp</div>
+	</footer>
 
-		</body>
+</body>
 <script>
-// ページ読み込み時にsessionStorageからラジオボタンの状態を復元
-window.onload = function() {
-    var tab1Checked = sessionStorage.getItem('tab1Checked');
-    var tab2Checked = sessionStorage.getItem('tab2Checked');
+	// ページ読み込み時にsessionStorageからラジオボタンの状態を復元
+	window.onload = function () {
+		var tab1Checked = sessionStorage.getItem('tab1Checked');
+		var tab2Checked = sessionStorage.getItem('tab2Checked');
 
-    if (tab2Checked === 'true') {
-		console.log("2がチェックされてます");
-        document.getElementById('tab2').checked = true;
-    } else if (tab1Checked === 'true') {
-		console.log("1がチェックされてます");
-        document.getElementById('tab1').checked = true;
-    }
-};
+		if (tab2Checked === 'true') {
+			console.log("2がチェックされてます");
+			document.getElementById('tab2').checked = true;
+		} else if (tab1Checked === 'true') {
+			console.log("1がチェックされてます");
+			document.getElementById('tab1').checked = true;
+		}
+	};
 
-// ラジオボタンがクリックされたときにsessionStorageに状態を保存
-function saveState(tabId) {
-    var isChecked = document.getElementById(tabId).checked;
-    if(tabId == "tab2"){
-		sessionStorage.setItem("tab2Checked", 'true');
-		console.log("2がチェックされました");
-	}else{
-		sessionStorage.setItem("tab2Checked", 'false');
-		console.log("1がチェックされました");
-	}
-};
+	// ラジオボタンがクリックされたときにsessionStorageに状態を保存
+	function saveState(tabId) {
+		var isChecked = document.getElementById(tabId).checked;
+		if (tabId == "tab2") {
+			sessionStorage.setItem("tab2Checked", 'true');
+			console.log("2がチェックされました");
+		} else {
+			sessionStorage.setItem("tab2Checked", 'false');
+			console.log("1がチェックされました");
+		}
+	};
 </script>
+
+
 </html>

@@ -103,8 +103,10 @@ public interface EmployeesInfoMapper{
 	 */
 	void createNewUser(EmployeesEntity employeesEntity);
 	
-	
 	List<EmployeesEntity> getEmployeesById(SearchEmployeesRequest searchEmployeesRequest);
 	List<EmployeesEntity> login(LoginRequest loginRequest);
+	
+	/** @author kk */
+	LogsEntity getLastLog(int id);
 
 }

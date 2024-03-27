@@ -33,7 +33,7 @@
 <!-- ログイン　form タグの actionを修正要望　-->
 						<form th:action="@{/login}" th:method="POST"  th:object=${logininfo}>
 							<label for="login_id"> 社員番号: </label> <input th:field="*{login_id}" type="number" class="input_box">  <br>
-							<label for="login_pw"> パスワード: </label> <input th:field="*{login_pw}" type="password" class="input_box"> <br>
+							<label for="login_pw"> パスワード : </label> <input th:field="*{login_pw}" type="password" class="input_box"> <br>
 							<button type="submit" class="red_btn"> ログイン</button>  <a href="create" class="blue_btn"> <span>会員登録</span></a> 
 						</form>   
 					</div> 
@@ -68,7 +68,7 @@
 		let hour = currentDate.getHours();
 		let minute = currentDate.getMinutes();
 		let second =currentDate.getSeconds();
-		let ampm = hour>=12 ? '午前': '午後';
+		let ampm = hour>=12 ? '午後': '午前';
 		hour =hour%12;
 		hour = hour ? hour: 12;
 		

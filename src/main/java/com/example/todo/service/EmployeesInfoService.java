@@ -77,6 +77,11 @@ public class EmployeesInfoService {
 	public String getAnEmployeeFirstName(int id) {
 		return employeesInfomapper.getAnEmployeeFirstName(id);
 	}
+	
+	/** @author kk */
+	public LogsEntity getLastLog(int id) {
+		return employeesInfomapper.getLastLog(id);
+	}
 }
 
 

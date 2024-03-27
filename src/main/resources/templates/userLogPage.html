@@ -54,12 +54,24 @@
 							</tr>
 						</tbody>
 					</div>
+					
 				</table>
+				<!-- Show current page number -->
+				<p>-- <span th:text="${currentPage}"></span> / <span th:text="${maxPageNum + 1}"></span> --</p>
 
 			</div>
 			<div class="footer">
+				<a th:if="${currentPage} > 1"           th:href="@{/userLogPage(currPage=${currentPage - 1})}">
+					<button class="blue_btn" style="font-size:30px;">前のページ</button>
+				</a>
 				<a href="/userMyPage">
 					<button class="blue_btn" style="font-size:30px;">マイページへ</button>
+				</a>
+				<a th:if="${currentPage <= maxPageNum}" th:href="@{/userLogPage(currPage=${currentPage + 1})}">
+					<button class="blue_btn" style="font-size:30px;">次のページ</button>
+				</a>
+				<a th:href="@{/detail}">
+					<button class="blue_btn" style="font-size:30px;">勤務時間確認</button>
 				</a>
 			</div>
 		</div>
