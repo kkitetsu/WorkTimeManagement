@@ -170,28 +170,31 @@ public class WorkTimeManagementController {
             long millisecondsDifference = currentTimestamp.getTime() - previousLog.getDatetime().getTime();
             long hoursDifference = TimeUnit.MILLISECONDS.toHours(millisecondsDifference);
             
-            // 前打刻十五時間経過していなかったら再同打刻不能
             if (previousLog.getStampTypeId() == Integer.parseInt(selectedOption)
                     && hoursDifference < 15) {
+            	// 前打刻十五時間経過していなかったら再同打刻不能
                 model.addAttribute("unableToClockIn", "前回の打刻から十五時間すぎていません");
                 return "/alertAndRedirect";
             } else {
+            	// 打刻をし、データベースを更新し、アラート表示にいく
             	LogsEntity logsEntity = new LogsEntity();
                 logsEntity.setApplicant("本人");
                 logsEntity.setNote("XXXX");
                 logsEntity.setUserId((int) session.getAttribute("userId"));
                 logsEntity.setStampTypeId(Integer.parseInt(selectedOption));
-
                 employeesInfoService.insertLogs(logsEntity);
-
+                
+                if (previousLog.getStampTypeId() == Integer.parseInt(selectedOption)) {
+                	// もし前回の打刻と一緒の内容だったら、前回で出勤か退勤を忘れている
+                	model.addAttribute("enableForgotAlert", true);
+                }
+                model.addAttribute("isClockIn", true);
                 return "/alertAndRedirect";
             }
 
         } else if (action.equals("checkHistory")) {
-
             return "redirect:/userLogPage";
         } else {
-
             session.invalidate();    // Logout and back to home
             return "redirect:/home";
         }
