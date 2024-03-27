@@ -125,7 +125,7 @@ public class WorkTimeManagementController {
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-    	System.out.println(hashedPassword);
+    	
     	loginrequest.setLogin_pw(hashedPassword);
 
         /** @author kk  If the login info is admin, jump to admin page. */
@@ -199,30 +199,31 @@ public class WorkTimeManagementController {
 
     /**
      * @author kk
-     *
-     * ユーザが打刻のちに、アラート画面と次の打刻画面への引き継ぎメソッド.
-     *
-     * @return clockinPage
+     * 
+     * 打刻履歴画面。
+     * 
+     * @param currPage 現在のページ。デフォルト（最初）は 1
+     * @param model
+     * @param session
+     * @return
      */
     @GetMapping("/userLogPage")
     public String userLogPage(@RequestParam(defaultValue = "1") int currPage, Model model, HttpSession session) {
         if (session.getAttribute("userFirstName") == null) {
             return "redirect:/home";
         }
-        List<LogsEntity> allData = employeesInfoService.getEmployeesLogs((int) session.getAttribute("userId"));
-
-        previousLog = allData.get(0);
-
-        int sublistSize = 5;
-        int startIndex = (currPage - 1) * sublistSize;
-        int endIndex = Math.min(startIndex + sublistSize, allData.size());
-
-        List<LogsEntity> logs = allData.subList(startIndex, endIndex);
+        
+        int userId = (int) session.getAttribute("userId");
+        int LogsSize = employeesInfoService.getLogsSize(userId);
+        final int SUBLISTSIZE = 5;
+        int startIndex = (currPage - 1) * SUBLISTSIZE;
+        
+        List<LogsEntity> logs = employeesInfoService.getEmployeesLogs(userId, SUBLISTSIZE, startIndex);
 
         model.addAttribute("logs", logs);
         model.addAttribute("userName", session.getAttribute("userFirstName"));
         model.addAttribute("currentPage", currPage);
-        model.addAttribute("maxPageNum", (int) (Math.ceil(allData.size() / sublistSize)));
+        model.addAttribute("maxPageNum", (int) (Math.ceil(LogsSize / SUBLISTSIZE)));
 
         for (LogsEntity eachLog : logs) {
             int tmp = eachLog.getStampTypeId();
