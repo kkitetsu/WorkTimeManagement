@@ -14,13 +14,24 @@
 			<div class="title_1"> <a href="https://www.rakuten-sec.co.jp/"><img src="../../img/rakuten_logo.png"
 						alt="Rakuten_sec_mark" class="maing_logo"> </a></div>
 			<div class="title_2"> 楽天証券打刻システム</div>
-			<div class="title_3"> </div>
+			<div class="title_3">
+				<form th:action="@{/clockin}" th:method="post" th:name="p" id="clockinForm">
+					<input type="hidden" name="action" id="action" />
+					<input type="hidden" name="selectedOption" id="selectedOption" />
+					<button class="logout-btn" type="submit" value="logout" onclick="setAction('logout')">ログアウト</button>
+				</form>
+			</div>
 		</div>
 	</header>
 
 	<div class="main_box">
 		- 編集 -
-		<div th:if="${stampInfo}">
+	</div>
+
+	<div class="content_box">
+
+		<div th:if="${stampInfo}" class="white_box">
+			<div class="middle_title"> - 編集前データ </div>
 			<table class="employeesTable">
 				<thead>
 					<tr>
@@ -43,31 +54,33 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="content_box">
-			<div class="content_class">
-				<form th:action="@{/stamp/update}" th:object="${stampUpdateRequest}" th:method="post">
-					<input type="hidden" th:field="*{id}" />
-					<div class="input_box">
-						<label>日時</label>
-						<input type="datetime-local" class="form-control" th:field="*{datetime}"
-							required="required"><br>
-						<label>出退勤カテゴリ：</label>
-						<select id="stampType_id" name="stampType_id">
-							<option value="0">出勤</option>
-							<option value="1">退勤</option>
-							<option value="2">外出</option>
-							<option value="3">復帰</option>
-						</select><br>
-					</div>
 
-					<div class="buttons">
-						<input type="submit" class="save_btn" value="保存">
-						<input type="submit" class="save_btn" value="キャンセル">
+		<div class="white_box">
+			<div class="middle_title"> - データ入力 </div>
+			<div class="content_class">
+				<form th:action="@{/stamp/update}" th:object="${stampUpdateRequest}" th:method="post"
+					class="edit_data_text">
+					<input type="hidden" th:field="*{id}" />
+
+					<label>日時:</label> <input type="datetime-local" class="edit_data_text" th:field="*{datetime}"
+						required="required"><br>
+					<label>出退勤カテゴリ：</label>
+					<select id="stampType_id" name="stampType_id" class="edit_data_text">
+						<option value="0">出勤</option>
+						<option value="1">退勤</option>
+						<option value="2">外出</option>
+						<option value="3">復帰</option>
+					</select>
+
+
+					<div class="btn_box_right">
+						<input type="submit" class="blue_btn" value="保存">
+						<input type="submit" class="red_btn" value="キャンセル">
 					</div>
 				</form>
 
-				<button>一括削除</button>
 			</div>
+
 		</div>
 	</div>
 

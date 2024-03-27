@@ -107,7 +107,7 @@ select {
 	margin: 5px 5%;
 }
 .content_box{
-	margin:30px 5%;
+	margin:50px 5%;
 	padding: 30px 5px;
 	width:90%;
 	background-color:pink;
@@ -298,4 +298,29 @@ td, th, tr{
 .btn_box{
 	display:flex;
 	justify-content: center;
+}
+.btn_box_right{
+	display:flex;
+	justify-content: right;
+	width:95%;
+}
+.white_box{
+	width:80%;
+	background-color:white;
+	padding:20px;
+	margin:10px 10% auto;
+	font-size:20px;
+	border-radius:10px;
+}
+.employeesTable{
+	margin-top:10px;
+	width:95%;
+}
+.edit_data_text{
+	font-size:30px;
+	font-weight:bold;
+}
+.middle_title{
+	font-size:35px;
+	font-weight:bolder;
 }
