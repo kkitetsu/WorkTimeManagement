@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>打刻システム - 編集</title>
+	<link rel="stylesheet" th:href="@{../../css/userPage.css}" />
+</head>
+
+<body>
+	<!--　ヘッダーです。（共通項目） -->
+	<header>
+		<div class="title_box">
+			<div class="title_1"> <a href="https://www.rakuten-sec.co.jp/"><img src="../../img/rakuten_logo.png"
+						alt="Rakuten_sec_mark" class="maing_logo"> </a></div>
+			<div class="title_2"> 楽天証券打刻システム</div>
+			<div class="title_3"> </div>
+		</div>
+	</header>
+
+	<body>
+		<input type="month" name="month">
+		<table class="employeesTable">
+			<thead>
+				<tr>
+					<th>総勤務日数</th>
+					<th>総勤務時間</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="stamp: ${stampInfo}" class="align-middle">
+					<td th:text="*{stamp.userId}"></td>
+					<td th:text="${#temporals.format(stamp.datetime, 'yyyy/MM/dd HH:mm:ss')}"></td>
+					<td th:text="*{stamp.stampTypeIdStr}"></td>
+					<td th:text="*{stamp.lastname} + ' ' + *{stamp.firstname}"></td>
+					<td th:text="*{stamp.applicant}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+
+</html>
