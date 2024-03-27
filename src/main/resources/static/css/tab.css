@@ -37,11 +37,11 @@ input{
 }
 #tab_position1{
 	position: absolute;
-	top:140px;
+	top:160px;
 }
 #tab_position2{
 	position: absolute;
-	top:140px;
+	top:160px;
 	left:600px;
 }
 
@@ -92,3 +92,5 @@ input:checked+.tab_class {
 input:checked+.tab_class+.content_class {
 	display: block;
 }
+.check_box{
+	transform: scale(2);}
