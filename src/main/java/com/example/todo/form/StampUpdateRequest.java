@@ -15,7 +15,7 @@ public class StampUpdateRequest implements Serializable{
 	/**
 	 * ログID
 	 */
-	private int id;
+	private Integer id;
 	
 	/**
 	 * 出退勤カテゴリ

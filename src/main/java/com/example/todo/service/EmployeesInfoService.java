@@ -6,12 +6,14 @@ import org.springframework.stereotype.Service;
 
 import com.example.todo.dto.SearchEmployeesDTO;
 import com.example.todo.dto.SearchStampsDTO;
+import com.example.todo.dto.WorkTimeDTO;
 import com.example.todo.entity.EmployeesEntity;
 import com.example.todo.entity.LogsEntity;
 import com.example.todo.form.LoginRequest;
 import com.example.todo.form.SearchEmployeesRequest;
 import com.example.todo.form.SearchStampsRequest;
 import com.example.todo.form.StampUpdateRequest;
+import com.example.todo.form.WorkTimeRequest;
 import com.example.todo.mapper.EmployeesInfoMapper;
 
 @Service
@@ -42,6 +44,15 @@ public class EmployeesInfoService {
 	
 	public List<EmployeesEntity> login(LoginRequest loginRequest){
 		return employeesInfomapper.login(loginRequest);}
+	
+	/**
+	 * @author shunsukekuzawa
+	 * 
+	 * Get total hours worked during the month.
+	 */
+	public List<WorkTimeDTO> getWorkTime(WorkTimeRequest workTimeRequest){
+		return employeesInfomapper.getWorkTime(workTimeRequest);
+	}
 	
 	/**
 	 * @author kk

@@ -25,9 +25,6 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class WorkTimeManagementController {
 
-    @Autowired
-    private EmployeesInfoService employeesinfoservice;
-
     /**
      * @author kk
      *
@@ -100,15 +97,15 @@ public class WorkTimeManagementController {
 		}
 
         try {
-            employeesinfoservice.createNewUser(employeeEntity);
+            employeesInfoService.createNewUser(employeeEntity);
         } catch (Exception e) {
             model.addAttribute("errorMsg", "この会員はすでに登録されております");
             return "createAccount";
         }
 
-        session.setAttribute("userFirstName", employeesinfoservice.getAnEmployeeFirstName(Integer.parseInt(id)));
+        session.setAttribute("userFirstName", employeesInfoService.getAnEmployeeFirstName(Integer.parseInt(id)));
         session.setAttribute("userId", id);
-        model.addAttribute("userName", employeesinfoservice.getAnEmployeeFirstName(Integer.parseInt(id)));
+        model.addAttribute("userName", employeesInfoService.getAnEmployeeFirstName(Integer.parseInt(id)));
 
         return "userMyPage";
     }
@@ -133,7 +130,7 @@ public class WorkTimeManagementController {
             return "redirect:admin";
         }
 
-        List<EmployeesEntity> user_info = employeesinfoservice.login(loginrequest);
+        List<EmployeesEntity> user_info = employeesInfoService.login(loginrequest);
         if (user_info.isEmpty()) {
             model.addAttribute("errMsg", "社員番号もしくはパスワードが違います");
             model.addAttribute("logininfo", new LoginRequest() );

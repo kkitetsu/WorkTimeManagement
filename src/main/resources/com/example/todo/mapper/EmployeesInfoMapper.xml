@@ -4,118 +4,163 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.todo.mapper.EmployeesInfoMapper">
-
-	<select id="getEmployees" resultType="com.example.todo.dto.SearchEmployeesDTO">
-		SELECT * FROM employees e 
-		LEFT JOIN departments d ON e.dpt_id  = d.dpt_id 
-		LEFT JOIN positions p ON e.position_id  = p.position_id 
-		WHERE created_date IS NOT null
+	<!-- shunsukekuzawa -->
+	<select id="getEmployees"
+		resultType="com.example.todo.dto.SearchEmployeesDTO">
+		SELECT * FROM employees e
+		LEFT JOIN departments d ON e.dpt_id =
+		d.dpt_id
+		LEFT JOIN positions p ON e.position_id = p.position_id
+		WHERE
+		created_date IS NOT null
 		<if test="lastname != null and lastname != ''">
-                AND e.lastname = #{lastname}
-         </if>
-         <if test="firstname != null and firstname != ''">
-                AND e.firstname = #{firstname}
-         </if> 
-       <if test="position_id != null">
-                AND e.position_id = #{position_id}
-         </if>
-        <if test="dpt_id != null">
-                AND e.dpt_id = #{dpt_id}
-         </if>
-         <if test="startDate != null">
-				AND birthday  >= #{startDate}
+			AND e.lastname = #{lastname}
+		</if>
+		<if test="firstname != null and firstname != ''">
+			AND e.firstname = #{firstname}
+		</if>
+		<if test="position_id != null">
+			AND e.position_id = #{position_id}
+		</if>
+		<if test="dpt_id != null">
+			AND e.dpt_id = #{dpt_id}
+		</if>
+		<if test="startDate != null">
+			AND birthday >= #{startDate}
 		</if>
 		<if test="endDate != null">
-				AND #{endDate} >= birthday
+			AND #{endDate} >= birthday
 		</if>
 	</select>
-	
-	<select id="getStamps" resultType="com.example.todo.dto.SearchStampsDTO">
+
+	<!-- shunsukekuzawa -->
+	<select id="getStamps"
+		resultType="com.example.todo.dto.SearchStampsDTO">
 		SELECT * FROM logs l
-		LEFT JOIN employees e ON e.employee_id  = l.user_id 
+		LEFT JOIN employees e ON e.employee_id = l.user_id
 		WHERE cancel_flag != 1
 		<if test="startDate != null">
-				AND datetime  >= #{startDate}
+			AND datetime >= #{startDate}
 		</if>
 		<if test="endDate != null">
-				AND #{endDate} >= datetime
+			AND #{endDate} >= datetime
 		</if>
 		<if test="stampType_id != null">
-                AND stampType_id = #{stampType_id}
-         </if>
-        <if test="employee_id != null and employee_id != ''">
-                AND user_id = #{employee_id}
-         </if>
-        <if test="firstname != null and firstname != ''">
-                AND e.firstname=#{firstname}
-         </if>
-         
-         <if test="lastname != null and lastname != ''">
-                AND e.lastname=#{lastname}
-       	</if>
-         </select>
-         
-      <select id="getStampsById" resultType="com.example.todo.dto.SearchStampsDTO">
+			AND stampType_id = #{stampType_id}
+		</if>
+		<if test="employee_id != null and employee_id != ''">
+			AND user_id = #{employee_id}
+		</if>
+		<if test="firstname != null and firstname != ''">
+			AND e.firstname=#{firstname}
+		</if>
+
+		<if test="lastname != null and lastname != ''">
+			AND e.lastname=#{lastname}
+		</if>
+	</select>
+
+	<!-- shunsukekuzawa -->
+	<select id="getStampsById"
+		resultType="com.example.todo.dto.SearchStampsDTO">
 		SELECT * FROM logs l
-		LEFT JOIN employees e ON e.employee_id  = l.user_id 
+		LEFT JOIN employees e ON e.employee_id
+		= l.user_id
 		WHERE log_id = #{id}
 	</select>
-	
+
 	<update id="updateStamps">
-    	UPDATE logs SET datetime = #{datetime}, stampType_id = #{stampType_id}, applicant = #{applicant} WHERE log_id = #{id};
-    </update>
-	
+		UPDATE logs SET datetime = #{datetime}, stampType_id
+		= #{stampType_id},
+		applicant = #{applicant} WHERE log_id = #{id};
+	</update>
 
-	<select id="login" resultType="com.example.todo.entity.EmployeesEntity">
-		SELECT
-		 *
+	<!--shunsukekuzawa -->
+	<select id="getWorkTime"
+		resultType="com.example.todo.dto.WorkTimeDTO">
+		SELECT SUM(total_seconds) AS total_time_seconds,
+		SEC_TO_TIME(SUM(total_seconds)) AS totalWorkTime,
+		count(*) as workCount
 		FROM
-		 employees
-		WHERE
-		 employee_id = #{login_id} AND loginPW = #{login_pw} 
+		(SELECT
+		DATE(datetime) AS date,
+		TIMESTAMPDIFF(SECOND, MIN(datetime), MAX(datetime)) AS total_seconds
+		FROM
+		logs
+		WHERE datetime >= #{date}
+		AND DATE_ADD(#{date}, INTERVAL 1 MONTH) > datetime
+		AND user_id = #{id}
+		GROUP BY
+		DATE(datetime)
+		) AS subquery;
 	</select>
-	
 
-    <select id="getEmployeesById" resultType="com.example.todo.entity.EmployeesEntity">
-    	SELECT firstname FROM employees WHERE lastname=#{name};
-    </select>
-    
-    <!--  author kk -->
-    <select id="getEmployeesLogs" resultType="com.example.todo.entity.LogsEntity">
-    	SELECT * FROM logs WHERE user_id=#{userId} ORDER BY datetime DESC LIMIT #{SUBLISTSIZE} OFFSET #{startIndex};
-    </select>
-    
-    <!--  author kk -->
-    <select id="getAnEmployeeFirstName">
-    	SELECT firstName FROM employees WHERE employee_id=#{id};
-    </select>
-     <!--  author kk -->
-    <select id="getLastLog">
-    	SELECT * FROM logs WHERE user_id=#{id} ORDER BY datetime DESC LIMIT 1;
-    </select>
-    
-    <!--  author kk -->
-    <select id="getLogsSize">
-    	SELECT COUNT(*) AS row_count FROM logs WHERE user_id=#{id};
-    </select>
-    
-    <!--  author kk -->
-    <insert id="insertLogs">
-    	INSERT INTO logs 
-    		(datetime, stampType_id, user_id, applicant, note)
-    	VALUES
-    		(CURRENT_TIMESTAMP, #{stampTypeId}, #{userId}, #{applicant}, #{note});
-    </insert>
+	<!-- shunsukekuzawa -->
+	<select id="login"
+		resultType="com.example.todo.entity.EmployeesEntity">
+		SELECT
+		*
+		FROM
+		employees
+		WHERE
+		employee_id = #{login_id} AND
+		loginPW = #{login_pw}
+	</select>
 
-    
-    <!--  author kk  -->
-    <insert id="createNewUser">
-    	INSERT INTO employees
-			(employee_id, loginPW, lastName, firstName, dpt_id, 
-					position_id, mail, phone, address, birthday, created_date)
+	<!-- shunsukekuzawa -->
+	<select id="getEmployeesById"
+		resultType="com.example.todo.entity.EmployeesEntity">
+		SELECT firstname FROM employees WHERE lastname=#{name};
+	</select>
+
+	<!-- author kk -->
+	<select id="getEmployeesLogs"
+		resultType="com.example.todo.entity.LogsEntity">
+		SELECT * FROM logs WHERE user_id=#{userId} ORDER BY
+		datetime DESC LIMIT
+		#{SUBLISTSIZE} OFFSET #{startIndex};
+	</select>
+
+	<!-- author kk -->
+	<select id="getAnEmployeeFirstName">
+		SELECT firstName FROM employees WHERE
+		employee_id=#{id};
+	</select>
+	<!-- author kk -->
+	<select id="getLastLog">
+		SELECT * FROM logs WHERE user_id=#{id} ORDER BY
+		datetime DESC LIMIT 1;
+	</select>
+
+	<!-- author kk -->
+	<select id="getLogsSize">
+		SELECT COUNT(*) AS row_count FROM logs WHERE
+		user_id=#{id};
+	</select>
+
+	<!-- author kk -->
+	<insert id="insertLogs">
+		INSERT INTO logs
+		(datetime, stampType_id, user_id,
+		applicant, note)
 		VALUES
-			(#{employee_id}, #{loginPW}, "xx", "xxx", 1, 
-				1, "xx@gmail.com", "xxx-xxxx-xxxx", "Tokyo", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-    </insert>
-    
+		(CURRENT_TIMESTAMP, #{stampTypeId}, #{userId},
+		#{applicant}, #{note});
+	</insert>
+
+
+	<!-- author kk -->
+	<insert id="createNewUser">
+		INSERT INTO employees
+		(employee_id, loginPW, lastName,
+		firstName, dpt_id,
+		position_id, mail, phone, address, birthday,
+		created_date)
+		VALUES
+		(#{employee_id}, #{loginPW}, "xx", "xxx", 1,
+		1,
+		"xx@gmail.com", "xxx-xxxx-xxxx", "Tokyo", CURRENT_TIMESTAMP,
+		CURRENT_TIMESTAMP);
+	</insert>
+
 </mapper>
