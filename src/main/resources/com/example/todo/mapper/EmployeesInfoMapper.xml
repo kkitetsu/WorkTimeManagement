@@ -178,5 +178,4 @@
     	UPDATE logs set cancel_flag = 1 WHERE log_id= #{id};
     </update>
     
-    
 </mapper>

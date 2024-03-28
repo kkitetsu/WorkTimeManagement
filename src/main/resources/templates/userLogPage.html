@@ -43,7 +43,7 @@
 							<!-- Table rows will be added dynamically here -->
 							<tr>
 								<td>
-									<p th:text="*{datetime}"></p>
+									<p th:text="${#dates.format(eachRow.datetime, 'yyyy-MM-dd HH:mm:ss')}"></p>
 								</td>
 								<td>
 									<p th:text="*{stampTypeIdStr}"></p>
@@ -70,9 +70,9 @@
 				<a th:if="${currentPage <= maxPageNum}" th:href="@{/userLogPage(currPage=${currentPage + 1})}">
 					<button class="blue_btn" style="font-size:30px;">次のページ</button>
 				</a>
-				<a th:href="@{/detail}">
+				<form th:action="@{/tmp}" th:method="post">
 					<button class="blue_btn" style="font-size:30px;">勤務時間確認</button>
-				</a>
+				</form>
 			</div>
 		</div>
 

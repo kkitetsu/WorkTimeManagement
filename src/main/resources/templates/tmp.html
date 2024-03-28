@@ -12,7 +12,7 @@
 	<!--　ヘッダーです。（共通項目） -->
 	<header>
 		<div class="title_box">
-			<div class="title_1"> <a href="https://www.rakuten-sec.co.jp/"><img src="img/rakuten_logo.png"
+			<div class="title_1"> <a href="https://www.rakuten-sec.co.jp/"><img src="../../img/rakuten_logo.png"
 						alt="Rakuten_sec_mark" class="maing_logo"> </a></div>
 			<div class="title_2"> <a href="home" class="main_title"> 楽天証券打刻システム</a></div>
 			<div class="title_3"> </div>
@@ -25,7 +25,7 @@
 			<div th:if="${errMsg}" class="alert alert-danger">
 				<span th:text="${errMsg}"></span>
 			</div>
-			- DETAIL(user) -
+			- DETAIL -
 		</div>
 		<form th:action="@{/tmp}" th:object="${workTimeRequest}" th:method="post">
 			<div class="content_box">
@@ -40,9 +40,16 @@
 				<div class="btn_box">
 					<button type="submit" class="blue_btn">検索</button>
 					</form>
-					<form th:action="@{/admin}" th:method="GET">
-						<button class="blue_btn" style="font-size:30px;">戻る</button>
-					</form>
+					<div th:if="${isAdmin}">
+						<form th:action="@{/admin}" th:method="GET">
+							<button class="blue_btn" style="font-size:30px;">戻る</button>
+						</form>
+					</div>
+					<div th:unless="${isAdmin}">
+						<form th:action="@{/userLogPage}" th:method="GET">
+							<button class="blue_btn" style="font-size:30px;">戻る</button>
+						</form>
+					</div>
 					
 				</div>
 			</div>

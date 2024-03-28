@@ -250,7 +250,6 @@ public class EmployeesInfoController {
 	@RequestMapping(value = "/stamp/update", method = RequestMethod.POST)
 	public String updateStamp(@ModelAttribute StampUpdateRequest stampUpdateRequest, Model model) {
 		//打刻履歴を更新すると申請者は、管理者
-
 		stampUpdateRequest.setApplicant("管理者");
 		employeesInfoService.updateStamps(stampUpdateRequest);
 
@@ -276,25 +275,47 @@ public class EmployeesInfoController {
 		workTimeRequest.setFirstname(employeesInfoService.getAnEmployeeFirstName(id));
 		workTimeRequest.setLastname(employeesInfoService.getAnEmployeeLastName(id));
 		model.addAttribute("workTimeRequest", workTimeRequest);
+		if (session.getAttribute("userId").equals("ADMIN")) {
+			model.addAttribute("isAdmin", true);
+		}
 		return "/tmp";
 	}
 
 	@RequestMapping(value = "/tmp", method = RequestMethod.POST)
 	public String workTime(Model model, HttpSession session, WorkTimeRequest workTimeRequest) {
+		
 		List<WorkTimeDTO> workTimeInfo = employeesInfoService.getWorkTime(workTimeRequest);
+		
+		int userId = 0;
+		System.out.println(session.getAttribute("userId"));
+		if (session.getAttribute("userId").equals("ADMIN")) {
+			// This is admin
+			userId = workTimeRequest.getId();
+			model.addAttribute("isAdmin", true);
+		} else {
+			// This is accessed by user
+			userId = Integer.parseInt(session.getAttribute("userId").toString());
+			model.addAttribute("isAdmin", false);
+		}
+		
+		System.out.println(model.getAttribute("isAdmin"));
+		
 		for (WorkTimeDTO eachLog : workTimeInfo) {
 			eachLog.setStartDate(workTimeRequest.getStartDate());
 			eachLog.setEndDate(workTimeRequest.getEndDate());
-			eachLog.setFirstname((employeesInfoService.getAnEmployeeFirstName(workTimeRequest.getId())));
-			eachLog.setLastname(employeesInfoService.getAnEmployeeLastName(workTimeRequest.getId()));
+			eachLog.setFirstname((employeesInfoService.getAnEmployeeFirstName(userId)));
+			eachLog.setLastname(employeesInfoService.getAnEmployeeLastName(userId));
 		}
 		
 		WorkTimeRequest workRequest = new WorkTimeRequest();
+
 		workRequest.setFirstname((employeesInfoService.getAnEmployeeFirstName(workTimeRequest.getId())));
 		workRequest.setLastname(employeesInfoService.getAnEmployeeLastName(workTimeRequest.getId()));
 		workRequest.setId(workTimeRequest.getId());	
+
 		model.addAttribute("workTimeInfo", workTimeInfo);
 		model.addAttribute("workTimeRequest", workRequest);
+		workRequest.setId(userId);
 		
 		return "/tmp";
 	}
