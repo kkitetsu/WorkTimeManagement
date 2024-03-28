@@ -309,8 +309,8 @@ public class EmployeesInfoController {
 		
 		WorkTimeRequest workRequest = new WorkTimeRequest();
 
-		workRequest.setFirstname((employeesInfoService.getAnEmployeeFirstName(workTimeRequest.getId())));
-		workRequest.setLastname(employeesInfoService.getAnEmployeeLastName(workTimeRequest.getId()));
+		workRequest.setFirstname((employeesInfoService.getAnEmployeeFirstName(userId)));
+		workRequest.setLastname(employeesInfoService.getAnEmployeeLastName(userId));
 		workRequest.setId(workTimeRequest.getId());	
 
 		model.addAttribute("workTimeInfo", workTimeInfo);
