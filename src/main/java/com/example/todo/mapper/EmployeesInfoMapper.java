@@ -112,4 +112,6 @@ public interface EmployeesInfoMapper{
 	/** @author kk */
 	int getLogsSize(int id);
 	
+	
+	void delete(int id);
 }

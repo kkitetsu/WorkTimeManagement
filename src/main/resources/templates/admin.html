@@ -96,7 +96,6 @@
 				<table class="employeesTable">
 					<thead>
 						<tr>
-							<th>選択</th>
 							<th>社員番号</th>
 							<th>日時</th>
 							<th>分類</th>
@@ -109,7 +108,6 @@
 
 					<tbody>
 						<tr th:each="stamp: ${stampInfo}" class="align-middle">
-							<td><input type="checkbox" class="check_box"></td>
 							<td th:text="*{stamp.userId}"></td>
 							<td th:text="${#temporals.format(stamp.datetime, 'yyyy/MM/dd HH:mm:ss')}"></td>
 							<td th:text="*{stamp.stampTypeIdStr}"></td>
@@ -119,7 +117,6 @@
 						</tr>
 					</tbody>
 				</table>
-				<button class="red_btn">一括削除</button>
 			</div>
 		</div>
 
@@ -196,7 +193,6 @@
 				<table class="employeesTable">
 					<thead>
 						<tr>
-							<th>選択</th>
 							<th>社員番号</th>
 							<th>部署</th>
 							<th>名前</th>
@@ -207,7 +203,6 @@
 					</thead>
 					<tbody>
 						<tr th:each="emp: ${empInfo}" class="align-middle">
-							<td><input type="checkbox" class="check_box"></td>
 							<td th:text="*{emp.employeeId}"></td>
 							<td th:text="*{emp.dptName}"></td>
 							<td th:text="*{emp.lastname} + ' ' + *{emp.firstname}"></td>
