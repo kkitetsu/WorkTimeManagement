@@ -75,6 +75,16 @@ public interface EmployeesInfoMapper{
 	 * @return
 	 */
 	String getAnEmployeeFirstName(int id);
+	
+	/**
+	 * @author kk
+	 * 
+	 * Get the last name of the employee by its id.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	String getAnEmployeeLastName(int id);
 
 	/**
 	 * @author kk

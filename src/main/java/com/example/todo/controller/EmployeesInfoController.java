@@ -270,20 +270,34 @@ public class EmployeesInfoController {
 	 * @param workTime
 	 * @return 
 	 */
-	@GetMapping(value = "/admin/{id}/adminDetail")
+	@GetMapping(value = "/admin/{id}/tmp")
 	public String workTimeDisplay(@PathVariable int id,Model model, HttpSession session) {
 		WorkTimeRequest workTimeRequest = new WorkTimeRequest();
 		workTimeRequest.setId(id);
+		workTimeRequest.setFirstname(employeesInfoService.getAnEmployeeFirstName(id));
+		workTimeRequest.setLastname(employeesInfoService.getAnEmployeeLastName(id));
 		model.addAttribute("workTimeRequest", workTimeRequest);
-		return "/adminDetail";
+		return "/tmp";
 	}
 
-	@RequestMapping(value = "/adminDetails", method = RequestMethod.POST)
+	@RequestMapping(value = "/tmp", method = RequestMethod.POST)
 	public String workTime(Model model, HttpSession session, WorkTimeRequest workTimeRequest) {
 		List<WorkTimeDTO> workTimeInfo = employeesInfoService.getWorkTime(workTimeRequest);
-
+		for (WorkTimeDTO eachLog : workTimeInfo) {
+			eachLog.setStartDate(workTimeRequest.getStartDate());
+			eachLog.setEndDate(workTimeRequest.getEndDate());
+			eachLog.setFirstname((employeesInfoService.getAnEmployeeFirstName(workTimeRequest.getId())));
+			eachLog.setLastname(employeesInfoService.getAnEmployeeLastName(workTimeRequest.getId()));
+		}
+		
+		WorkTimeRequest workRequest = new WorkTimeRequest();
+		workRequest.setFirstname((employeesInfoService.getAnEmployeeFirstName(workTimeRequest.getId())));
+		workRequest.setLastname(employeesInfoService.getAnEmployeeLastName(workTimeRequest.getId()));
+		
 		model.addAttribute("workTimeInfo", workTimeInfo);
-		return "/adminDetail";
+		model.addAttribute("workTimeRequest", workRequest);
+		
+		return "/tmp";
 	}
 
 }

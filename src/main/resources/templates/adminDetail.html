@@ -20,7 +20,9 @@
 
 	<body>
 		<form th:action="@{/adminDetails}" th:object="${workTimeRequest}" th:method="post">
-			<input type="date" th:field="*{date}">
+			<label>期間</label>
+			<input type="date" th:field="*{startDate}">〜
+			<input type="date" th:field="*{endDate}">
 			<input type="hidden" th:field="*{id}">
 			<button type="submit">検索</button>
 		</form>

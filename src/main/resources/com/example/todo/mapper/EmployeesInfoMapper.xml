@@ -87,8 +87,8 @@
 		TIMESTAMPDIFF(SECOND, MIN(datetime), MAX(datetime)) AS total_seconds
 		FROM
 		logs
-		WHERE datetime >= #{date}
-		AND DATE_ADD(#{date}, INTERVAL 1 MONTH) > datetime
+		WHERE datetime >= #{startDate}
+		AND #{endDate} > datetime
 		AND user_id = #{id}
 		GROUP BY
 		DATE(datetime)
@@ -126,6 +126,13 @@
 		SELECT firstName FROM employees WHERE
 		employee_id=#{id};
 	</select>
+	
+	<!-- author kk -->
+	<select id="getAnEmployeeLastName">
+		SELECT lastName FROM employees WHERE
+		employee_id=#{id};
+	</select>
+	
 	<!-- author kk -->
 	<select id="getLastLog">
 		SELECT * FROM logs WHERE user_id=#{id} ORDER BY
