@@ -87,5 +87,8 @@ public class EmployeesInfoService {
 	public int getLogsSize(int id) {
 		return employeesInfomapper.getLogsSize(id);
 	}
+	public void delete(int id) {
+		employeesInfomapper.delete(id);
+	}
 }
 

@@ -206,6 +206,7 @@ public class EmployeesInfoController {
 		
 		model.addAttribute("stampUpdateRequest",newStamp);
 		model.addAttribute("stampInfo",stampInfo);
+		model.addAttribute("searchEmployeesRequest", new SearchEmployeesRequest());
 
 		return "/adminEdit";
 	}
@@ -222,8 +223,8 @@ public class EmployeesInfoController {
 	@RequestMapping(value="/stamp/update",method=RequestMethod.POST)
 	public String updateStamp(@ModelAttribute StampUpdateRequest stampUpdateRequest,Model model) {
 		//打刻履歴を更新すると申請者は、管理者
-		stampUpdateRequest.setApplicant("管理者");
 		
+		stampUpdateRequest.setApplicant("管理者");
 		employeesInfoService.updateStamps(stampUpdateRequest);
 		
 		View(model);
@@ -255,5 +256,14 @@ public class EmployeesInfoController {
 
 		return "/adminDetail";
 	}
+	
 
+	@RequestMapping(value="/stamp/delete", method=RequestMethod.POST)
+	public String deleteStamp(@ModelAttribute StampUpdateRequest stampUpdateRequest,Model model) {
+		System.out.println(stampUpdateRequest.getId());
+		employeesInfoService.delete(stampUpdateRequest.getId());
+		return "redirect:/admin";
+		
+	}
 }
+

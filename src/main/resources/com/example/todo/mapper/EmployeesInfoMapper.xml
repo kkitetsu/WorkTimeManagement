@@ -118,4 +118,11 @@
 				1, "xx@gmail.com", "xxx-xxxx-xxxx", "Tokyo", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
     </insert>
     
+    
+    <update id="delete">
+    	UPDATE logs set cancel_flag = 1 WHERE log_id= #{id};
+    </update>
+    
+    
+    
 </mapper>
