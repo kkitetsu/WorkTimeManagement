@@ -7,7 +7,7 @@
 	<link rel="stylesheet" th:href="@{../../css/userPage.css}" />
 </head>
 
-<body>
+<div>
 	<!--　ヘッダーです。（共通項目） -->
 	<header>
 		<div class="title_box">
@@ -62,7 +62,8 @@
 					class="edit_data_text">
 					<input type="hidden" th:field="*{id}" />
 
-					<label>日時:</label> <input type="datetime-local" class="edit_data_text" th:field="*{datetime}" required="required"><br>
+					<label>日時:</label> <input type="datetime-local" class="edit_data_text" th:field="*{datetime}"
+						required="required"><br>
 					<label>出退勤カテゴリ：</label>
 					<select id="stampType_id" name="stampType_id" class="edit_data_text">
 						<option value="0">出勤</option>
@@ -70,20 +71,25 @@
 						<option value="2">外出</option>
 						<option value="3">復帰</option>
 					</select>
-
-
 					<div class="btn_box_right">
 						<input type="submit" class="blue_btn" value="保存">
-						<input type="submit" class="red_btn" value="キャンセル">
-					</div>
+				</form>
+				<form th:action="@{/admin}" th:method="GET">
+					<button class="red_btn" style="font-size:30px;">キャンセル</button>
 				</form>
 
+				<form th:action="@{/stamp/delete}" th:object="${stampUpdateRequest}" th:method="post">
+					<input type="hidden" th:field="*{id}">
+					<input type="hidden" name="delete_trigger" value="true">
+					<input type="submit" class="blue_btn" value="削除">
+				</form>
 			</div>
 
 		</div>
+
 	</div>
 
 
-</body>
+	</body>
 
 </html>

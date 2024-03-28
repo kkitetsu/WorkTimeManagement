@@ -87,7 +87,7 @@ public class EmployeesInfoController {
 		empCondition.setStartDate(searchEmployeesRequest.getStartDate());
 		empCondition.setFirstname(searchEmployeesRequest.getFirstname());
 		empCondition.setLastname(searchEmployeesRequest.getLastname());
-		if (empInfo.size() != 0) {
+		if (searchEmployeesRequest.getPosition_id() != null) {
 			empCondition.setPositionName(empInfo.get(0).getPositionName());
 			empCondition.setDptName(empInfo.get(0).getDptName());
 		} else {
@@ -231,11 +231,10 @@ public class EmployeesInfoController {
 				eachLog.setStampTypeIdStr(null);
 				break;
 			}
-		}
-
-		model.addAttribute("stampUpdateRequest", newStamp);
-		model.addAttribute("stampInfo", stampInfo);
-
+		}		
+		model.addAttribute("stampUpdateRequest",newStamp);
+		model.addAttribute("stampInfo",stampInfo);
+		model.addAttribute("searchEmployeesRequest", new SearchEmployeesRequest());
 		return "/adminEdit";
 	}
 
@@ -251,8 +250,8 @@ public class EmployeesInfoController {
 	@RequestMapping(value = "/stamp/update", method = RequestMethod.POST)
 	public String updateStamp(@ModelAttribute StampUpdateRequest stampUpdateRequest, Model model) {
 		//打刻履歴を更新すると申請者は、管理者
-		stampUpdateRequest.setApplicant("管理者");
 
+		stampUpdateRequest.setApplicant("管理者");
 		employeesInfoService.updateStamps(stampUpdateRequest);
 
 		View(model);
@@ -293,11 +292,20 @@ public class EmployeesInfoController {
 		WorkTimeRequest workRequest = new WorkTimeRequest();
 		workRequest.setFirstname((employeesInfoService.getAnEmployeeFirstName(workTimeRequest.getId())));
 		workRequest.setLastname(employeesInfoService.getAnEmployeeLastName(workTimeRequest.getId()));
-		
+		workRequest.setId(workTimeRequest.getId());	
 		model.addAttribute("workTimeInfo", workTimeInfo);
 		model.addAttribute("workTimeRequest", workRequest);
 		
 		return "/tmp";
 	}
+	
 
+	@RequestMapping(value="/stamp/delete", method=RequestMethod.POST)
+	public String deleteStamp(@ModelAttribute StampUpdateRequest stampUpdateRequest,Model model) {
+		System.out.println(stampUpdateRequest.getId());
+		employeesInfoService.delete(stampUpdateRequest.getId());
+		return "redirect:/admin";
+		
+	}
 }
+
