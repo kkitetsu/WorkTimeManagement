@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.todo.entity.EmployeesEntity;
 import com.example.todo.entity.LogsEntity;
 import com.example.todo.form.LoginRequest;
+import com.example.todo.form.WorkTimeRequest;
 import com.example.todo.service.EmployeesInfoService;
 import com.example.todo.utils.HashGenerator;
 
@@ -72,9 +73,18 @@ public class WorkTimeManagementController {
         return "createAccount";
     }
     
+    /**
+     * Show the user's working time and working days.
+     * @param model
+     * @param session
+     * @return
+     */
     @GetMapping(value="/detail")
     public String displaycreatepage1(Model model, HttpSession session) {
-    	return "detail";
+    	WorkTimeRequest workTimeRequest = new WorkTimeRequest();
+    	workTimeRequest.setId((int)session.getAttribute("userId"));
+    	model.addAttribute("workTimeRequest", workTimeRequest);
+    	return "/detail";
     }
 
     /**
@@ -91,6 +101,7 @@ public class WorkTimeManagementController {
                                         @RequestParam("employee_id") String id,
                                         @RequestParam("loginPW") String pwd) {
 
+    	// 新規ユーザIDとパスワードを記録
         EmployeesEntity employeeEntity = new EmployeesEntity();
         employeeEntity.setEmployee_id(Integer.parseInt(id));
         try {
@@ -99,6 +110,7 @@ public class WorkTimeManagementController {
 			e1.printStackTrace();
 		}
 
+        // 上記のデータをsqlに保存
         try {
             employeesinfoservice.createNewUser(employeeEntity);
         } catch (Exception e) {
@@ -106,6 +118,7 @@ public class WorkTimeManagementController {
             return "createAccount";
         }
 
+        // セッションにユーザIDと名前を記録
         session.setAttribute("userFirstName", employeesinfoservice.getAnEmployeeFirstName(Integer.parseInt(id)));
         session.setAttribute("userId", id);
         model.addAttribute("userName", employeesinfoservice.getAnEmployeeFirstName(Integer.parseInt(id)));
@@ -113,6 +126,14 @@ public class WorkTimeManagementController {
         return "userMyPage";
     }
 
+    /**
+     * Logic for handling login process.
+     * 
+     * @param loginrequest
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value="/login", method=RequestMethod.POST)
     public String UserLogin( @ModelAttribute LoginRequest loginrequest,
                                             Model model, HttpSession session) {
@@ -133,14 +154,17 @@ public class WorkTimeManagementController {
             return "redirect:admin";
         }
 
+        // ユーザのログイン情報でsqlに取得
         List<EmployeesEntity> user_info = employeesinfoservice.login(loginrequest);
+        
+        // もしログイン情報が間違いだったら、SQLは空
         if (user_info.isEmpty()) {
             model.addAttribute("errMsg", "社員番号もしくはパスワードが違います");
             model.addAttribute("logininfo", new LoginRequest() );
             return "/home";
         }
 
-        /** @author kk session */
+        // セッションにユーザの名前を追加。のちにHTMLアウトプットなどで使える
         session.setAttribute("userFirstName", user_info.get(0).getFirstname());
         session.setAttribute("userId", loginrequest.getLogin_id());
         model.addAttribute("userName", session.getAttribute("userFirstName"));
@@ -164,10 +188,12 @@ public class WorkTimeManagementController {
         }
         if (action.equals("clockin")) {
         	
-        	System.out.println(session.getAttribute("userId"));
+        	// 前回の打刻記録を取得する
             previousLog = employeesInfoService.getLastLog(Integer.parseInt(session.getAttribute("userId").toString()));
             
+            // もし新規ユーザだったら、前回の打刻記録は存在しない
             if (previousLog == null) {
+            	// 打刻をし、データベースを更新し、アラート表示に行く
             	LogsEntity logsEntity = new LogsEntity();
                 logsEntity.setApplicant("本人");
                 logsEntity.setNote("XXXX");
@@ -178,6 +204,7 @@ public class WorkTimeManagementController {
                 return "/alertAndRedirect";
             }
 
+            // 前回の打刻記録と、現在の打刻の時間を比較
             Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
             long millisecondsDifference = currentTimestamp.getTime() - previousLog.getDatetime().getTime();
             long hoursDifference = TimeUnit.MILLISECONDS.toHours(millisecondsDifference);
@@ -205,8 +232,10 @@ public class WorkTimeManagementController {
             }
 
         } else if (action.equals("checkHistory")) {
+        	// 履歴確認クリック
             return "redirect:/userLogPage";
         } else {
+        	// ログアウトボタンクリック
             session.invalidate();    // Logout and back to home
             return "redirect:/home";
         }
@@ -228,18 +257,22 @@ public class WorkTimeManagementController {
             return "redirect:/home";
         }
         
+        // データベースから５件だけ取得する準備
         int userId = Integer.parseInt(session.getAttribute("userId").toString());
         int LogsSize = employeesInfoService.getLogsSize(userId);
         final int SUBLISTSIZE = 5;
         int startIndex = (currPage - 1) * SUBLISTSIZE;
         
+        // データベースから指定の範囲のデータを取得
         List<LogsEntity> logs = employeesInfoService.getEmployeesLogs(userId, SUBLISTSIZE, startIndex);
 
+        // HTMLに必要な変数を入力
         model.addAttribute("logs", logs);
         model.addAttribute("userName", session.getAttribute("userFirstName"));
         model.addAttribute("currentPage", currPage);
         model.addAttribute("maxPageNum", (int) (Math.ceil(LogsSize / SUBLISTSIZE)));
 
+        // ローデータは 0, 1, 2, 3 なのでそれらを漢字に変換
         for (LogsEntity eachLog : logs) {
             int tmp = eachLog.getStampTypeId();
             switch (tmp) {
@@ -251,6 +284,7 @@ public class WorkTimeManagementController {
             }
         }
 
+        // 履歴画面表示
         return "userLogPage";
     }
 
