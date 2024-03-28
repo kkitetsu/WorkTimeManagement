@@ -70,9 +70,9 @@
 				<a th:if="${currentPage <= maxPageNum}" th:href="@{/userLogPage(currPage=${currentPage + 1})}">
 					<button class="blue_btn" style="font-size:30px;">次のページ</button>
 				</a>
-				<a th:href="@{/detail}">
+				<form th:action="@{/tmp}" th:method="post">
 					<button class="blue_btn" style="font-size:30px;">勤務時間確認</button>
-				</a>
+				</form>
 			</div>
 		</div>
 

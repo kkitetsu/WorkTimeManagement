@@ -40,9 +40,16 @@
 				<div class="btn_box">
 					<button type="submit" class="blue_btn">検索</button>
 					</form>
-					<form th:action="@{/admin}" th:method="GET">
-						<button class="blue_btn" style="font-size:30px;">戻る</button>
-					</form>
+					<div th:if="${isAdmin}">
+						<form th:action="@{/admin}" th:method="GET">
+							<button class="blue_btn" style="font-size:30px;">戻る</button>
+						</form>
+					</div>
+					<div th:unless="${isAdmin}">
+						<form th:action="@{/userLogPage}" th:method="GET">
+							<button class="blue_btn" style="font-size:30px;">戻る</button>
+						</form>
+					</div>
 					
 				</div>
 			</div>
