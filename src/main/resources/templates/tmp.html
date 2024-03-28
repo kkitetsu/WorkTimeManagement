@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>打刻システム-詳細</title>
+	<link rel="stylesheet" th:href="@{../../css/userPage.css}" />
+</head>
+
+<body>
+
+	<!--　ヘッダーです。（共通項目） -->
+	<header>
+		<div class="title_box">
+			<div class="title_1"> <a href="https://www.rakuten-sec.co.jp/"><img src="img/rakuten_logo.png"
+						alt="Rakuten_sec_mark" class="maing_logo"> </a></div>
+			<div class="title_2"> <a href="home" class="main_title"> 楽天証券打刻システム</a></div>
+			<div class="title_3"> </div>
+		</div>
+	</header>
+	<!--　ここからメインです。-->
+	<main>
+		<div class="main_box">
+			<!-- author kk  handling error case -->
+			<div th:if="${errMsg}" class="alert alert-danger">
+				<span th:text="${errMsg}"></span>
+			</div>
+			- DETAIL(user) -
+		</div>
+		<form th:action="@{/tmp}" th:object="${workTimeRequest}" th:method="post">
+			<div class="content_box">
+				<div class="name_box">
+					<sapn th:text="*{lastname} + ' ' + *{firstname}"></sapn>
+				</div> <br>
+				<div class="text_box"> 日付 : <span class="white_span_box"><input type="date"
+							th:field="*{startDate}"></span>
+					~ <span class="white_span_box"><input type="date" th:field="*{endDate}"></span> <br>
+					<input type="hidden" th:field="*{id}">
+				</div>
+				<div class="btn_box">
+					<button type="submit" class="blue_btn">検索</button>
+					</form>
+					<form th:action="@{/admin}" th:method="GET">
+						<button class="blue_btn" style="font-size:30px;">戻る</button>
+					</form>
+					
+				</div>
+			</div>
+		
+
+		<div class="content_box">
+			<div th:if="${workTimeInfo}">
+				<div th:each="work: ${workTimeInfo}" class="align-middle">
+					<div class="text_box">名前:<div class="name_box" th:text="*{work.lastname} + ' ' + *{work.firstname}">
+						</div>
+					</div>
+					<div class="text_box"> 期限 : <span class="white_span_box" th:text="*{work.startDate}"></span>
+						より <span class="white_span_box" th:text="*{work.endDate}"></span>まで </div>
+					<div class="text_box">
+
+						期限内出勤日数：<span class="white_span_box" th:text="*{work.workCount}">
+						</span>日,
+						総勤務時間:<span class="white_span_box" th:text="${#temporals.format(work.totalWorkTime, 'HH:mm')}">
+						</span> 時間
+					</div>
+				</div>
+			</div>
+
+	</main>
+
+
+	<!--フッターです。（共通項目）-->
+	<footer>
+		<div class="footer_box">問い合わせ先:rakuten-tarou@rakuten-sec.co.jp</div>
+	</footer>
+</body>
+
+</html>

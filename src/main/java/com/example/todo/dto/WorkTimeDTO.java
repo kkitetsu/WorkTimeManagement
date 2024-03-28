@@ -12,5 +12,11 @@ public class WorkTimeDTO {
 	
 	private Integer workCount;
 	
-	private LocalDate month;
+	private String lastname;
+	
+	private String firstname;
+	
+	private LocalDate startDate;
+	
+	private LocalDate endDate;
 }
