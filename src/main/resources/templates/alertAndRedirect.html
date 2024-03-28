@@ -10,25 +10,35 @@
 			window.location.href = "/userLogPage";
 		</script>
 	</div>
-    <script>
-        var currentTime = new Date();
-        var hours = currentTime.getHours();
-        var minutes = currentTime.getMinutes();
-        var seconds = currentTime.getSeconds();
-
-        if (minutes < 10) {
-            minutes = "0" + minutes;
-        }
-        if (seconds < 10) {
-            seconds = "0" + seconds;
-        }
-
-        var formattedTime = hours + ":" + minutes + ":" + seconds;
-        alert("アラート\n" + formattedTime + "に打刻しました");
-
-        // Redirect after displaying the alert
-        window.location.href = "/userLogPage";
-    </script>
+	<div id="forgotAlert" th:data-enable-forgot-alert="${enableForgotAlert}"></div>
+	<div th:if="${isClockIn}">
+	    <script th:inline="javascript">
+			
+			var enableForgotAlert = document.getElementById('forgotAlert').getAttribute('data-enable-forgot-alert');
+	        var currentTime = new Date();
+	        var hours = currentTime.getHours();
+	        var minutes = currentTime.getMinutes();
+	        var seconds = currentTime.getSeconds();
+	
+	        if (minutes < 10) {
+	            minutes = "0" + minutes;
+	        }
+	        if (seconds < 10) {
+	            seconds = "0" + seconds;
+	        }
+	        
+			var formattedTime = hours + ":" + minutes + ":" + seconds;
+			if (enableForgotAlert) {
+				alert("アラート\n" + formattedTime + "に打刻しました\n" + 
+						"前回に打刻忘れがあります。打刻履歴を確認し、管理者に連絡してください");
+			} else {
+				alert("アラート\n" + formattedTime + "に打刻しました");
+			}
+	
+	        // Redirect after displaying the alert
+	        window.location.href = "/userLogPage";
+	    </script>
+	</div>
 </head>
 <body>
     <!-- This is a placeholder body, but it's not actually used -->
