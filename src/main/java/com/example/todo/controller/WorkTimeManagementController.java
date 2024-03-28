@@ -147,6 +147,7 @@ public class WorkTimeManagementController {
 
         /** @author kk  If the login info is admin, jump to admin page. */
         if (loginrequest.getLogin_id() == 4755 && loginrequest.getLogin_pw().equals(adminPassword)) {
+        	session.setAttribute("userId", "ADMIN");
             return "redirect:admin";
         }
 

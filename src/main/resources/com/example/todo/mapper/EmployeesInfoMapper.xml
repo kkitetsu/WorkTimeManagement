@@ -25,6 +25,9 @@
 		<if test="dpt_id != null">
 			AND e.dpt_id = #{dpt_id}
 		</if>
+		<if test="employee_id != null and employee_id != ''">
+			AND e.employee_id = #{employee_id}
+		</if>
 		<if test="startDate != null">
 			AND birthday >= #{startDate}
 		</if>
@@ -168,7 +171,8 @@
 		1,
 		"xx@gmail.com", "xxx-xxxx-xxxx", "Tokyo", CURRENT_TIMESTAMP,
 		CURRENT_TIMESTAMP);
-    </insert>
+	</insert>
+    
     
     <update id="delete">
     	UPDATE logs set cancel_flag = 1 WHERE log_id= #{id};
