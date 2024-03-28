@@ -87,7 +87,7 @@ public class EmployeesInfoController {
 		empCondition.setStartDate(searchEmployeesRequest.getStartDate());
 		empCondition.setFirstname(searchEmployeesRequest.getFirstname());
 		empCondition.setLastname(searchEmployeesRequest.getLastname());
-		if (empInfo.size() != 0) {
+		if (searchEmployeesRequest.getPosition_id() != null) {
 			empCondition.setPositionName(empInfo.get(0).getPositionName());
 			empCondition.setDptName(empInfo.get(0).getDptName());
 		} else {
@@ -231,12 +231,10 @@ public class EmployeesInfoController {
 				eachLog.setStampTypeIdStr(null);
 				break;
 			}
-		}
-		
+		}		
 		model.addAttribute("stampUpdateRequest",newStamp);
 		model.addAttribute("stampInfo",stampInfo);
 		model.addAttribute("searchEmployeesRequest", new SearchEmployeesRequest());
-
 		return "/adminEdit";
 	}
 
@@ -310,9 +308,11 @@ public class EmployeesInfoController {
 		}
 		
 		WorkTimeRequest workRequest = new WorkTimeRequest();
-		workRequest.setFirstname((employeesInfoService.getAnEmployeeFirstName(userId)));
-		workRequest.setLastname(employeesInfoService.getAnEmployeeLastName(userId));
-		
+
+		workRequest.setFirstname((employeesInfoService.getAnEmployeeFirstName(workTimeRequest.getId())));
+		workRequest.setLastname(employeesInfoService.getAnEmployeeLastName(workTimeRequest.getId()));
+		workRequest.setId(workTimeRequest.getId());	
+
 		model.addAttribute("workTimeInfo", workTimeInfo);
 		model.addAttribute("workTimeRequest", workRequest);
 		workRequest.setId(userId);
