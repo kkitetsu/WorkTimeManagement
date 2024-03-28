@@ -10,10 +10,17 @@ public class WorkTimeRequest implements Serializable{
 	/*
 	 * 指定された月
 	 */
-	private LocalDate date;
+	private LocalDate startDate;
+	
+	private LocalDate endDate;
 	
 	/*
-	 * ユーザーID
+	 *ユーザーID 
 	 */
 	private Integer id;
+	
+	private String lastname;
+	
+	private String firstname;
+
 }

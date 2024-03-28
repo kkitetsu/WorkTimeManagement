@@ -19,25 +19,31 @@
 	</header>
 
 	<body>
-		<input type="month" name="month">
-		<table class="employeesTable">
+		<form th:action="@{/adminDetails}" th:object="${workTimeRequest}" th:method="post">
+			<label>期間</label>
+			<input type="date" th:field="*{startDate}">〜
+			<input type="date" th:field="*{endDate}">
+			<input type="hidden" th:field="*{id}">
+			<button type="submit">検索</button>
+		</form>
+
+		<table class="workTimeTable">
 			<thead>
 				<tr>
 					<th>総勤務日数</th>
 					<th>総勤務時間</th>
 				</tr>
 			</thead>
-
-			<tbody>
-				<tr th:each="stamp: ${stampInfo}" class="align-middle">
-					<td th:text="*{stamp.userId}"></td>
-					<td th:text="${#temporals.format(stamp.datetime, 'yyyy/MM/dd HH:mm:ss')}"></td>
-					<td th:text="*{stamp.stampTypeIdStr}"></td>
-					<td th:text="*{stamp.lastname} + ' ' + *{stamp.firstname}"></td>
-					<td th:text="*{stamp.applicant}"></td>
-				</tr>
-			</tbody>
+			<div th:if="${workTimeInfo}">
+				<tbody>
+					<tr th:each="work: ${workTimeInfo}" class="align-middle">
+						<td th:text="*{work.workCount}"></td>
+						<td th:text="${#temporals.format(work.totalWorkTime, 'HH:mm')}"></td>
+					</tr>
+				</tbody>
+			</div>
 		</table>
+
 	</body>
 
 </html>

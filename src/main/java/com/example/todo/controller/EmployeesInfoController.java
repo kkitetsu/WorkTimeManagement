@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.todo.dto.SearchEmployeesDTO;
 import com.example.todo.dto.SearchStampsDTO;
+import com.example.todo.dto.WorkTimeDTO;
 import com.example.todo.form.SearchEmployeesRequest;
 import com.example.todo.form.SearchStampsRequest;
 import com.example.todo.form.StampUpdateRequest;
@@ -30,11 +31,10 @@ import jakarta.servlet.http.HttpSession;
  */
 @Controller
 public class EmployeesInfoController {
-	
+
 	@Autowired
 	private EmployeesInfoService employeesInfoService;
-   
-	
+
 	/**
 	 * @author shunsukekuzawa
 	 * 
@@ -43,13 +43,13 @@ public class EmployeesInfoController {
 	 * @param model
 	 * @return admin top page URL
 	 */
-	@GetMapping(value="/admin")
+	@GetMapping(value = "/admin")
 	public String View(Model model) {
 		model.addAttribute("searchEmployeesRequest", new SearchEmployeesRequest());
 		model.addAttribute("searchStampsRequest", new SearchStampsRequest());
 		return "/admin";
-	} 	
-	
+	}
+
 	/**
 	 * @author shunsukekuzawa
 	 * 
@@ -60,24 +60,25 @@ public class EmployeesInfoController {
 	 * @param model
 	 * @return admin top page URL
 	 */
-	@RequestMapping(value="/admin",params = "emp",method=RequestMethod.POST)
-	public String searchEmp(@ModelAttribute SearchEmployeesRequest searchEmployeesRequest, BindingResult result, Model model) {
+	@RequestMapping(value = "/admin", params = "emp", method = RequestMethod.POST)
+	public String searchEmp(@ModelAttribute SearchEmployeesRequest searchEmployeesRequest, BindingResult result,
+			Model model) {
 		//バリデーションチェック
 		if (result.hasErrors()) {
-            // 入力チェックエラーの場合
-            List<String> errorList = new ArrayList<String>();
-            for (ObjectError error : result.getAllErrors()) {
-                errorList.add(error.getDefaultMessage());
-            }
-            model.addAttribute("searchEmployeesRequest", new SearchEmployeesRequest());
-    		model.addAttribute("searchStampsRequest", new SearchStampsRequest());
-            model.addAttribute("validationError", errorList);
-            return "admin";
-        }
-		
+			// 入力チェックエラーの場合
+			List<String> errorList = new ArrayList<String>();
+			for (ObjectError error : result.getAllErrors()) {
+				errorList.add(error.getDefaultMessage());
+			}
+			model.addAttribute("searchEmployeesRequest", new SearchEmployeesRequest());
+			model.addAttribute("searchStampsRequest", new SearchStampsRequest());
+			model.addAttribute("validationError", errorList);
+			return "admin";
+		}
+
 		//社員の検索条件を入力し、条件を満たした社員を代入
 		List<SearchEmployeesDTO> empInfo = employeesInfoService.getEmployees(searchEmployeesRequest);
-		
+
 		//入力された検索条件を出力するために、変数empConditionに条件を代入
 		SearchEmployeesDTO empCondition = new SearchEmployeesDTO();
 		empCondition.setEmployeeId(searchEmployeesRequest.getEmployee_id());
@@ -86,25 +87,26 @@ public class EmployeesInfoController {
 		empCondition.setStartDate(searchEmployeesRequest.getStartDate());
 		empCondition.setFirstname(searchEmployeesRequest.getFirstname());
 		empCondition.setLastname(searchEmployeesRequest.getLastname());
-		if(empInfo.size() != 0) {
+		if (empInfo.size() != 0) {
 			empCondition.setPositionName(empInfo.get(0).getPositionName());
 			empCondition.setDptName(empInfo.get(0).getDptName());
-		}else {
+		} else {
 			empCondition.setPositionName(null);
 			empCondition.setDptName(null);
 		}
-		
+
 		//検索条件の情報
-		model.addAttribute("empCondition",empCondition);
+		model.addAttribute("empCondition", empCondition);
 		//検索条件に一致した社員のリスト
-		model.addAttribute("empInfo",empInfo);
-		
+		model.addAttribute("empInfo", empInfo);
+
 		//おまじない
 		model.addAttribute("searchEmployeesRequest", new SearchEmployeesRequest());
 		model.addAttribute("searchStampsRequest", new SearchStampsRequest());
-		
+
 		return "admin";
 	}
+
 	/**
 	 * @author shunsukekuzawa
 	 * 
@@ -116,20 +118,21 @@ public class EmployeesInfoController {
 	 * @param model
 	 * @return admin top page URL
 	 */
-	@RequestMapping(value="/admin",params = "stamp",method=RequestMethod.POST)
-	public String searchStamp(@ModelAttribute SearchStampsRequest searchStampsRequest,HttpSession session, BindingResult result,Model model) {
+	@RequestMapping(value = "/admin", params = "stamp", method = RequestMethod.POST)
+	public String searchStamp(@ModelAttribute SearchStampsRequest searchStampsRequest, HttpSession session,
+			BindingResult result, Model model) {
 		//バリデーション
 		if (result.hasErrors()) {
-            // 入力チェックエラーの場合
-            List<String> errorList = new ArrayList<String>();
-            for (ObjectError error : result.getAllErrors()) {
-                errorList.add(error.getDefaultMessage());
-            }
-            model.addAttribute("validationError", errorList);
-            model.addAttribute("searchEmployeesRequest", new SearchEmployeesRequest());
-    		model.addAttribute("searchStampsRequest", new SearchStampsRequest());
-            return "admin";
-        }
+			// 入力チェックエラーの場合
+			List<String> errorList = new ArrayList<String>();
+			for (ObjectError error : result.getAllErrors()) {
+				errorList.add(error.getDefaultMessage());
+			}
+			model.addAttribute("validationError", errorList);
+			model.addAttribute("searchEmployeesRequest", new SearchEmployeesRequest());
+			model.addAttribute("searchStampsRequest", new SearchStampsRequest());
+			return "admin";
+		}
 		//打刻の検索条件を入力し、条件を満たした打刻履歴を代入
 		List<SearchStampsDTO> stampInfo = employeesInfoService.getStamps(searchStampsRequest);
 		LocalDateTime startDate = searchStampsRequest.getStartDate();
@@ -139,13 +142,21 @@ public class EmployeesInfoController {
 			eachLog.setStartDate(startDate);
 			eachLog.setEndDate(endDate);
 			switch (tmp) {
-				case 0: eachLog.setStampTypeIdStr("出勤"); break;
-				case 1: eachLog.setStampTypeIdStr("退勤"); break;
-				case 2: eachLog.setStampTypeIdStr("外出"); break;
-				case 3: eachLog.setStampTypeIdStr("復帰"); break;
+			case 0:
+				eachLog.setStampTypeIdStr("出勤");
+				break;
+			case 1:
+				eachLog.setStampTypeIdStr("退勤");
+				break;
+			case 2:
+				eachLog.setStampTypeIdStr("外出");
+				break;
+			case 3:
+				eachLog.setStampTypeIdStr("復帰");
+				break;
 			}
 		}
-		
+
 		//入力された検索条件を出力するために、変数stampConditionに条件を代入
 		SearchStampsDTO stampCondition = new SearchStampsDTO();
 		stampCondition.setStartDate(searchStampsRequest.getStartDate());
@@ -153,28 +164,36 @@ public class EmployeesInfoController {
 		stampCondition.setFirstname(searchStampsRequest.getFirstname());
 		stampCondition.setLastname(searchStampsRequest.getLastname());
 		stampCondition.setUserId(searchStampsRequest.getEmployee_id());
-		if(searchStampsRequest.getStampType_id() != null) {
+		if (searchStampsRequest.getStampType_id() != null) {
 			int tmp = searchStampsRequest.getStampType_id();
 			switch (tmp) {
-			case 0: stampCondition.setStampTypeIdStr("出勤"); break;
-			case 1: stampCondition.setStampTypeIdStr("退勤"); break;
-			case 2: stampCondition.setStampTypeIdStr("外出"); break;
-			case 3: stampCondition.setStampTypeIdStr("復帰"); break;
-		   }
+			case 0:
+				stampCondition.setStampTypeIdStr("出勤");
+				break;
+			case 1:
+				stampCondition.setStampTypeIdStr("退勤");
+				break;
+			case 2:
+				stampCondition.setStampTypeIdStr("外出");
+				break;
+			case 3:
+				stampCondition.setStampTypeIdStr("復帰");
+				break;
+			}
 		}
-		
+
 		//検索条件を格納
-		model.addAttribute("stampCondition",stampCondition);
+		model.addAttribute("stampCondition", stampCondition);
 		//検索条件を満たした打刻履歴を格納
-		model.addAttribute("stampInfo",stampInfo);
-		
+		model.addAttribute("stampInfo", stampInfo);
+
 		//おまじない
 		model.addAttribute("searchEmployeesRequest", new SearchEmployeesRequest());
 		model.addAttribute("searchStampsRequest", new SearchStampsRequest());
-		
+
 		return "admin";
 	}
-	
+
 	/**
 	 * @author shunsukekuzawa
 	 * 
@@ -185,31 +204,41 @@ public class EmployeesInfoController {
 	 * @param session
 	 * @return edit page URL
 	 */
-	@GetMapping(value="/admin/{id}/adminEdit")
+	@GetMapping(value = "/admin/{id}/adminEdit")
 	public String editStamp(@PathVariable int id, Model model, HttpSession session) {
-		
+
 		StampUpdateRequest newStamp = new StampUpdateRequest();
 		newStamp.setId(id);
-		
+
 		//編集・更新
 		List<SearchStampsDTO> stampInfo = employeesInfoService.getStampsById(id);
 		for (SearchStampsDTO eachLog : stampInfo) {
 			int tmp = eachLog.getStampTypeId();
 			switch (tmp) {
-				case 0: eachLog.setStampTypeIdStr("出勤"); break;
-				case 1: eachLog.setStampTypeIdStr("退勤"); break;
-				case 2: eachLog.setStampTypeIdStr("外出"); break;
-				case 3: eachLog.setStampTypeIdStr("復帰"); break;
-				default: eachLog.setStampTypeIdStr(null); break;
+			case 0:
+				eachLog.setStampTypeIdStr("出勤");
+				break;
+			case 1:
+				eachLog.setStampTypeIdStr("退勤");
+				break;
+			case 2:
+				eachLog.setStampTypeIdStr("外出");
+				break;
+			case 3:
+				eachLog.setStampTypeIdStr("復帰");
+				break;
+			default:
+				eachLog.setStampTypeIdStr(null);
+				break;
 			}
 		}
-		
-		model.addAttribute("stampUpdateRequest",newStamp);
-		model.addAttribute("stampInfo",stampInfo);
+
+		model.addAttribute("stampUpdateRequest", newStamp);
+		model.addAttribute("stampInfo", stampInfo);
 
 		return "/adminEdit";
 	}
-	
+
 	/**
 	 * @author shunsukekuzawa
 	 * 
@@ -219,18 +248,17 @@ public class EmployeesInfoController {
 	 * @param model
 	 * @return admin top page URL
 	 */
-	@RequestMapping(value="/stamp/update",method=RequestMethod.POST)
-	public String updateStamp(@ModelAttribute StampUpdateRequest stampUpdateRequest,Model model) {
+	@RequestMapping(value = "/stamp/update", method = RequestMethod.POST)
+	public String updateStamp(@ModelAttribute StampUpdateRequest stampUpdateRequest, Model model) {
 		//打刻履歴を更新すると申請者は、管理者
 		stampUpdateRequest.setApplicant("管理者");
-		
+
 		employeesInfoService.updateStamps(stampUpdateRequest);
-		
+
 		View(model);
 		return "redirect:/admin";
 	}
-	
-	
+
 	/**
 	 * @author shunsukekuzawa
 	 * 
@@ -242,18 +270,34 @@ public class EmployeesInfoController {
 	 * @param workTime
 	 * @return 
 	 */
-	@GetMapping(value="/admin/{id}/adminDetail")
-	public String workTime(@PathVariable int id, Model model, HttpSession session,WorkTimeRequest workTime) {
-		
-		workTime.setUser_id(id);
-		
-		//List<WorkTimeDTO> workTimeInfo = employeesInfoService.getWorkTime(workTime);
-		
-		
-//		model.addAttribute("stampUpdateRequest",newStamp);
-//		model.addAttribute("stampInfo",stampInfo);
+	@GetMapping(value = "/admin/{id}/tmp")
+	public String workTimeDisplay(@PathVariable int id,Model model, HttpSession session) {
+		WorkTimeRequest workTimeRequest = new WorkTimeRequest();
+		workTimeRequest.setId(id);
+		workTimeRequest.setFirstname(employeesInfoService.getAnEmployeeFirstName(id));
+		workTimeRequest.setLastname(employeesInfoService.getAnEmployeeLastName(id));
+		model.addAttribute("workTimeRequest", workTimeRequest);
+		return "/tmp";
+	}
 
-		return "/adminDetail";
+	@RequestMapping(value = "/tmp", method = RequestMethod.POST)
+	public String workTime(Model model, HttpSession session, WorkTimeRequest workTimeRequest) {
+		List<WorkTimeDTO> workTimeInfo = employeesInfoService.getWorkTime(workTimeRequest);
+		for (WorkTimeDTO eachLog : workTimeInfo) {
+			eachLog.setStartDate(workTimeRequest.getStartDate());
+			eachLog.setEndDate(workTimeRequest.getEndDate());
+			eachLog.setFirstname((employeesInfoService.getAnEmployeeFirstName(workTimeRequest.getId())));
+			eachLog.setLastname(employeesInfoService.getAnEmployeeLastName(workTimeRequest.getId()));
+		}
+		
+		WorkTimeRequest workRequest = new WorkTimeRequest();
+		workRequest.setFirstname((employeesInfoService.getAnEmployeeFirstName(workTimeRequest.getId())));
+		workRequest.setLastname(employeesInfoService.getAnEmployeeLastName(workTimeRequest.getId()));
+		
+		model.addAttribute("workTimeInfo", workTimeInfo);
+		model.addAttribute("workTimeRequest", workRequest);
+		
+		return "/tmp";
 	}
 
 }

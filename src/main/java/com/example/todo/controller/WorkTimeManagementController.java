@@ -26,9 +26,6 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class WorkTimeManagementController {
 
-    @Autowired
-    private EmployeesInfoService employeesinfoservice;
-
     /**
      * @author kk
      *
@@ -112,16 +109,15 @@ public class WorkTimeManagementController {
 
         // 上記のデータをsqlに保存
         try {
-            employeesinfoservice.createNewUser(employeeEntity);
+            employeesInfoService.createNewUser(employeeEntity);
         } catch (Exception e) {
             model.addAttribute("errorMsg", "この会員はすでに登録されております");
             return "createAccount";
         }
 
-        // セッションにユーザIDと名前を記録
-        session.setAttribute("userFirstName", employeesinfoservice.getAnEmployeeFirstName(Integer.parseInt(id)));
+        session.setAttribute("userFirstName", employeesInfoService.getAnEmployeeFirstName(Integer.parseInt(id)));
         session.setAttribute("userId", id);
-        model.addAttribute("userName", employeesinfoservice.getAnEmployeeFirstName(Integer.parseInt(id)));
+        model.addAttribute("userName", employeesInfoService.getAnEmployeeFirstName(Integer.parseInt(id)));
 
         return "userMyPage";
     }
@@ -155,10 +151,9 @@ public class WorkTimeManagementController {
         }
 
         // ユーザのログイン情報でsqlに取得
-        List<EmployeesEntity> user_info = employeesinfoservice.login(loginrequest);
-        
-        // もしログイン情報が間違いだったら、SQLは空
+        List<EmployeesEntity> user_info = employeesInfoService.login(loginrequest);
         if (user_info.isEmpty()) {
+        	// もしログイン情報が間違いだったら、SQLは空
             model.addAttribute("errMsg", "社員番号もしくはパスワードが違います");
             model.addAttribute("logininfo", new LoginRequest() );
             return "/home";
