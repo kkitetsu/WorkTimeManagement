@@ -35,6 +35,22 @@
 			AND #{endDate} >= birthday
 		</if>
 	</select>
+	
+	<select id="getEmployee"
+		resultType="com.example.todo.dto.SearchEmployeesDTO">
+		SELECT dpt_name,position_name FROM employees e
+		LEFT JOIN departments d ON e.dpt_id =
+		d.dpt_id
+		LEFT JOIN positions p ON e.position_id = p.position_id
+		WHERE
+		created_date IS NOT null
+		<if test="dpt_id != null">
+			AND e.dpt_id = #{dpt_id}
+		</if>
+		<if test="employee_id != null and employee_id != ''">
+			AND e.employee_id = #{employee_id}
+		</if>
+	</select>
 
 	<!-- shunsukekuzawa -->
 	<select id="getStamps"
@@ -114,6 +130,16 @@
 	<select id="getEmployeesById"
 		resultType="com.example.todo.entity.EmployeesEntity">
 		SELECT firstname FROM employees WHERE lastname=#{name};
+	</select>
+	
+	<select id="getDptNameById">
+		SELECT dpt_name FROM departments
+		WHERE dpt_id = #{id}
+	</select>
+	
+	<select id="getPositionNameById">
+		SELECT position_name FROM positions
+		WHERE position_id = #{id}
 	</select>
 
 	<!-- author kk -->

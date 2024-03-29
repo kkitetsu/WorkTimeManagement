@@ -43,6 +43,10 @@ public class SearchEmployeesRequest implements Serializable {
 	 * 役職ID
 	 */
 	private Integer  position_id;
+	
+	private String positionName;
+
+	private String dptName;
 }
 
 

@@ -67,7 +67,7 @@
 
 						期限内出勤日数：<span class="white_span_box" th:text="*{work.workCount}">
 						</span>日,
-						総勤務時間:<span class="white_span_box" th:text="${#temporals.format(work.totalWorkTime, 'HH:mm')}">
+						総勤務時間:<span class="white_span_box" th:text="*{work.totalWorkTime}">
 						</span> 時間
 					</div>
 				</div>
