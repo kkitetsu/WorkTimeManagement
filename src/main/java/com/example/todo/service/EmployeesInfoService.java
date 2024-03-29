@@ -26,6 +26,10 @@ public class EmployeesInfoService {
 		return employeesInfomapper.getEmployees(searchEmployeesRequest);
 	}
 	
+	public SearchEmployeesDTO getEmployee(SearchEmployeesRequest searchEmployeesRequest) {
+		return employeesInfomapper.getEmployee(searchEmployeesRequest);
+	}
+	
 	public List<SearchStampsDTO> getStamps(SearchStampsRequest searchStampsRequest) {
 		return employeesInfomapper.getStamps(searchStampsRequest);
   }
@@ -52,6 +56,20 @@ public class EmployeesInfoService {
 	 */
 	public List<WorkTimeDTO> getWorkTime(WorkTimeRequest workTimeRequest){
 		return employeesInfomapper.getWorkTime(workTimeRequest);
+	}
+	
+	
+	/**
+	 * @author shunsukekuzawa
+	 * 
+	 * 
+	 */
+	public String getPositionNameById(int id) {
+		return employeesInfomapper.getPositionNameById(id);
+	}
+	
+	public String getDptNameById(int id) {
+		return employeesInfomapper.getDptNameById(id);
 	}
 	
 	/**

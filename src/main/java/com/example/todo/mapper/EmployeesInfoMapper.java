@@ -27,6 +27,8 @@ public interface EmployeesInfoMapper{
 	 */
 	List<SearchEmployeesDTO> getEmployees(SearchEmployeesRequest searchEmployeesRequest);	
 	
+	SearchEmployeesDTO getEmployee(SearchEmployeesRequest searchEmployeesRequest);
+	
 	/**
 	 * @author shunsukekuzawa
 	 * 
@@ -56,6 +58,10 @@ public interface EmployeesInfoMapper{
 	 * @return total hours (hh:mm:ss)
 	 */
 	List<WorkTimeDTO> getWorkTime(WorkTimeRequest workTimeRequest);
+	
+	String getPositionNameById(int id);
+	
+	String getDptNameById(int id);
 	
 	/**
 	 * @author shunsukekuzawa
