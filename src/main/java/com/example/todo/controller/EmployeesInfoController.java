@@ -20,6 +20,7 @@ import com.example.todo.dto.SearchStampsDTO;
 import com.example.todo.dto.WorkTimeDTO;
 import com.example.todo.entity.DepartmentsEntity;
 import com.example.todo.entity.PositionsEntity;
+import com.example.todo.form.LoginRequest;
 import com.example.todo.form.SearchEmployeesRequest;
 import com.example.todo.form.SearchStampsRequest;
 import com.example.todo.form.StampUpdateRequest;
@@ -46,7 +47,13 @@ public class EmployeesInfoController {
 	 * @return admin top page URL
 	 */
 	@GetMapping(value = "/admin")
-	public String View(Model model) {
+	public String View(Model model, HttpSession session) {
+		if (session.getAttribute("userId") == null || !(session.getAttribute("userId").equals("ADMIN"))) {
+			// If session is not logged in as ADMIN
+			model.addAttribute("logininfo", new LoginRequest() );
+			return "/home";
+		}
+		// It is ADMIN, proceed to admin page with necessary data for html
 		model.addAttribute("searchEmployeesRequest", new SearchEmployeesRequest());
 		model.addAttribute("searchStampsRequest", new SearchStampsRequest());
 		return "/admin";
@@ -218,6 +225,12 @@ public class EmployeesInfoController {
 	 */
 	@GetMapping(value = "/admin/{id}/adminEdit")
 	public String editStamp(@PathVariable int id, Model model, HttpSession session) {
+		
+		if (session.getAttribute("userId") == null || !(session.getAttribute("userId").equals("ADMIN"))) {
+			// If session is not logged in as ADMIN
+			model.addAttribute("logininfo", new LoginRequest() );
+			return "redirect:/home";
+		}
 
 		StampUpdateRequest newStamp = new StampUpdateRequest();
 		newStamp.setId(id);
@@ -260,12 +273,13 @@ public class EmployeesInfoController {
 	 * @return admin top page URL
 	 */
 	@RequestMapping(value = "/stamp/update", method = RequestMethod.POST)
-	public String updateStamp(@ModelAttribute StampUpdateRequest stampUpdateRequest, Model model) {
+	public String updateStamp(@ModelAttribute StampUpdateRequest stampUpdateRequest, Model model,
+											HttpSession session) {
 		//打刻履歴を更新すると申請者は、管理者
 		stampUpdateRequest.setApplicant("管理者");
 		employeesInfoService.updateStamps(stampUpdateRequest);
 
-		View(model);
+		View(model, session);
 		return "redirect:/admin";
 	}
 
@@ -282,6 +296,11 @@ public class EmployeesInfoController {
 	 */
 	@GetMapping(value = "/admin/{id}/tmp")
 	public String workTimeDisplay(@PathVariable int id,Model model, HttpSession session) {
+		if (session.getAttribute("userId") == null || !(session.getAttribute("userId").equals("ADMIN"))) {
+			// If session is not logged in as ADMIN
+			model.addAttribute("logininfo", new LoginRequest() );
+			return "redirect:/home";
+		}
 		WorkTimeRequest workTimeRequest = new WorkTimeRequest();
 		workTimeRequest.setId(id);
 		workTimeRequest.setFirstname(employeesInfoService.getAnEmployeeFirstName(id));
@@ -299,7 +318,7 @@ public class EmployeesInfoController {
 		List<WorkTimeDTO> workTimeInfo = employeesInfoService.getWorkTime(workTimeRequest);
 		
 		int userId = 0;
-		System.out.println(session.getAttribute("userId"));
+		
 		if (session.getAttribute("userId").equals("ADMIN")) {
 			// This is admin
 			userId = workTimeRequest.getId();
@@ -309,8 +328,6 @@ public class EmployeesInfoController {
 			userId = Integer.parseInt(session.getAttribute("userId").toString());
 			model.addAttribute("isAdmin", false);
 		}
-		
-		System.out.println(model.getAttribute("isAdmin"));
 		
 		for (WorkTimeDTO eachLog : workTimeInfo) {
 			eachLog.setStartDate(workTimeRequest.getStartDate());
@@ -335,7 +352,6 @@ public class EmployeesInfoController {
 
 	@RequestMapping(value="/stamp/delete", method=RequestMethod.POST)
 	public String deleteStamp(@ModelAttribute StampUpdateRequest stampUpdateRequest,Model model) {
-		System.out.println(stampUpdateRequest.getId());
 		employeesInfoService.delete(stampUpdateRequest.getId());
 		return "redirect:/admin";
 		
