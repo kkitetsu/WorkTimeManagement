@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.example.todo.dto.SearchEmployeesDTO;
 import com.example.todo.dto.SearchStampsDTO;
 import com.example.todo.dto.WorkTimeDTO;
+import com.example.todo.entity.DepartmentsEntity;
+import com.example.todo.entity.PositionsEntity;
 import com.example.todo.form.LoginRequest;
 import com.example.todo.form.SearchEmployeesRequest;
 import com.example.todo.form.SearchStampsRequest;
@@ -85,9 +87,13 @@ public class EmployeesInfoController {
 
 		//社員の検索条件を入力し、条件を満たした社員を代入
 		List<SearchEmployeesDTO> empInfo = employeesInfoService.getEmployees(searchEmployeesRequest);
-
+		DepartmentsEntity d = new DepartmentsEntity();
+		PositionsEntity p = new PositionsEntity();
+		
+		
 		//入力された検索条件を出力するために、変数empConditionに条件を代入
 		SearchEmployeesDTO empCondition = new SearchEmployeesDTO();
+		
 		empCondition.setEmployeeId(searchEmployeesRequest.getEmployee_id());
 		empCondition.setDptId(searchEmployeesRequest.getDpt_id());
 		empCondition.setEndDate(searchEmployeesRequest.getEndDate());
@@ -95,12 +101,18 @@ public class EmployeesInfoController {
 		empCondition.setFirstname(searchEmployeesRequest.getFirstname());
 		empCondition.setLastname(searchEmployeesRequest.getLastname());
 		if (searchEmployeesRequest.getPosition_id() != null) {
-			empCondition.setPositionName(empInfo.get(0).getPositionName());
-			empCondition.setDptName(empInfo.get(0).getDptName());
+			p.setPosition_name(employeesInfoService.getPositionNameById(searchEmployeesRequest.getPosition_id()));
+			empCondition.setPositionName(p.getPosition_name());
 		} else {
 			empCondition.setPositionName(null);
+		}
+		if (searchEmployeesRequest.getDpt_id() != null) {
+			d.setDpt_name(employeesInfoService.getDptNameById(searchEmployeesRequest.getDpt_id()));
+			empCondition.setDptName(d.getDpt_name());
+		} else {
 			empCondition.setDptName(null);
 		}
+		
 
 		//検索条件の情報
 		model.addAttribute("empCondition", empCondition);
