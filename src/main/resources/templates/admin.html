@@ -21,7 +21,7 @@
 					<input type="hidden" name="selectedOption" id="selectedOption" />
 					<button class="logout-btn" type="submit" value="logout" onclick="setAction('logout')">ログアウト</button>
 				</form>
-			</div>
+			</div> 
 		</div>
 	</header>
 
@@ -66,7 +66,7 @@
 				</div>
 			</form>
 			<div th:if="${stampCondition}">
-				<label>検索条件</label>
+				<div style="text-align:center;"><label>- 検索条件 -</label></div>	
 				<table>
 					<thead>
 						<tr>
@@ -162,7 +162,7 @@
 			</form>
 
 			<div th:if="${empCondition}">
-				<label class="condition_label">検索条件</label>
+				<div style="text-align:center;"> <label class="condition_label">- 検索条件 -</label></div>
 				<table>
 					<thead>
 						<tr>

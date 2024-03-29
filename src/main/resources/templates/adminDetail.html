@@ -14,15 +14,21 @@
 			<div class="title_1"> <a href="https://www.rakuten-sec.co.jp/"><img src="../../img/rakuten_logo.png"
 						alt="Rakuten_sec_mark" class="maing_logo"> </a></div>
 			<div class="title_2"> 楽天証券打刻システム</div>
-			<div class="title_3"> </div>
+			<div class="title_3">
+				<form th:action="@{/clockin}" th:method="post" th:name="p" id="clockinForm">
+					<input type="hidden" name="action" id="action" />
+					<input type="hidden" name="selectedOption" id="selectedOption" />
+					<button class="logout-btn" type="submit" value="logout" onclick="setAction('logout')">ログアウト</button>
+				</form>
+			</div>
 		</div>
 	</header>
 
 	<body>
 		<form th:action="@{/adminDetails}" th:object="${workTimeRequest}" th:method="post">
 			<label>期間</label>
-			<input type="date" th:field="*{startDate}">〜
-			<input type="date" th:field="*{endDate}">
+			<input type="date" th:field="*{startDate}" class="date_box">〜
+			<input type="date" th:field="*{endDate}" class="date_box">
 			<input type="hidden" th:field="*{id}">
 			<button type="submit">検索</button>
 		</form>
