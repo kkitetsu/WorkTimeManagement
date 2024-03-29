@@ -207,6 +207,7 @@ public class WorkTimeManagementController {
             
             if (previousLog.getStampTypeId() == Integer.parseInt(selectedOption)
                     && hoursDifference < 15) {
+            	// 前打刻と今回の打刻内容が一緒（出勤と出勤）
             	// 前打刻十五時間経過していなかったら再同打刻不能
                 model.addAttribute("unableToClockIn", "前回の打刻から十五時間すぎていません");
                 return "/alertAndRedirect";
@@ -215,7 +216,7 @@ public class WorkTimeManagementController {
             	LogsEntity logsEntity = new LogsEntity();
                 logsEntity.setApplicant("本人");
                 logsEntity.setNote("XXXX");
-                logsEntity.setUserId((int) session.getAttribute("userId"));
+                logsEntity.setUserId(Integer.parseInt(session.getAttribute("userId").toString()));
                 logsEntity.setStampTypeId(Integer.parseInt(selectedOption));
                 employeesInfoService.insertLogs(logsEntity);
                 
