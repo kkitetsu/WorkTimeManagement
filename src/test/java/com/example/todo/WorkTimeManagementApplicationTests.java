@@ -53,5 +53,10 @@ class WorkTimeManagementApplicationTests {
 	void simpleTest() {
 		assertEquals("1", "1");
 	}
+	
+	@Test
+	void simpleAgainTest() {
+		assertEquals("2", "2");
+	}
 
 }
