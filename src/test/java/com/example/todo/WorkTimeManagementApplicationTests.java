@@ -48,5 +48,15 @@ class WorkTimeManagementApplicationTests {
         // Verify that the session is invalidated
         assertTrue(session.isInvalid());
 	}
+	
+	@Test 
+	void simpleTest() {
+		assertEquals("1", "1");
+	}
+	
+	@Test
+	void simpleAgainTest() {
+		assertEquals("2", "2");
+	}
 
 }
